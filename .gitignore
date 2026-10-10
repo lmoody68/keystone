@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# never commit keys / secrets
+*.key
+.env
+API_Keys.txt
+qbo_config.json
+qbo_tokens.json

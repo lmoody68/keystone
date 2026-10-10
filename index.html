@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KEYSTONE ERP</title>
+<style>
+  :root{
+    --bg:#eef2f7; --side:#0f172a; --side2:#1e293b; --sidehi:#334155; --card:#fff; --ink:#0f172a;
+    --mut:#64748b; --line:#e4e9f0; --soft:#f6f8fb; --blue:#2563eb; --green:#16a34a; --red:#dc2626;
+    --amber:#d97706; --gold:#eab308; --mono:'SF Mono',Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px}
+  .app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+  /* sidebar */
+  .side{background:var(--side);color:#cbd5e1;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow:auto}
+  .logo{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;font-size:18px;font-weight:800;color:#fff;letter-spacing:.5px}
+  .ks{width:26px;height:22px;background:linear-gradient(180deg,var(--gold),var(--amber));clip-path:polygon(22% 0,78% 0,100% 100%,0 100%);flex:0 0 auto}
+  .logo small{display:block;font-size:10px;color:#94a3b8;font-weight:600;letter-spacing:.3px;margin-top:1px}
+  .nav{padding:6px 10px;display:flex;flex-direction:column;gap:1px}
+  .navsec{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#64748b;padding:12px 10px 5px;font-weight:700}
+  .nav a{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;color:#cbd5e1;text-decoration:none;font-size:13.5px;cursor:pointer}
+  .nav a .i{width:18px;text-align:center;opacity:.9}
+  .nav a:hover{background:var(--side2);color:#fff}
+  .nav a.on{background:var(--blue);color:#fff;font-weight:600}
+  .sidefoot{margin-top:auto;padding:12px 16px;font-size:11px;color:#64748b;border-top:1px solid #1e293b}
+  .sidefoot b{color:#cbd5e1}
+  /* main */
+  .main{padding:0}
+  .top{background:var(--card);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:5}
+  .top h1{font-size:18px;margin:0}
+  .top .sub{color:var(--mut);font-size:12.5px}
+  .top .stat{margin-left:auto;display:flex;gap:16px;font-size:12px;color:var(--mut)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px}
+  .dot.off{background:var(--mut)}
+  .view{padding:22px 24px 60px;max-width:1280px}
+  .databanner{background:#fdf6e3;border-bottom:1px solid #f0e3c0;color:#8a6d1a;font-size:12px;padding:7px 24px;display:flex;align-items:center;gap:7px;position:sticky;top:0;z-index:4}
+  .databanner b{color:#6b540f}
+  /* shared */
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+  @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .kpi .k{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;font-weight:600}
+  .kpi .v{font-size:22px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
+  .kpi .s{font-size:11px;color:var(--mut);margin-top:2px}
+  .kpi.red .v{color:var(--red)} .kpi.green .v{color:var(--green)} .kpi.blue .v{color:var(--blue)} .kpi.amber .v{color:var(--amber)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+  .card h2{margin:0;padding:12px 16px;font-size:13px;font-weight:700;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+  .card h2 .tag{margin-left:auto;font-weight:600;font-size:11px;color:var(--mut)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;padding:9px 16px;color:var(--mut);font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:9px 16px;border-bottom:1px solid var(--soft);font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+  .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700}
+  .pill.red{background:#fde8e8;color:var(--red)} .pill.green{background:#e6f5ec;color:var(--green)}
+  .pill.amber{background:#fdf0e0;color:var(--amber)} .pill.gray{background:#eef2f6;color:var(--mut)} .pill.blue{background:#e7effd;color:var(--blue)}
+  .amt.red{color:var(--red);font-weight:700} .amt.green{color:var(--green);font-weight:700}
+  .bar{height:9px;border-radius:5px;background:var(--soft);overflow:hidden;display:flex}
+  .bar i{display:block;height:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:13px;margin-top:11px;font-size:12px}
+  .legend b{font-variant-numeric:tabular-nums}
+  .flagrow{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--soft);font-size:13px}
+  .flagrow:last-child{border-bottom:none}
+  .flagrow .sm{color:var(--mut);font-size:11.5px}
+  .btn{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer}
+  .btn:hover{filter:brightness(1.07)} .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--line)}
+  .btn.gold{background:linear-gradient(180deg,var(--gold),var(--amber));color:#3a2a00}
+  input,textarea,select{font-family:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;outline:none;width:100%}
+  input:focus,textarea:focus{border-color:var(--blue)}
+  .muted{color:var(--mut);font-size:12.5px}
+  .spin{display:inline-block;width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  /* profile cards */
+  .profiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:900px){.profiles{grid-template-columns:1fr}}
+  .prof{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .prof h3{margin:0 0 3px;font-size:15px}
+  .prof .ind{color:var(--blue);font-size:12px;font-weight:600;margin-bottom:8px}
+  .prof .row{font-size:12.5px;margin:4px 0;color:#334155}
+  .prof .row b{color:var(--ink)}
+  .prof .src{font-size:10.5px;color:var(--mut);margin-top:9px;border-top:1px solid var(--soft);padding-top:7px}
+  .realbadge{background:#e6f5ec;color:var(--green);font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:5px;text-transform:uppercase;letter-spacing:.03em}
+  /* copilot */
+  .chat{height:52vh;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--soft)}
+  .msg{max-width:80%;padding:10px 13px;border-radius:12px;font-size:13.5px;line-height:1.55;white-space:pre-wrap}
+  .msg.u{align-self:flex-end;background:var(--blue);color:#fff}
+  .msg.a{align-self:flex-start;background:#fff;border:1px solid var(--line)}
+  .msg.a b{color:var(--blue)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px}
+  .chip{font-size:11.5px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:6px 10px;cursor:pointer;color:var(--blue)}
+  .chip:hover{background:#f0f6fc}
+  .ask{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+  /* design studio */
+  .studio{display:grid;grid-template-columns:360px 1fr;gap:18px}
+  @media(max-width:900px){.studio{grid-template-columns:1fr}}
+  .render{background:var(--soft);border:1px dashed var(--line);border-radius:12px;min-height:430px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .render img{width:100%;height:100%;object-fit:cover;border-radius:11px}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.3s;z-index:50}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><div class="ks"></div><div>KEYSTONE<small>ERP · Burns Companies</small></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sidefoot">QuickBooks: <b id="qbstat">sandbox</b><br>Books as of <b id="asof">…</b></div>
+  </aside>
+  <div class="main">
+    <div class="top">
+      <div><h1 id="mtitle">Dashboard</h1><div class="sub" id="msub">Group overview across all companies</div></div>
+      <select id="srcsel" style="margin-left:20px;width:auto;font-weight:600" disabled title="Connect QuickBooks to enable live data">
+        <option value="">📊 Demo data</option>
+        <option value="qb">🟢 Live QuickBooks</option>
+      </select>
+      <select id="cosel" style="margin-left:10px;width:auto;max-width:250px;font-weight:600">
+        <option value="">🏢 All companies (group)</option>
+        <option value="wayne">Wayne Contracting</option>
+        <option value="mhard">Meramec Hardscapes</option>
+        <option value="mpool">Meramec Pools &amp; Outdoors</option>
+        <option value="vizex">Vizex</option>
+        <option value="csw">City Seafood (Wholesale)</option>
+        <option value="csr">City Seafood (Retail)</option>
+      </select>
+      <div class="stat">
+        <span><span class="dot" id="aidot"></span>AI copilot</span>
+        <span><span class="dot" id="imgdot"></span>Renderings</span>
+      </div>
+    </div>
+    <div class="databanner" id="banner">ℹ️ <span><b>Demo data.</b> Company profiles are real &amp; sourced; all dollar figures are modeled sample data — not Burns' actual financials. Connect QuickBooks for live numbers.</span></div>
+    <div class="view" id="main"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const M=n=> (Math.abs(n)>=1e6?'$'+(n/1e6).toFixed(2)+'M':Math.abs(n)>=1e3?'$'+Math.round(n/1e3)+'K':'$'+Math.round(n));
+const F=n=>'$'+Math.round(n).toLocaleString();
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+let CO='';            // selected company id ('' = consolidated group)
+let CUR='dashboard';  // current module
+const CONAME={wayne:'Wayne Contracting',mhard:'Meramec Hardscapes',mpool:'Meramec Pools & Outdoors',vizex:'Vizex',csw:'City Seafood (Wholesale)',csr:'City Seafood (Retail)'};
+let SRC='';           // '' = demo (Burns model), 'qb' = live QuickBooks
+const SCOPED=['/api/overview','/api/jobs','/api/ar','/api/ap','/api/inventory','/api/po','/api/crm','/api/vendors'];
+const get=u=>{ if(SCOPED.some(p=>u.startsWith(p))){ if(SRC) u+=(u.includes('?')?'&':'?')+'source='+SRC; else if(CO) u+=(u.includes('?')?'&':'?')+'company='+CO; } return fetch(u).then(r=>r.json()); };
+const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200);}
+function tbl(head,rows){return `<div style="overflow:auto"><table><tr>${head}</tr>${rows}</table></div>`;}
+
+const NAV=[
+ {sec:'Overview'},
+ {id:'dashboard',label:'Dashboard',icon:'📊',sub:'Group overview across all companies'},
+ {id:'companies',label:'Companies',icon:'🏢',sub:'The 7 Burns operating companies (real profiles)'},
+ {sec:'Operations'},
+ {id:'jobs',label:'Job Costing',icon:'🏗️',sub:'Budget vs actual on every job'},
+ {id:'ar',label:'Invoicing / AR',icon:'🧾',sub:'Receivables, aging, DSO, ready-to-send invoices'},
+ {id:'ap',label:'Bills / AP',icon:'💳',sub:'Vendor bills payable & aging'},
+ {id:'po',label:'Purchase Orders',icon:'📦',sub:'Open commitments to vendors'},
+ {id:'inventory',label:'Inventory',icon:'🐟',sub:'City Seafood stock & valuation'},
+ {sec:'Relationships'},
+ {id:'crm',label:'Customers',icon:'👥',sub:'Customer balances & history (CRM)'},
+ {id:'vendors',label:'Vendors',icon:'🚚',sub:'Supplier spend & payables'},
+ {sec:'AI & Integrations'},
+ {id:'copilot',label:'AI Copilot',icon:'🤖',sub:'Ask anything about the books'},
+ {id:'studio',label:'Design Studio',icon:'🎨',sub:'AI pool & outdoor renderings (Meramec Pools)'},
+ {id:'email',label:'Email → ERP',icon:'📧',sub:'Turn vendor-invoice emails into bills automatically'},
+ {id:'qbsync',label:'QuickBooks Sync',icon:'🔌',sub:'Two-way sync with QuickBooks Online'},
+ {sec:'Help'},
+ {id:'guide',label:'User Guide',icon:'📖',sub:'What KEYSTONE is and how to use every feature'},
+];
+const META=Object.fromEntries(NAV.filter(n=>n.id).map(n=>[n.id,n]));
+
+function buildNav(){
+ $('#nav').innerHTML=NAV.map(n=>n.sec?`<div class="navsec">${n.sec}</div>`:
+   `<a data-id="${n.id}"><span class="i">${n.icon}</span>${n.label}</a>`).join('');
+ document.querySelectorAll('.nav a').forEach(a=>a.onclick=()=>route(a.dataset.id));
+}
+function route(id){
+ CUR=id;
+ document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('on',a.dataset.id===id));
+ $('#mtitle').textContent=META[id].label;
+ $('#msub').textContent=META[id].sub+(CO?(' — scoped to '+CONAME[CO]):'');
+ $('#main').innerHTML='<div class="muted"><span class="spin"></span> loading…</div>';
+ ({dashboard:vDash,companies:vCompanies,jobs:vJobs,ar:vAR,ap:vAP,po:vPO,inventory:vInv,crm:vCRM,vendors:vVendors,copilot:vCopilot,studio:vStudio,email:vEmail,qbsync:vQB,guide:vGuide})[id]();
+}
+
+// ---------- DASHBOARD ----------
+async function vDash(){
+ const s=await get('/api/overview'),g=s.group;
+ const kpi=[['Open A/R',M(g.open_ar),'',''],['Overdue A/R',M(g.overdue_ar),'needs chasing','red'],
+   ['Un-billed work',M(g.under_billed),'done, not invoiced','green'],['Open A/P',M(g.open_ap),'bills to pay','amber'],
+   ['DSO',g.dso_days+'d',g.over_budget_job_count+' jobs over budget','blue'],['Inventory',M(g.inventory_value),'City Seafood','']];
+ let co=`<tr><th>Company</th><th>Industry</th><th class="num">Jobs</th><th class="num">Contract</th><th class="num">Un-billed</th><th class="num">Open A/R</th><th class="num">Overdue</th></tr>`;
+ s.companies.forEach(c=>co+=`<tr><td><b>${c.name}</b></td><td class="muted">${c.industry}</td><td class="num">${c.active_jobs}</td><td class="num">${M(c.contract_value)}</td><td class="num amt green">${c.under_billed>0?M(c.under_billed):'—'}</td><td class="num">${M(c.open_ar)}</td><td class="num amt ${c.overdue_ar>0?'red':''}">${c.overdue_ar>0?M(c.overdue_ar):'—'}</td></tr>`);
+ $('#main').innerHTML=`
+  <div class="kpis">${kpi.map(k=>`<div class="kpi ${k[3]}"><div class="k">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  <div class="card"><h2>🏢 Companies <span class="tag">${s.companies.length} entities</span></h2>${tbl('',co).replace('<tr></tr>','')}</div>
+  <div class="grid2">
+   <div class="card"><h2>📅 A/R Aging</h2><div style="padding:14px 16px">${agingBars(s.aging.overall)}</div></div>
+   <div class="card"><h2>💳 A/P Aging</h2><div style="padding:14px 16px">${agingBars(s.ap.aging)}</div></div>
+  </div>
+  <div class="grid2">
+   <div class="card"><h2>🚨 Over-budget jobs</h2>${s.flags.over_budget_jobs.map(j=>`<div class="flagrow"><div><b>${j.name}</b><div class="sm">${j.company_name} · ${j.pct_complete}% · margin ${j.proj_margin_pct}%</div></div><div class="amt red">+${M(j.cost_variance)}</div></div>`).join('')||'<div class="flagrow sm">All on budget</div>'}</div>
+   <div class="card"><h2>⏰ Slow payers</h2>${s.flags.slow_payers.map(x=>`<div class="flagrow"><div><b>${x.customer}</b><div class="sm">${x.company}</div></div><div class="amt red">${M(x.overdue)}</div></div>`).join('')||'<div class="flagrow sm">None</div>'}</div>
+  </div>`;
+}
+function agingBars(a){
+ const o=[['current','#16a34a'],['1-30','#84cc16'],['31-60','#eab308'],['61-90','#f97316'],['90+','#dc2626']];
+ const t=Object.values(a).reduce((x,y)=>x+y,0)||1;
+ let bar='<div class="bar">';o.forEach(([k,c])=>{const w=a[k]/t*100;if(w>0)bar+=`<i style="width:${w}%;background:${c}"></i>`;});bar+='</div>';
+ let leg='<div class="legend">';o.forEach(([k,c])=>leg+=`<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${c};margin-right:5px"></span>${k}: <b>${M(a[k])}</b></span>`);leg+='</div>';
+ return bar+leg;
+}
+
+// ---------- COMPANIES (real profiles) ----------
+async function vCompanies(){
+ const d=await get('/api/companies'),p=d.profiles;
+ const ids=[['wayne','Wayne Contracting','General Contractor'],['vizex','Vizex','Graphics / Signage'],['mhard','Meramec Hardscapes','Concrete / Hardscaping'],['mpool','Meramec Pools & Outdoors','Pools / Outdoor Living'],['csw','City Seafood (Wholesale)','Wholesale Seafood'],['csr','City Seafood (Retail)','Retail Seafood'],['arch','Arch City Group','Restaurant Franchise']];
+ let html=`<div class="card" style="padding:14px 16px"><b>${p.holding.name}</b> · Owner <b>${p.holding.owner}</b> · ${p.holding.hq}<div class="muted" style="margin-top:4px">${p.holding.about}</div></div><div class="profiles">`;
+ ids.forEach(([id,name,ind])=>{const c=p[id]||{};const rows=[];
+   if(c.founded)rows.push(['Founded',c.founded]); if(c.status)rows.push(['Status',c.status]);
+   if(c.leadership)rows.push(['Leadership',c.leadership]); if(c.services)rows.push(['Services',c.services.join(', ')]);
+   if(c.sectors)rows.push(['Sectors',c.sectors.join(', ')]); if(c.reach)rows.push(['Reach',c.reach]);
+   if(c.facility)rows.push(['Facility',c.facility]); if(c.model)rows.push(['Model',c.model]);
+   if(c.delivery)rows.push(['Delivery',c.delivery]); if(c.products_confirmed)rows.push(['Products',c.products_confirmed.join(', ')+' (confirmed)']);
+   if(c.origin)rows.push(['Origin',c.origin]); if(c.growth)rows.push(['Growth',c.growth]); if(c.about)rows.push(['About',c.about]);
+   html+=`<div class="prof"><h3>${name} <span class="realbadge">real</span></h3><div class="ind">${ind}</div>
+     ${rows.map(r=>`<div class="row"><b>${r[0]}:</b> ${esc(''+r[1])}</div>`).join('')}
+     <div class="src">Source: ${esc(c.source||'theburnscos.com')}</div></div>`;});
+ html+='</div>';$('#main').innerHTML=html;
+}
+
+// ---------- JOB COSTING ----------
+async function vJobs(){
+ const d=await get('/api/jobs');
+ let r=`<tr><th>Job</th><th>Company</th><th>Customer</th><th class="num">Contract</th><th class="num">%</th><th class="num">Budget</th><th class="num">Actual</th><th class="num">Variance</th><th class="num">Margin</th><th class="num">Un-billed</th></tr>`;
+ d.jobs.forEach(j=>r+=`<tr><td><b>${j.name}</b> ${j.over_budget?'<span class="pill red">over</span>':''}</td><td class="muted">${j.company_name}</td><td class="muted">${j.customer}</td><td class="num">${M(j.contract)}</td><td class="num">${j.pct_complete}%</td><td class="num">${M(j.budget_cost)}</td><td class="num">${M(j.actual_cost)}</td><td class="num amt ${j.cost_variance>0?'red':'green'}">${j.cost_variance>0?'+':''}${M(j.cost_variance)}</td><td class="num">${j.proj_margin_pct}%</td><td class="num amt ${j.under_billed>0?'green':''}">${j.under_billed>0?M(j.under_billed):'—'}</td></tr>`);
+ $('#main').innerHTML=`<div class="card"><h2>🏗️ Job Costing <span class="tag">${d.jobs.length} jobs · budget vs actual</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- AR ----------
+async function vAR(){
+ const d=await get('/api/ar');
+ let inv=`<tr><th>Invoice</th><th>Company</th><th>Customer</th><th class="num">Amount</th><th>Status</th><th class="num">Past due</th></tr>`;
+ d.open.slice(0,25).forEach(i=>inv+=`<tr><td>${i.id}</td><td class="muted">${i.company_name}</td><td>${i.customer}</td><td class="num">${F(i.amount)}</td><td><span class="pill ${i.status==='overdue'?'red':'blue'}">${i.status}</span></td><td class="num">${i.days_past_due||'—'}</td></tr>`);
+ let dr=`<tr><th>Customer</th><th>Job</th><th class="num">Amount</th><th>Terms</th></tr>`;
+ d.drafts.slice(0,12).forEach(x=>dr+=`<tr><td><b>${x.customer}</b> <span class="pill gray">${x.company}</span></td><td class="muted">${x.job} · ${x.pct_complete}%</td><td class="num amt green">${F(x.amount)}</td><td>Net ${x.terms_days}</td></tr>`);
+ const draftTot=d.drafts.reduce((a,b)=>a+b.amount,0);
+ $('#main').innerHTML=`
+  <div class="card"><h2>📅 A/R Aging <span class="tag">DSO ${d.dso.overall.dso_days}d</span></h2><div style="padding:14px 16px">${agingBars(d.aging.overall)}</div></div>
+  <div class="card"><h2>🧾 Ready-to-send invoices <span class="tag">${d.drafts.length} drafts · ${M(draftTot)} billable now</span></h2>${tbl('',dr).replace('<tr></tr>','')}</div>
+  <div class="card"><h2>📂 Open invoices</h2>${tbl('',inv).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- AP ----------
+async function vAP(){
+ const d=await get('/api/ap');
+ let r=`<tr><th>Bill</th><th>Company</th><th>Vendor</th><th class="num">Amount</th><th>Status</th><th class="num">Past due</th></tr>`;
+ d.bills.slice(0,30).forEach(b=>r+=`<tr><td>${b.id}</td><td class="muted">${b.company_name}</td><td>${b.vendor}</td><td class="num">${F(b.amount)}</td><td><span class="pill ${b.status==='overdue'?'red':'amber'}">${b.status}</span></td><td class="num">${b.days_past_due||'—'}</td></tr>`);
+ $('#main').innerHTML=`
+  <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+   <div class="kpi amber"><div class="k">Open A/P</div><div class="v">${M(d.open_ap)}</div></div>
+   <div class="kpi red"><div class="k">Overdue A/P</div><div class="v">${M(d.overdue_ap)}</div></div>
+   <div class="kpi"><div class="k">Open bills</div><div class="v">${d.bill_count}</div></div></div>
+  <div class="card"><h2>💳 A/P Aging</h2><div style="padding:14px 16px">${agingBars(d.aging)}</div></div>
+  <div class="card"><h2>📂 Open bills</h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- PO ----------
+async function vPO(){
+ const d=await get('/api/po');
+ let r=`<tr><th>PO</th><th>Company</th><th>Vendor</th><th class="num">Amount</th><th>Date</th></tr>`;
+ d.open_pos.forEach(p=>r+=`<tr><td>${p.id}</td><td class="muted">${p.company_name}</td><td>${p.vendor}</td><td class="num">${F(p.amount)}</td><td class="muted">${p.date}</td></tr>`);
+ $('#main').innerHTML=`<div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi blue"><div class="k">Committed (open POs)</div><div class="v">${M(d.committed)}</div></div><div class="kpi"><div class="k">Open POs</div><div class="v">${d.count}</div></div></div><div class="card"><h2>📦 Open purchase orders</h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- INVENTORY ----------
+async function vInv(){
+ const d=await get('/api/inventory');
+ let r=`<tr><th>Item</th><th class="num">On hand</th><th class="num">Reorder pt</th><th class="num">Unit cost</th><th class="num">Value</th><th>Status</th></tr>`;
+ d.items.forEach(i=>r+=`<tr><td><b>${i.item}</b></td><td class="num">${i.qty_on_hand}</td><td class="num">${i.reorder_point}</td><td class="num">${F(i.unit_cost)}</td><td class="num">${F(i.value)}</td><td>${i.low_stock?'<span class="pill red">reorder</span>':'<span class="pill green">ok</span>'}</td></tr>`);
+ $('#main').innerHTML=`<div class="kpis" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Inventory value</div><div class="v">${M(d.total_value)}</div></div><div class="kpi"><div class="k">SKUs</div><div class="v">${d.item_count}</div></div><div class="kpi red"><div class="k">Low stock</div><div class="v">${d.low_stock.length}</div></div></div><div class="card"><h2>🐟 City Seafood inventory <span class="tag">Fenton facility</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- CRM ----------
+async function vCRM(){
+ const d=await get('/api/crm');
+ let r=`<tr><th>Customer</th><th>Company</th><th class="num">Invoiced</th><th class="num">Open balance</th><th class="num">Overdue</th></tr>`;
+ d.customers.forEach(c=>r+=`<tr><td><b>${c.customer}</b></td><td class="muted">${c.company}</td><td class="num">${F(c.invoiced)}</td><td class="num">${c.open>0?F(c.open):'—'}</td><td class="num amt ${c.overdue>0?'red':''}">${c.overdue>0?F(c.overdue):'—'}</td></tr>`);
+ $('#main').innerHTML=`<div class="card"><h2>👥 Customers <span class="tag">${d.customers.length} · across all companies</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- VENDORS ----------
+async function vVendors(){
+ const d=await get('/api/vendors');
+ let r=`<tr><th>Vendor</th><th>Company</th><th class="num">Billed</th><th class="num">Open payable</th></tr>`;
+ d.vendors.forEach(v=>r+=`<tr><td><b>${v.vendor}</b></td><td class="muted">${v.company}</td><td class="num">${F(v.billed)}</td><td class="num amt ${v.open>0?'amber':''}">${v.open>0?F(v.open):'—'}</td></tr>`);
+ $('#main').innerHTML=`<div class="card"><h2>🚚 Vendors <span class="tag">${d.vendors.length} suppliers</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- COPILOT ----------
+const CHIPS=["Which jobs are over budget?","How much can we invoice right now?","Who's slow to pay?","What's our DSO?","Give me a cash-flow summary","Which company has the most overdue A/R?"];
+function vCopilot(){
+ $('#main').innerHTML=`<div class="card">
+   <h2>🤖 KEYSTONE Copilot <span class="tag">grounded in live numbers — never guesses</span></h2>
+   <div class="chat" id="chat"><div class="msg a">Ask me anything about jobs, costs, invoices, A/P, inventory, or cash flow across all the Burns companies. Every figure I give is computed live from the books.</div></div>
+   <div class="chips">${CHIPS.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+   <div class="ask"><input id="q" placeholder="Ask about costs, invoices, cash flow…" autocomplete="off"><button class="btn" id="send">Ask</button></div></div>`;
+ document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{$('#q').value=c.textContent;csend();});
+ $('#send').onclick=csend;$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')csend();});$('#q').focus();
+}
+function cmd(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^- /gm,'• ');}
+let cbusy=false;
+async function csend(){
+ const q=$('#q').value.trim();if(!q||cbusy)return;cbusy=true;$('#send').disabled=true;$('#q').value='';
+ const c=$('#chat');c.insertAdjacentHTML('beforeend',`<div class="msg u">${cmd(q)}</div>`);
+ c.insertAdjacentHTML('beforeend',`<div class="msg a" id="pend"><span class="spin"></span> checking the books…</div>`);c.scrollTop=1e9;
+ try{const r=await post('/api/ask',{question:q,company:CO});$('#pend').innerHTML=cmd(r.answer||r.error||'(no answer)');$('#pend').id='';}
+ catch(e){$('#pend').innerHTML='⚠️ error';}
+ c.scrollTop=1e9;cbusy=false;$('#send').disabled=false;$('#q').focus();
+}
+
+// ---------- DESIGN STUDIO ----------
+const PRESETS=["Freeform gunite pool with a raised spa, tanning ledge, and natural stone decking","Modern rectangular pool with a 12-ft infinity edge, fire bowls, and a travertine patio","Family pool with a retaining wall, pergola-covered patio, and lush landscaping","Lagoon-style pool with a waterfall, boulder accents, and a built-in fire pit"];
+let PHOTO=null;  // uploaded backyard photo (data URL) → enables img2img
+function resizeImg(file,max){return new Promise(res=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{let w=img.width,h=img.height;const sc=Math.min(1,max/Math.max(w,h));w=Math.round(w*sc);h=Math.round(h*sc);const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);res(c.toDataURL('image/png'));};img.src=url;});}
+function vStudio(){
+ PHOTO=null;
+ $('#main').innerHTML=`<div class="studio">
+   <div class="card" style="padding:16px">
+     <h2 style="border:0;padding:0 0 10px">🎨 Pool & Outdoor Renderings</h2>
+     <div class="muted" style="margin-bottom:10px">For <b>Meramec Pools &amp; Outdoors</b> — show the client their finished backyard before you build it.</div>
+     <label class="muted">Customer / job (optional)</label>
+     <input id="rcust" placeholder="e.g. The Henderson Residence" style="margin:4px 0 12px">
+     <label class="muted">Client's backyard photo <b>(optional — enables img2img)</b></label>
+     <div id="drop" style="border:1px dashed var(--line);border-radius:10px;padding:14px;text-align:center;margin:4px 0 12px;cursor:pointer">
+       <input type="file" id="rphoto" accept="image/*" style="display:none">
+       <div id="dropmsg" class="muted" style="font-size:12.5px">📷 Click to upload the client's backyard — we'll render the pool <b>onto their actual yard</b></div>
+       <img id="prev" style="display:none;max-width:100%;border-radius:8px;margin-top:8px">
+     </div>
+     <label class="muted">Describe the design</label>
+     <textarea id="rprompt" rows="4" placeholder="Describe the pool & outdoor space…" style="margin:4px 0 10px"></textarea>
+     <div class="chips" style="padding:0 0 12px">${PRESETS.map(p=>`<span class="chip" data-p="${esc(p)}">${esc(p.slice(0,34))}…</span>`).join('')}</div>
+     <button class="btn gold" id="gen" style="width:100%">✨ Generate rendering</button>
+     <div class="muted" style="margin-top:10px;font-size:11.5px">Upload a photo to render the pool onto the client's <b>actual backyard</b> (img2img); leave it empty for a concept render from your description.</div>
+   </div>
+   <div><div class="render" id="render"><div class="muted">Your rendering will appear here</div></div></div>
+ </div>`;
+ document.querySelectorAll('.chip[data-p]').forEach(c=>c.onclick=()=>{$('#rprompt').value=c.dataset.p;});
+ $('#drop').onclick=()=>$('#rphoto').click();
+ $('#rphoto').onchange=async e=>{const f=e.target.files[0];if(!f)return;PHOTO=await resizeImg(f,1024);$('#prev').src=PHOTO;$('#prev').style.display='block';$('#dropmsg').innerHTML='<b>✓ Photo ready</b> — the pool will be rendered onto this yard';$('#gen').textContent='✨ Render on this photo';};
+ $('#gen').onclick=async()=>{
+   const p=$('#rprompt').value.trim();if(!p){toast('Describe the design first');return;}
+   const cust=$('#rcust').value.trim();const full=(cust?`For ${cust}. `:'')+p;
+   $('#gen').disabled=true;$('#render').innerHTML=`<div class="muted"><span class="spin"></span> ${PHOTO?'rendering onto the photo':'rendering'}… (15–40s)</div>`;
+   try{const r=PHOTO?await post('/api/render_edit',{prompt:full,image:PHOTO}):await post('/api/render',{prompt:full});
+     if(r.image)$('#render').innerHTML=`<img src="${r.image}" alt="rendering">`;
+     else $('#render').innerHTML=`<div class="muted" style="padding:20px;text-align:center">⚠️ ${esc(r.error||'could not render')}</div>`;
+   }catch(e){$('#render').innerHTML='<div class="muted">⚠️ error</div>';}
+   $('#gen').disabled=false;
+ };
+}
+
+// ---------- EMAIL -> ERP ----------
+async function vEmail(){
+ const d=await get('/api/email');
+ let list=d.inbox.map(e=>`<div class="flagrow" style="cursor:pointer" data-id="${e.id}"><div><b>${esc(e.subject)}</b><div class="sm">${esc(e.from)} · ${e.received}</div></div><span class="pill blue">vendor invoice</span></div>`).join('');
+ $('#main').innerHTML=`<div class="grid2">
+   <div class="card"><h2>📧 Inbox <span class="tag">vendor invoices</span></h2>${list}</div>
+   <div class="card"><h2>✨ Extracted bill</h2><div id="extract" style="padding:16px"><div class="muted">Select an email, then extract it into a QuickBooks bill with AI.</div></div></div></div>`;
+ window.__emails=Object.fromEntries(d.inbox.map(e=>[e.id,e]));
+ document.querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>showEmail(el.dataset.id));
+}
+function showEmail(id){
+ const e=window.__emails[id];
+ $('#extract').innerHTML=`<div class="muted" style="white-space:pre-wrap;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12.5px;max-height:180px;overflow:auto">${esc(e.body)}</div>
+   <button class="btn" id="ex" style="margin-top:12px;width:100%">✨ Extract to QuickBooks bill</button><div id="exout"></div>`;
+ $('#ex').onclick=async()=>{
+   $('#ex').disabled=true;$('#exout').innerHTML='<div class="muted" style="margin-top:12px"><span class="spin"></span> AI reading the invoice…</div>';
+   try{const r=await post('/api/email/extract',{body:e.body});const b=r.bill||{};
+     if(b.error){$('#exout').innerHTML=`<div class="muted" style="margin-top:12px">⚠️ ${esc(b.error)}</div>`;}
+     else{const rows=[['Vendor',b.vendor],['Invoice #',b.invoice_number],['Amount',b.amount?F(b.amount):'—'],['Company',b.suggested_company],['Job',b.suggested_job||'—'],['GL account',b.suggested_gl],['Terms','Net '+(b.terms_days??'—')],['Confidence',Math.round((b.confidence||0)*100)+'%']];
+       $('#exout').innerHTML=`<div class="card" style="margin-top:12px">${tbl('',rows.map(x=>`<tr><td class="muted">${x[0]}</td><td><b>${esc(''+(x[1]??'—'))}</b></td></tr>`).join(''))}</div><button class="btn green" style="background:var(--green);width:100%" onclick="toast('Posted to QuickBooks (demo)')">Post to QuickBooks →</button>`;}
+   }catch(e){$('#exout').innerHTML='<div class="muted">⚠️ error</div>';}
+   $('#ex').disabled=false;
+ };
+}
+
+// ---------- QUICKBOOKS SYNC ----------
+async function vQB(){
+ const d=await get('/api/qbsync');
+ const sy=d.synced||{}, pp=d.pending_push||{};
+ const live=d.connected&&d.live;
+ const badge=live?'<span class="realbadge" style="background:#e6f5ec;color:var(--green)">● connected · live</span>'
+                 :'<span class="realbadge" style="background:#fdf0e0;color:var(--amber)">not connected · demo</span>';
+ let connectCard='';
+ if(!d.connected){
+   connectCard=`<div class="card" style="padding:16px">
+     <h2 style="border:0;padding:0 0 8px">🔌 Connect to QuickBooks Online</h2>
+     <div class="muted" style="margin-bottom:12px">${d.configured?'<b style="color:var(--green)">✓ Credentials found.</b> Click Connect to authorize your sandbox company.':'Add your Intuit <b>client_id</b> / <b>client_secret</b> to <code>qbo_config.json</code>, then Connect. Register this redirect URI in your Intuit app: <code>'+esc(d.redirect_uri||'')+'</code>'}</div>
+     <a class="btn gold" href="/qb/connect" target="_blank" style="text-decoration:none;display:inline-block">🔗 Connect QuickBooks</a></div>`;
+ }
+ $('#main').innerHTML=`
+  ${connectCard}
+  <div class="card" style="padding:16px"><h2 style="border:0;padding:0 0 8px">🔌 QuickBooks Online ${badge}</h2>
+   <div class="muted">${esc(d.environment)} · Realm: <b>${esc(''+d.realm)}</b> · Last sync <b>${esc(''+d.last_sync)}</b></div>${d.error?'<div class="muted" style="color:var(--red);margin-top:6px">'+esc(d.error)+'</div>':''}</div>
+  <div class="kpis" style="grid-template-columns:repeat(5,1fr)">
+   ${[['Customers',sy.customers],['Vendors',sy.vendors],['Invoices',sy.invoices],['Bills',sy.bills],['Items',sy.items]].map(k=>`<div class="kpi"><div class="k">${k[0]} ${live?'in QB':'(demo)'}</div><div class="v">${k[1]??'—'}</div></div>`).join('')}</div>
+  <div class="grid2">
+   <div class="card"><h2>⬆️ Pending push to QuickBooks</h2>
+     <div class="flagrow"><div><b>Invoice drafts</b><div class="sm">auto-generated from job progress</div></div><span class="pill blue">${pp.invoice_drafts}</span></div>
+     <div class="flagrow"><div><b>Bills to post</b><div class="sm">from Email → ERP extraction</div></div><span class="pill amber">${pp.bills_to_post}</span></div>
+     <div style="padding:14px 16px"><button class="btn" onclick="route('qbsync')">↻ Refresh</button></div></div>
+   <div class="card"><h2>ℹ️ How it works</h2><div style="padding:14px 16px" class="muted">${esc(d.note)}<br><br>KEYSTONE adds the modules QuickBooks can't do — <b>multi-company job costing, POs, inventory, CRM, renderings, and email automation</b> — while QuickBooks stays the system of record for the general ledger.</div></div>
+  </div>`;
+}
+
+// ---------- USER GUIDE ----------
+function gSec(icon,title,items){
+ return `<div class="card"><h2>${icon} ${title}</h2><div style="padding:6px 16px 14px">${items.map(i=>`<div style="margin:9px 0;font-size:13.5px"><b>${i[0]}</b> — <span class="muted">${i[1]}</span></div>`).join('')}</div></div>`;
+}
+function vGuide(){
+ $('#main').innerHTML=`
+  <div class="card" style="padding:18px"><h2 style="border:0;padding:0 0 9px">📖 Welcome to KEYSTONE</h2>
+    <div class="muted" style="line-height:1.65">KEYSTONE is an <b>AI-native ERP for The Burns Companies</b> — one system that runs all the operating companies (general contracting, hardscaping, pools, graphics &amp; signage, and seafood) with <b>QuickBooks built in</b>. QuickBooks stays your system of record for the books; KEYSTONE adds everything QuickBooks can't do on its own — <b>multi-company job costing, purchasing, inventory, CRM, AI renderings, and email automation</b> — all in one screen.
+    <br><br><b>Getting around:</b> use the <b>left sidebar</b> to switch modules. The top bar shows the module you're in, the books date, and whether the AI copilot &amp; renderings are online (green dots).</div></div>
+
+  ${gSec('📊','Overview',[
+    ['Dashboard','Your group-wide snapshot: open A/R, overdue, un-billed work, open A/P, DSO, and inventory value, plus every company side-by-side, A/R & A/P aging, over-budget jobs, and slow payers. Start here each morning.'],
+    ['Companies','The 7 real Burns operating companies with sourced profiles — owners, founding, services, sectors, and the real story (e.g. City Seafood is "Bob\'s 2.0" out of Fenton). This is factual, publicly-sourced data.']])}
+
+  ${gSec('🏗️','Operations',[
+    ['Job Costing','Every job with budget vs actual, % complete, cost variance, projected margin, and un-billed work. Jobs trending over budget are flagged <span class="pill red">over</span>.'],
+    ['Invoicing / AR','Receivables aging, DSO, your largest open invoices, and <b>ready-to-send invoices</b> auto-generated from job progress (work you\'ve earned but not yet billed).'],
+    ['Bills / AP','Vendor bills you owe, with aging and overdue totals — the pay side of cash flow.'],
+    ['Purchase Orders','Open commitments to vendors, tied to jobs — so you see cost that\'s coming before the bill arrives.'],
+    ['Inventory','City Seafood\'s stock and valuation out of the Fenton facility, with low-stock reorder flags.']])}
+
+  ${gSec('👥','Relationships',[
+    ['Customers (CRM)','Every customer across all companies with total invoiced, open balance, and overdue — know who owes you and who to chase.'],
+    ['Vendors','Supplier spend and open payables across the group.']])}
+
+  ${gSec('🤖','AI & Integrations — the differentiators',[
+    ['AI Copilot','Ask anything in plain English — "which jobs are over budget?", "how much can we invoice right now?", "who\'s slow to pay?" Click a suggested question or type your own. <b>Every number is computed live from the books — the AI never makes figures up.</b>'],
+    ['Design Studio 🎨','For Meramec Pools: describe a pool / outdoor design (or pick a preset) and KEYSTONE generates a <b>photorealistic rendering</b> to show the client before you build. Production adds img2img on the client\'s actual backyard photo, saved to their job record.'],
+    ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry.'],
+    ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online and what\'s queued to push (invoice drafts, extracted bills). QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.']])}
+
+  <div class="card" style="padding:16px"><h2 style="border:0;padding:0 0 7px">✅ The promise</h2>
+    <div class="muted">KEYSTONE computes every dollar figure <b>deterministically</b> from your QuickBooks data — the AI only explains, extracts, and renders. So the numbers you see and the answers the copilot gives are always grounded in the real books.</div></div>`;
+}
+
+// ---------- BOOT ----------
+function updateBanner(){
+ const b=$('#banner'); if(!b) return;
+ if(SRC==='qb'){ b.innerHTML='🟢 <span><b>Live QuickBooks data.</b> These figures are pulled in real time from your connected QuickBooks Online company via the API.</span>'; b.style.background='#e9f7ec'; b.style.borderColor='#bfe6c6'; b.style.color='#1a6e2e'; }
+ else { b.innerHTML="ℹ️ <span><b>Demo data.</b> Company profiles are real &amp; sourced; all dollar figures are modeled sample data — not Burns' actual financials. Switch to Live QuickBooks for real numbers.</span>"; b.style.background='#fdf6e3'; b.style.borderColor='#f0e3c0'; b.style.color='#8a6d1a'; }
+}
+async function boot(){
+ buildNav();
+ $('#cosel').onchange=e=>{CO=e.target.value; route(CUR);};
+ $('#srcsel').onchange=e=>{ SRC=e.target.value; $('#cosel').style.display=SRC==='qb'?'none':''; if(SRC==='qb')CO=''; updateBanner(); route(CUR); };
+ try{const h=await get('/api/health');
+   $('#asof').textContent=h.as_of;
+   $('#qbstat').textContent=h.qb_connected?'● connected (live)':'sandbox (demo)';
+   $('#aidot').className='dot '+(h.llm_ready?'':'off');$('#imgdot').className='dot '+(h.image_ready?'':'off');
+   if(h.qb_connected){ $('#srcsel').disabled=false; $('#srcsel').title='Switch between demo and live QuickBooks data'; }
+ }catch(e){}
+ route('dashboard');
+}
+boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,3753 @@
+{
+ "as_of": "2026-10-09",
+ "holding": {
+  "name": "The Burns Companies (Burns Holdings, LLC)",
+  "owner": "Brad Burns",
+  "hq": "32 Progress Parkway, Maryland Heights, MO 63043",
+  "accounting": "QuickBooks (per-company files)",
+  "about": "Privately held, bootstrapped umbrella of operating companies across commercial construction, graphics/signage, hardscaping & pools, and seafood.",
+  "source": "theburnscos.com"
+ },
+ "profiles": {
+  "holding": {
+   "name": "The Burns Companies (Burns Holdings, LLC)",
+   "owner": "Brad Burns",
+   "hq": "32 Progress Parkway, Maryland Heights, MO 63043",
+   "accounting": "QuickBooks (per-company files)",
+   "about": "Privately held, bootstrapped umbrella of operating companies across commercial construction, graphics/signage, hardscaping & pools, and seafood.",
+   "source": "theburnscos.com"
+  },
+  "wayne": {
+   "founded": 2014,
+   "leadership": "Brad W. Burns (founder)",
+   "services": [
+    "General contracting",
+    "Construction management",
+    "Multi-site project rollouts"
+   ],
+   "sectors": [
+    "Retail",
+    "Hospitality",
+    "Food service"
+   ],
+   "reach": "National",
+   "about": "Flagship; concept-to-completion commercial GC. One of the fastest-growing US GCs, grown with no outside investment.",
+   "source": "theburnscos.com; cbinsights; levelset"
+  },
+  "vizex": {
+   "founded": 2019,
+   "services": [
+    "Vinyl graphics",
+    "Window displays",
+    "Visual-experience design & install"
+   ],
+   "sectors": [
+    "Commercial",
+    "Retail"
+   ],
+   "reach": "All 50 states",
+   "about": "Strategize \u2192 design \u2192 print \u2192 install visual graphics for commercial & retail spaces.",
+   "source": "theburnscos.com"
+  },
+  "mhard": {
+   "founded": 2019,
+   "services": [
+    "Concrete",
+    "Hardscaping",
+    "Landscape construction"
+   ],
+   "reach": "Midwest",
+   "about": "Decorative and structural concrete + hardscapes.",
+   "source": "theburnscos.com"
+  },
+  "mpool": {
+   "founded": 2021,
+   "services": [
+    "Pool design & install",
+    "Spas",
+    "Decorative concrete",
+    "Retaining walls",
+    "Tanning ledges"
+   ],
+   "about": "Complete outdoor-living projects; 20+ years of experience.",
+   "source": "theburnscos.com"
+  },
+  "csw": {
+   "founded": 2023,
+   "leadership": "Brad Burns + Mike Vujevic (ex-Bob's Seafood VP; runs fish-cutting)",
+   "facility": "Processing facility in Fenton, MO",
+   "model": "Wholesale (2023) + online D2C (late 2024)",
+   "delivery": "35-40 mi radius from Fenton, $100 min; pickup at Fenton",
+   "origin": "'Bob's 2.0' - founded after Bob's Seafood closed June 2022 (eminent domain for a Costco in University City); relocated Bob's equipment, coolers, trucks, and fish-cutters.",
+   "growth": "Exploring a retail storefront; eyeing 15-20 Midwest markets (Tulsa, Omaha, Nashville).",
+   "products_confirmed": [
+    "Salmon",
+    "Shrimp"
+   ],
+   "source": "stlmag.com 'City Seafood's Brad Burns'; theburnscos.com"
+  },
+  "csr": {
+   "founded": 2024,
+   "model": "Retail / online D2C - delivery + Fenton pickup",
+   "about": "Direct-to-consumer arm of City Seafood.",
+   "source": "stlmag.com; theburnscos.com"
+  },
+  "arch": {
+   "name": "Arch City Group",
+   "status": "Launching 2025",
+   "services": [
+    "Restaurant franchise operations",
+    "Investment & development"
+   ],
+   "source": "theburnscos.com"
+  }
+ },
+ "companies": [
+  {
+   "id": "wayne",
+   "name": "Wayne Contracting",
+   "industry": "General Contractor",
+   "model": "job",
+   "terms": 30
+  },
+  {
+   "id": "mhard",
+   "name": "Meramec Hardscapes",
+   "industry": "Concrete / Hardscaping",
+   "model": "job",
+   "terms": 30
+  },
+  {
+   "id": "mpool",
+   "name": "Meramec Pools & Outdoors",
+   "industry": "Pools / Outdoor Living",
+   "model": "job",
+   "terms": 30
+  },
+  {
+   "id": "vizex",
+   "name": "Vizex",
+   "industry": "Graphics / Signage",
+   "model": "job",
+   "terms": 30
+  },
+  {
+   "id": "csw",
+   "name": "City Seafood (Wholesale)",
+   "industry": "Wholesale Seafood",
+   "model": "recurring",
+   "terms": 15
+  },
+  {
+   "id": "csr",
+   "name": "City Seafood (Retail)",
+   "industry": "Retail Seafood",
+   "model": "retail",
+   "terms": 0
+  }
+ ],
+ "jobs": [
+  {
+   "id": "J101",
+   "company": "wayne",
+   "customer": "Gateway Retail Group",
+   "name": "Gateway Retail Buildout",
+   "contract_amount": 1750800.0,
+   "budget_cost": 1288725.57,
+   "pct_complete": 15,
+   "start_date": "2026-04-22",
+   "status": "in_progress"
+  },
+  {
+   "id": "J102",
+   "company": "wayne",
+   "customer": "Midwest Logistics Park",
+   "name": "Logistics Park Phase 2",
+   "contract_amount": 1621300.0,
+   "budget_cost": 1275480.75,
+   "pct_complete": 45,
+   "start_date": "2026-08-28",
+   "status": "in_progress"
+  },
+  {
+   "id": "J103",
+   "company": "wayne",
+   "customer": "St. Charles Medical Plaza",
+   "name": "Medical Plaza Core/Shell",
+   "contract_amount": 711100.0,
+   "budget_cost": 547369.05,
+   "pct_complete": 75,
+   "start_date": "2026-07-08",
+   "status": "in_progress"
+  },
+  {
+   "id": "J104",
+   "company": "wayne",
+   "customer": "Riverport Hospitality",
+   "name": "Riverport Hotel Renovation",
+   "contract_amount": 446100.0,
+   "budget_cost": 321902.57,
+   "pct_complete": 60,
+   "start_date": "2026-07-20",
+   "status": "in_progress"
+  },
+  {
+   "id": "J105",
+   "company": "wayne",
+   "customer": "Delmar Office Partners",
+   "name": "Delmar TI \u2014 3rd Floor",
+   "contract_amount": 1282400.0,
+   "budget_cost": 1020309.57,
+   "pct_complete": 75,
+   "start_date": "2026-05-24",
+   "status": "in_progress"
+  },
+  {
+   "id": "J106",
+   "company": "mhard",
+   "customer": "Whitmore HOA",
+   "name": "Whitmore Driveway & Patio",
+   "contract_amount": 63800.0,
+   "budget_cost": 50376.71,
+   "pct_complete": 90,
+   "start_date": "2026-05-07",
+   "status": "in_progress"
+  },
+  {
+   "id": "J107",
+   "company": "mhard",
+   "customer": "Chesterfield Commons",
+   "name": "Commons Stamped Walkways",
+   "contract_amount": 87800.0,
+   "budget_cost": 69665.76,
+   "pct_complete": 60,
+   "start_date": "2026-06-29",
+   "status": "in_progress"
+  },
+  {
+   "id": "J108",
+   "company": "mhard",
+   "customer": "Kirkwood Parks Dept",
+   "name": "Kirkwood Park Pavilion Slab",
+   "contract_amount": 135100.0,
+   "budget_cost": 108928.9,
+   "pct_complete": 75,
+   "start_date": "2026-03-13",
+   "status": "in_progress"
+  },
+  {
+   "id": "J109",
+   "company": "mhard",
+   "customer": "Ladue Estates",
+   "name": "Ladue Retaining Wall",
+   "contract_amount": 25500.0,
+   "budget_cost": 18772.47,
+   "pct_complete": 15,
+   "start_date": "2026-07-14",
+   "status": "in_progress"
+  },
+  {
+   "id": "J110",
+   "company": "mhard",
+   "customer": "Frontenac Retail Center",
+   "name": "Frontenac Plaza Concrete",
+   "contract_amount": 75000.0,
+   "budget_cost": 55492.29,
+   "pct_complete": 45,
+   "start_date": "2026-03-30",
+   "status": "in_progress"
+  },
+  {
+   "id": "J111",
+   "company": "mpool",
+   "customer": "The Henderson Residence",
+   "name": "Henderson Gunite Pool + Spa",
+   "contract_amount": 113400.0,
+   "budget_cost": 89406.56,
+   "pct_complete": 100,
+   "start_date": "2026-07-11",
+   "status": "complete"
+  },
+  {
+   "id": "J112",
+   "company": "mpool",
+   "customer": "Wildwood Country Club",
+   "name": "Wildwood Club Lap Pool",
+   "contract_amount": 111100.0,
+   "budget_cost": 83818.41,
+   "pct_complete": 45,
+   "start_date": "2026-06-11",
+   "status": "in_progress"
+  },
+  {
+   "id": "J113",
+   "company": "mpool",
+   "customer": "Town & Country Estate",
+   "name": "T&C Infinity Pool",
+   "contract_amount": 166100.0,
+   "budget_cost": 121302.52,
+   "pct_complete": 90,
+   "start_date": "2026-05-18",
+   "status": "in_progress"
+  },
+  {
+   "id": "J114",
+   "company": "mpool",
+   "customer": "Ballwin Aquatics",
+   "name": "Ballwin Splash Pad",
+   "contract_amount": 104900.0,
+   "budget_cost": 80544.22,
+   "pct_complete": 75,
+   "start_date": "2026-07-12",
+   "status": "in_progress"
+  },
+  {
+   "id": "J115",
+   "company": "mpool",
+   "customer": "The Pryor Residence",
+   "name": "Pryor Pool + Tanning Ledge",
+   "contract_amount": 204200.0,
+   "budget_cost": 165865.72,
+   "pct_complete": 100,
+   "start_date": "2026-07-30",
+   "status": "complete"
+  },
+  {
+   "id": "J116",
+   "company": "vizex",
+   "customer": "National Tire Co",
+   "name": "National Tire Rebrand (54 sites)",
+   "contract_amount": 13200.0,
+   "budget_cost": 10562.54,
+   "pct_complete": 45,
+   "start_date": "2026-07-27",
+   "status": "in_progress"
+  },
+  {
+   "id": "J117",
+   "company": "vizex",
+   "customer": "BrightMart Grocery",
+   "name": "BrightMart Window Program",
+   "contract_amount": 54800.0,
+   "budget_cost": 44489.37,
+   "pct_complete": 30,
+   "start_date": "2026-05-29",
+   "status": "in_progress"
+  },
+  {
+   "id": "J118",
+   "company": "vizex",
+   "customer": "FitZone Gyms",
+   "name": "FitZone Interior Graphics",
+   "contract_amount": 43000.0,
+   "budget_cost": 31186.3,
+   "pct_complete": 30,
+   "start_date": "2026-04-23",
+   "status": "in_progress"
+  },
+  {
+   "id": "J119",
+   "company": "vizex",
+   "customer": "Summit Bank",
+   "name": "Summit Bank Signage",
+   "contract_amount": 17300.0,
+   "budget_cost": 13765.27,
+   "pct_complete": 30,
+   "start_date": "2026-07-26",
+   "status": "in_progress"
+  },
+  {
+   "id": "J120",
+   "company": "vizex",
+   "customer": "QuickFuel C-Stores",
+   "name": "QuickFuel Pylon Wraps",
+   "contract_amount": 15300.0,
+   "budget_cost": 12509.32,
+   "pct_complete": 45,
+   "start_date": "2026-08-02",
+   "status": "in_progress"
+  }
+ ],
+ "invoices": [
+  {
+   "id": "INV-3001",
+   "company": "wayne",
+   "customer": "Gateway Retail Group",
+   "job_id": "J101",
+   "amount": 0.0,
+   "issue_date": "2026-07-11",
+   "due_date": "2026-08-10",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3002",
+   "company": "wayne",
+   "customer": "Midwest Logistics Park",
+   "job_id": "J102",
+   "amount": 567455.0,
+   "issue_date": "2026-09-13",
+   "due_date": "2026-10-13",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3003",
+   "company": "wayne",
+   "customer": "St. Charles Medical Plaza",
+   "job_id": "J103",
+   "amount": 231107.5,
+   "issue_date": "2026-08-04",
+   "due_date": "2026-09-03",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3004",
+   "company": "wayne",
+   "customer": "St. Charles Medical Plaza",
+   "job_id": "J103",
+   "amount": 231107.5,
+   "issue_date": "2026-09-01",
+   "due_date": "2026-10-01",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3005",
+   "company": "wayne",
+   "customer": "Riverport Hospitality",
+   "job_id": "J104",
+   "amount": 133830.0,
+   "issue_date": "2026-08-12",
+   "due_date": "2026-09-11",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3006",
+   "company": "wayne",
+   "customer": "Riverport Hospitality",
+   "job_id": "J104",
+   "amount": 133830.0,
+   "issue_date": "2026-09-05",
+   "due_date": "2026-10-05",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3007",
+   "company": "wayne",
+   "customer": "Delmar Office Partners",
+   "job_id": "J105",
+   "amount": 320600.0,
+   "issue_date": "2026-06-25",
+   "due_date": "2026-07-25",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3008",
+   "company": "wayne",
+   "customer": "Delmar Office Partners",
+   "job_id": "J105",
+   "amount": 320600.0,
+   "issue_date": "2026-07-27",
+   "due_date": "2026-08-26",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3009",
+   "company": "wayne",
+   "customer": "Delmar Office Partners",
+   "job_id": "J105",
+   "amount": 320600.0,
+   "issue_date": "2026-08-28",
+   "due_date": "2026-09-27",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3010",
+   "company": "mhard",
+   "customer": "Whitmore HOA",
+   "job_id": "J106",
+   "amount": 19140.0,
+   "issue_date": "2026-06-12",
+   "due_date": "2026-07-12",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3011",
+   "company": "mhard",
+   "customer": "Whitmore HOA",
+   "job_id": "J106",
+   "amount": 19140.0,
+   "issue_date": "2026-07-18",
+   "due_date": "2026-08-17",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3012",
+   "company": "mhard",
+   "customer": "Whitmore HOA",
+   "job_id": "J106",
+   "amount": 19140.0,
+   "issue_date": "2026-08-23",
+   "due_date": "2026-09-22",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3013",
+   "company": "mhard",
+   "customer": "Chesterfield Commons",
+   "job_id": "J107",
+   "amount": 26340.0,
+   "issue_date": "2026-07-29",
+   "due_date": "2026-08-28",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3014",
+   "company": "mhard",
+   "customer": "Chesterfield Commons",
+   "job_id": "J107",
+   "amount": 26340.0,
+   "issue_date": "2026-08-29",
+   "due_date": "2026-09-28",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3015",
+   "company": "mhard",
+   "customer": "Kirkwood Parks Dept",
+   "job_id": "J108",
+   "amount": 37152.5,
+   "issue_date": "2026-05-18",
+   "due_date": "2026-06-17",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3016",
+   "company": "mhard",
+   "customer": "Kirkwood Parks Dept",
+   "job_id": "J108",
+   "amount": 37152.5,
+   "issue_date": "2026-07-24",
+   "due_date": "2026-08-23",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3017",
+   "company": "mhard",
+   "customer": "Ladue Estates",
+   "job_id": "J109",
+   "amount": 3825.0,
+   "issue_date": "2026-08-21",
+   "due_date": "2026-09-20",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3018",
+   "company": "mhard",
+   "customer": "Frontenac Retail Center",
+   "job_id": "J110",
+   "amount": 22500.0,
+   "issue_date": "2026-06-29",
+   "due_date": "2026-07-29",
+   "terms_days": 30,
+   "status": "overdue",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3019",
+   "company": "mpool",
+   "customer": "The Henderson Residence",
+   "job_id": "J111",
+   "amount": 30240.0,
+   "issue_date": "2026-07-31",
+   "due_date": "2026-08-30",
+   "terms_days": 30,
+   "status": "overdue",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3020",
+   "company": "mpool",
+   "customer": "The Henderson Residence",
+   "job_id": "J111",
+   "amount": 30240.0,
+   "issue_date": "2026-08-20",
+   "due_date": "2026-09-19",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3021",
+   "company": "mpool",
+   "customer": "The Henderson Residence",
+   "job_id": "J111",
+   "amount": 30240.0,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-10-09",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3022",
+   "company": "mpool",
+   "customer": "Wildwood Country Club",
+   "job_id": "J112",
+   "amount": 49995.0,
+   "issue_date": "2026-08-05",
+   "due_date": "2026-09-04",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3023",
+   "company": "mpool",
+   "customer": "Town & Country Estate",
+   "job_id": "J113",
+   "amount": 44293.33,
+   "issue_date": "2026-06-20",
+   "due_date": "2026-07-20",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3024",
+   "company": "mpool",
+   "customer": "Town & Country Estate",
+   "job_id": "J113",
+   "amount": 44293.33,
+   "issue_date": "2026-07-24",
+   "due_date": "2026-08-23",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3025",
+   "company": "mpool",
+   "customer": "Town & Country Estate",
+   "job_id": "J113",
+   "amount": 44293.33,
+   "issue_date": "2026-08-26",
+   "due_date": "2026-09-25",
+   "terms_days": 30,
+   "status": "overdue",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3026",
+   "company": "mpool",
+   "customer": "Ballwin Aquatics",
+   "job_id": "J114",
+   "amount": 26225.0,
+   "issue_date": "2026-07-31",
+   "due_date": "2026-08-30",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3027",
+   "company": "mpool",
+   "customer": "Ballwin Aquatics",
+   "job_id": "J114",
+   "amount": 26225.0,
+   "issue_date": "2026-08-20",
+   "due_date": "2026-09-19",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3028",
+   "company": "mpool",
+   "customer": "Ballwin Aquatics",
+   "job_id": "J114",
+   "amount": 26225.0,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-10-09",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3029",
+   "company": "mpool",
+   "customer": "The Pryor Residence",
+   "job_id": "J115",
+   "amount": 51050.0,
+   "issue_date": "2026-08-14",
+   "due_date": "2026-09-13",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3030",
+   "company": "mpool",
+   "customer": "The Pryor Residence",
+   "job_id": "J115",
+   "amount": 51050.0,
+   "issue_date": "2026-08-29",
+   "due_date": "2026-09-28",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3031",
+   "company": "mpool",
+   "customer": "The Pryor Residence",
+   "job_id": "J115",
+   "amount": 51050.0,
+   "issue_date": "2026-09-13",
+   "due_date": "2026-10-13",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3032",
+   "company": "vizex",
+   "customer": "National Tire Co",
+   "job_id": "J116",
+   "amount": 4620.0,
+   "issue_date": "2026-08-28",
+   "due_date": "2026-09-27",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3033",
+   "company": "vizex",
+   "customer": "BrightMart Grocery",
+   "job_id": "J117",
+   "amount": 5480.0,
+   "issue_date": "2026-07-29",
+   "due_date": "2026-08-28",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3034",
+   "company": "vizex",
+   "customer": "FitZone Gyms",
+   "job_id": "J118",
+   "amount": 12900.0,
+   "issue_date": "2026-07-11",
+   "due_date": "2026-08-10",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3035",
+   "company": "vizex",
+   "customer": "Summit Bank",
+   "job_id": "J119",
+   "amount": 3460.0,
+   "issue_date": "2026-08-27",
+   "due_date": "2026-09-26",
+   "terms_days": 30,
+   "status": "paid",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3036",
+   "company": "vizex",
+   "customer": "QuickFuel C-Stores",
+   "job_id": "J120",
+   "amount": 6885.0,
+   "issue_date": "2026-08-31",
+   "due_date": "2026-09-30",
+   "terms_days": 30,
+   "status": "sent",
+   "kind": "progress"
+  },
+  {
+   "id": "INV-3037",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 2151.73,
+   "issue_date": "2026-10-08",
+   "due_date": "2026-10-23",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3038",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 2990.2,
+   "issue_date": "2026-10-01",
+   "due_date": "2026-10-16",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3039",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 6948.72,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-10-08",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3040",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 5251.02,
+   "issue_date": "2026-09-18",
+   "due_date": "2026-10-03",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3041",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 8566.47,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-24",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3042",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 2773.35,
+   "issue_date": "2026-09-02",
+   "due_date": "2026-09-17",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3043",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 9615.68,
+   "issue_date": "2026-08-27",
+   "due_date": "2026-09-11",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3044",
+   "company": "csw",
+   "customer": "Prime 1012 Steakhouse",
+   "job_id": null,
+   "amount": 7214.5,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-03",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3045",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 1113.11,
+   "issue_date": "2026-10-08",
+   "due_date": "2026-10-23",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3046",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 5538.07,
+   "issue_date": "2026-10-01",
+   "due_date": "2026-10-16",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3047",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 1577.88,
+   "issue_date": "2026-09-24",
+   "due_date": "2026-10-09",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3048",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 2445.82,
+   "issue_date": "2026-09-16",
+   "due_date": "2026-10-01",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3049",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 1358.47,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-24",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3050",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 6859.97,
+   "issue_date": "2026-09-04",
+   "due_date": "2026-09-19",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3051",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 1546.32,
+   "issue_date": "2026-08-26",
+   "due_date": "2026-09-10",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3052",
+   "company": "csw",
+   "customer": "Blue Oyster Bistro",
+   "job_id": null,
+   "amount": 6276.9,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-03",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3053",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 5488.23,
+   "issue_date": "2026-10-07",
+   "due_date": "2026-10-22",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3054",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 3640.58,
+   "issue_date": "2026-10-02",
+   "due_date": "2026-10-17",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3055",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 4104.48,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-10-08",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3056",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 6169.08,
+   "issue_date": "2026-09-17",
+   "due_date": "2026-10-02",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3057",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 3540.71,
+   "issue_date": "2026-09-10",
+   "due_date": "2026-09-25",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3058",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 7215.2,
+   "issue_date": "2026-09-02",
+   "due_date": "2026-09-17",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3059",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 4412.72,
+   "issue_date": "2026-08-26",
+   "due_date": "2026-09-10",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3060",
+   "company": "csw",
+   "customer": "The Hill Trattoria",
+   "job_id": null,
+   "amount": 6865.99,
+   "issue_date": "2026-08-20",
+   "due_date": "2026-09-04",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3061",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 9384.31,
+   "issue_date": "2026-10-09",
+   "due_date": "2026-10-24",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3062",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 2079.36,
+   "issue_date": "2026-09-30",
+   "due_date": "2026-10-15",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3063",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 5028.18,
+   "issue_date": "2026-09-24",
+   "due_date": "2026-10-09",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3064",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 4851.2,
+   "issue_date": "2026-09-18",
+   "due_date": "2026-10-03",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3065",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 3950.05,
+   "issue_date": "2026-09-10",
+   "due_date": "2026-09-25",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3066",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 9098.62,
+   "issue_date": "2026-09-03",
+   "due_date": "2026-09-18",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3067",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 5012.34,
+   "issue_date": "2026-08-26",
+   "due_date": "2026-09-10",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3068",
+   "company": "csw",
+   "customer": "Schnucks Commissary",
+   "job_id": null,
+   "amount": 5367.08,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-03",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3069",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 4254.22,
+   "issue_date": "2026-10-09",
+   "due_date": "2026-10-24",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3070",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 4206.26,
+   "issue_date": "2026-10-02",
+   "due_date": "2026-10-17",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3071",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 4263.68,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-10-08",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3072",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 3836.68,
+   "issue_date": "2026-09-17",
+   "due_date": "2026-10-02",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3073",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 2567.04,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-24",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3074",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 3597.11,
+   "issue_date": "2026-09-04",
+   "due_date": "2026-09-19",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3075",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 2431.89,
+   "issue_date": "2026-08-26",
+   "due_date": "2026-09-10",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3076",
+   "company": "csw",
+   "customer": "Harbor & Vine",
+   "job_id": null,
+   "amount": 4438.81,
+   "issue_date": "2026-08-21",
+   "due_date": "2026-09-05",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3077",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 9714.21,
+   "issue_date": "2026-10-08",
+   "due_date": "2026-10-23",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3078",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 3150.84,
+   "issue_date": "2026-09-30",
+   "due_date": "2026-10-15",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3079",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 6643.68,
+   "issue_date": "2026-09-25",
+   "due_date": "2026-10-10",
+   "terms_days": 15,
+   "status": "sent",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3080",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 2005.18,
+   "issue_date": "2026-09-16",
+   "due_date": "2026-10-01",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3081",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 3756.91,
+   "issue_date": "2026-09-10",
+   "due_date": "2026-09-25",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3082",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 2522.53,
+   "issue_date": "2026-09-03",
+   "due_date": "2026-09-18",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3083",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 3861.95,
+   "issue_date": "2026-08-27",
+   "due_date": "2026-09-11",
+   "terms_days": 15,
+   "status": "overdue",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3084",
+   "company": "csw",
+   "customer": "Catch 314",
+   "job_id": null,
+   "amount": 1245.42,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-03",
+   "terms_days": 15,
+   "status": "paid",
+   "kind": "recurring"
+  },
+  {
+   "id": "INV-3085",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 52.68,
+   "issue_date": "2026-08-31",
+   "due_date": "2026-08-31",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3086",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 91.4,
+   "issue_date": "2026-09-14",
+   "due_date": "2026-09-14",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3087",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 86.15,
+   "issue_date": "2026-09-12",
+   "due_date": "2026-09-12",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3088",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 146.24,
+   "issue_date": "2026-09-24",
+   "due_date": "2026-09-24",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3089",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 296.44,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-04",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3090",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 192.33,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-09",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3091",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 50.51,
+   "issue_date": "2026-09-17",
+   "due_date": "2026-09-17",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3092",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 252.33,
+   "issue_date": "2026-09-13",
+   "due_date": "2026-09-13",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3093",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 106.57,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-04",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3094",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 50.74,
+   "issue_date": "2026-09-01",
+   "due_date": "2026-09-01",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3095",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 307.12,
+   "issue_date": "2026-08-29",
+   "due_date": "2026-08-29",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3096",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 232.31,
+   "issue_date": "2026-10-07",
+   "due_date": "2026-10-07",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3097",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 151.66,
+   "issue_date": "2026-09-05",
+   "due_date": "2026-09-05",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3098",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 134.76,
+   "issue_date": "2026-09-28",
+   "due_date": "2026-09-28",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3099",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 142.95,
+   "issue_date": "2026-08-30",
+   "due_date": "2026-08-30",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3100",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 105.45,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-09",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3101",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 216.22,
+   "issue_date": "2026-09-08",
+   "due_date": "2026-09-08",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3102",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 291.12,
+   "issue_date": "2026-09-18",
+   "due_date": "2026-09-18",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3103",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 76.38,
+   "issue_date": "2026-10-05",
+   "due_date": "2026-10-05",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3104",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 77.79,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-09-23",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3105",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 117.47,
+   "issue_date": "2026-10-05",
+   "due_date": "2026-10-05",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3106",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 99.06,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-04",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3107",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 30.49,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-09-23",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3108",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 198.26,
+   "issue_date": "2026-09-25",
+   "due_date": "2026-09-25",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3109",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 215.37,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-04",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3110",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 297.66,
+   "issue_date": "2026-10-09",
+   "due_date": "2026-10-09",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3111",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 107.13,
+   "issue_date": "2026-09-24",
+   "due_date": "2026-09-24",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3112",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 207.67,
+   "issue_date": "2026-09-30",
+   "due_date": "2026-09-30",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3113",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 124.95,
+   "issue_date": "2026-08-29",
+   "due_date": "2026-08-29",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3114",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 293.52,
+   "issue_date": "2026-09-07",
+   "due_date": "2026-09-07",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3115",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 120.55,
+   "issue_date": "2026-08-31",
+   "due_date": "2026-08-31",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3116",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 212.91,
+   "issue_date": "2026-10-05",
+   "due_date": "2026-10-05",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3117",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 216.27,
+   "issue_date": "2026-09-03",
+   "due_date": "2026-09-03",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3118",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 44.48,
+   "issue_date": "2026-08-30",
+   "due_date": "2026-08-30",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3119",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 215.32,
+   "issue_date": "2026-09-06",
+   "due_date": "2026-09-06",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3120",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 186.09,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-09-23",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3121",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 86.42,
+   "issue_date": "2026-09-23",
+   "due_date": "2026-09-23",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3122",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 257.66,
+   "issue_date": "2026-10-05",
+   "due_date": "2026-10-05",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3123",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 127.79,
+   "issue_date": "2026-09-10",
+   "due_date": "2026-09-10",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3124",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 40.69,
+   "issue_date": "2026-09-28",
+   "due_date": "2026-09-28",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3125",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 192.65,
+   "issue_date": "2026-10-06",
+   "due_date": "2026-10-06",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3126",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 91.02,
+   "issue_date": "2026-09-17",
+   "due_date": "2026-09-17",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3127",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 169.38,
+   "issue_date": "2026-09-03",
+   "due_date": "2026-09-03",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3128",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 256.76,
+   "issue_date": "2026-09-12",
+   "due_date": "2026-09-12",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3129",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 313.91,
+   "issue_date": "2026-09-11",
+   "due_date": "2026-09-11",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3130",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 135.4,
+   "issue_date": "2026-08-30",
+   "due_date": "2026-08-30",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3131",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 74.83,
+   "issue_date": "2026-09-07",
+   "due_date": "2026-09-07",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3132",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 246.11,
+   "issue_date": "2026-10-08",
+   "due_date": "2026-10-08",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3133",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 238.85,
+   "issue_date": "2026-09-20",
+   "due_date": "2026-09-20",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3134",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 277.01,
+   "issue_date": "2026-09-22",
+   "due_date": "2026-09-22",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3135",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 140.23,
+   "issue_date": "2026-08-27",
+   "due_date": "2026-08-27",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3136",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 193.87,
+   "issue_date": "2026-09-25",
+   "due_date": "2026-09-25",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3137",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 128.82,
+   "issue_date": "2026-10-01",
+   "due_date": "2026-10-01",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3138",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 303.44,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-09",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3139",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 260.56,
+   "issue_date": "2026-09-20",
+   "due_date": "2026-09-20",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3140",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 130.53,
+   "issue_date": "2026-09-12",
+   "due_date": "2026-09-12",
+   "terms_days": 0,
+   "status": "sent",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3141",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 209.07,
+   "issue_date": "2026-10-05",
+   "due_date": "2026-10-05",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3142",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 142.06,
+   "issue_date": "2026-08-29",
+   "due_date": "2026-08-29",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3143",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 202.34,
+   "issue_date": "2026-10-03",
+   "due_date": "2026-10-03",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  },
+  {
+   "id": "INV-3144",
+   "company": "csr",
+   "customer": "Walk-in / Delivery",
+   "job_id": null,
+   "amount": 319.64,
+   "issue_date": "2026-09-29",
+   "due_date": "2026-09-29",
+   "terms_days": 0,
+   "status": "paid",
+   "kind": "retail"
+  }
+ ],
+ "cost_entries": [
+  {
+   "job_id": "J101",
+   "company": "wayne",
+   "type": "Labor",
+   "amount": 76261.39,
+   "date": "2026-04-27"
+  },
+  {
+   "job_id": "J101",
+   "company": "wayne",
+   "type": "Materials",
+   "amount": 68233.88,
+   "date": "2026-04-27"
+  },
+  {
+   "job_id": "J101",
+   "company": "wayne",
+   "type": "Subcontractor",
+   "amount": 36123.82,
+   "date": "2026-04-27"
+  },
+  {
+   "job_id": "J101",
+   "company": "wayne",
+   "type": "Equipment",
+   "amount": 12041.27,
+   "date": "2026-04-27"
+  },
+  {
+   "job_id": "J101",
+   "company": "wayne",
+   "type": "Other",
+   "amount": 8027.52,
+   "date": "2026-04-27"
+  },
+  {
+   "job_id": "J102",
+   "company": "wayne",
+   "type": "Labor",
+   "amount": 219728.25,
+   "date": "2026-09-02"
+  },
+  {
+   "job_id": "J102",
+   "company": "wayne",
+   "type": "Materials",
+   "amount": 196598.96,
+   "date": "2026-09-02"
+  },
+  {
+   "job_id": "J102",
+   "company": "wayne",
+   "type": "Subcontractor",
+   "amount": 104081.8,
+   "date": "2026-09-02"
+  },
+  {
+   "job_id": "J102",
+   "company": "wayne",
+   "type": "Equipment",
+   "amount": 34693.93,
+   "date": "2026-09-02"
+  },
+  {
+   "job_id": "J102",
+   "company": "wayne",
+   "type": "Other",
+   "amount": 23129.29,
+   "date": "2026-09-02"
+  },
+  {
+   "job_id": "J103",
+   "company": "wayne",
+   "type": "Labor",
+   "amount": 153641.15,
+   "date": "2026-07-13"
+  },
+  {
+   "job_id": "J103",
+   "company": "wayne",
+   "type": "Materials",
+   "amount": 137468.4,
+   "date": "2026-07-13"
+  },
+  {
+   "job_id": "J103",
+   "company": "wayne",
+   "type": "Subcontractor",
+   "amount": 72777.39,
+   "date": "2026-07-13"
+  },
+  {
+   "job_id": "J103",
+   "company": "wayne",
+   "type": "Equipment",
+   "amount": 24259.13,
+   "date": "2026-07-13"
+  },
+  {
+   "job_id": "J103",
+   "company": "wayne",
+   "type": "Other",
+   "amount": 16172.75,
+   "date": "2026-07-13"
+  },
+  {
+   "job_id": "J104",
+   "company": "wayne",
+   "type": "Labor",
+   "amount": 73444.67,
+   "date": "2026-07-25"
+  },
+  {
+   "job_id": "J104",
+   "company": "wayne",
+   "type": "Materials",
+   "amount": 65713.65,
+   "date": "2026-07-25"
+  },
+  {
+   "job_id": "J104",
+   "company": "wayne",
+   "type": "Subcontractor",
+   "amount": 34789.58,
+   "date": "2026-07-25"
+  },
+  {
+   "job_id": "J104",
+   "company": "wayne",
+   "type": "Equipment",
+   "amount": 11596.53,
+   "date": "2026-07-25"
+  },
+  {
+   "job_id": "J104",
+   "company": "wayne",
+   "type": "Other",
+   "amount": 7731.02,
+   "date": "2026-07-25"
+  },
+  {
+   "job_id": "J105",
+   "company": "wayne",
+   "type": "Labor",
+   "amount": 304343.02,
+   "date": "2026-05-29"
+  },
+  {
+   "job_id": "J105",
+   "company": "wayne",
+   "type": "Materials",
+   "amount": 272306.91,
+   "date": "2026-05-29"
+  },
+  {
+   "job_id": "J105",
+   "company": "wayne",
+   "type": "Subcontractor",
+   "amount": 144162.48,
+   "date": "2026-05-29"
+  },
+  {
+   "job_id": "J105",
+   "company": "wayne",
+   "type": "Equipment",
+   "amount": 48054.16,
+   "date": "2026-05-29"
+  },
+  {
+   "job_id": "J105",
+   "company": "wayne",
+   "type": "Other",
+   "amount": 32036.11,
+   "date": "2026-05-29"
+  },
+  {
+   "job_id": "J106",
+   "company": "mhard",
+   "type": "Labor",
+   "amount": 17848.62,
+   "date": "2026-05-12"
+  },
+  {
+   "job_id": "J106",
+   "company": "mhard",
+   "type": "Materials",
+   "amount": 15969.82,
+   "date": "2026-05-12"
+  },
+  {
+   "job_id": "J106",
+   "company": "mhard",
+   "type": "Subcontractor",
+   "amount": 8454.61,
+   "date": "2026-05-12"
+  },
+  {
+   "job_id": "J106",
+   "company": "mhard",
+   "type": "Equipment",
+   "amount": 2818.2,
+   "date": "2026-05-12"
+  },
+  {
+   "job_id": "J106",
+   "company": "mhard",
+   "type": "Other",
+   "amount": 1878.8,
+   "date": "2026-05-12"
+  },
+  {
+   "job_id": "J107",
+   "company": "mhard",
+   "type": "Labor",
+   "amount": 16115.85,
+   "date": "2026-07-04"
+  },
+  {
+   "job_id": "J107",
+   "company": "mhard",
+   "type": "Materials",
+   "amount": 14419.45,
+   "date": "2026-07-04"
+  },
+  {
+   "job_id": "J107",
+   "company": "mhard",
+   "type": "Subcontractor",
+   "amount": 7633.83,
+   "date": "2026-07-04"
+  },
+  {
+   "job_id": "J107",
+   "company": "mhard",
+   "type": "Equipment",
+   "amount": 2544.61,
+   "date": "2026-07-04"
+  },
+  {
+   "job_id": "J107",
+   "company": "mhard",
+   "type": "Other",
+   "amount": 1696.41,
+   "date": "2026-07-04"
+  },
+  {
+   "job_id": "J108",
+   "company": "mhard",
+   "type": "Labor",
+   "amount": 31052.75,
+   "date": "2026-03-18"
+  },
+  {
+   "job_id": "J108",
+   "company": "mhard",
+   "type": "Materials",
+   "amount": 27784.04,
+   "date": "2026-03-18"
+  },
+  {
+   "job_id": "J108",
+   "company": "mhard",
+   "type": "Subcontractor",
+   "amount": 14709.2,
+   "date": "2026-03-18"
+  },
+  {
+   "job_id": "J108",
+   "company": "mhard",
+   "type": "Equipment",
+   "amount": 4903.07,
+   "date": "2026-03-18"
+  },
+  {
+   "job_id": "J108",
+   "company": "mhard",
+   "type": "Other",
+   "amount": 3268.71,
+   "date": "2026-03-18"
+  },
+  {
+   "job_id": "J109",
+   "company": "mhard",
+   "type": "Labor",
+   "amount": 1008.4,
+   "date": "2026-07-19"
+  },
+  {
+   "job_id": "J109",
+   "company": "mhard",
+   "type": "Materials",
+   "amount": 902.25,
+   "date": "2026-07-19"
+  },
+  {
+   "job_id": "J109",
+   "company": "mhard",
+   "type": "Subcontractor",
+   "amount": 477.66,
+   "date": "2026-07-19"
+  },
+  {
+   "job_id": "J109",
+   "company": "mhard",
+   "type": "Equipment",
+   "amount": 159.22,
+   "date": "2026-07-19"
+  },
+  {
+   "job_id": "J109",
+   "company": "mhard",
+   "type": "Other",
+   "amount": 106.15,
+   "date": "2026-07-19"
+  },
+  {
+   "job_id": "J110",
+   "company": "mhard",
+   "type": "Labor",
+   "amount": 9022.35,
+   "date": "2026-04-04"
+  },
+  {
+   "job_id": "J110",
+   "company": "mhard",
+   "type": "Materials",
+   "amount": 8072.63,
+   "date": "2026-04-04"
+  },
+  {
+   "job_id": "J110",
+   "company": "mhard",
+   "type": "Subcontractor",
+   "amount": 4273.74,
+   "date": "2026-04-04"
+  },
+  {
+   "job_id": "J110",
+   "company": "mhard",
+   "type": "Equipment",
+   "amount": 1424.58,
+   "date": "2026-04-04"
+  },
+  {
+   "job_id": "J110",
+   "company": "mhard",
+   "type": "Other",
+   "amount": 949.72,
+   "date": "2026-04-04"
+  },
+  {
+   "job_id": "J111",
+   "company": "mpool",
+   "type": "Labor",
+   "amount": 45525.82,
+   "date": "2026-07-16"
+  },
+  {
+   "job_id": "J111",
+   "company": "mpool",
+   "type": "Materials",
+   "amount": 40733.63,
+   "date": "2026-07-16"
+  },
+  {
+   "job_id": "J111",
+   "company": "mpool",
+   "type": "Subcontractor",
+   "amount": 21564.86,
+   "date": "2026-07-16"
+  },
+  {
+   "job_id": "J111",
+   "company": "mpool",
+   "type": "Equipment",
+   "amount": 7188.29,
+   "date": "2026-07-16"
+  },
+  {
+   "job_id": "J111",
+   "company": "mpool",
+   "type": "Other",
+   "amount": 4792.19,
+   "date": "2026-07-16"
+  },
+  {
+   "job_id": "J112",
+   "company": "mpool",
+   "type": "Labor",
+   "amount": 14860.55,
+   "date": "2026-06-16"
+  },
+  {
+   "job_id": "J112",
+   "company": "mpool",
+   "type": "Materials",
+   "amount": 13296.28,
+   "date": "2026-06-16"
+  },
+  {
+   "job_id": "J112",
+   "company": "mpool",
+   "type": "Subcontractor",
+   "amount": 7039.21,
+   "date": "2026-06-16"
+  },
+  {
+   "job_id": "J112",
+   "company": "mpool",
+   "type": "Equipment",
+   "amount": 2346.4,
+   "date": "2026-06-16"
+  },
+  {
+   "job_id": "J112",
+   "company": "mpool",
+   "type": "Other",
+   "amount": 1564.27,
+   "date": "2026-06-16"
+  },
+  {
+   "job_id": "J113",
+   "company": "mpool",
+   "type": "Labor",
+   "amount": 42535.21,
+   "date": "2026-05-23"
+  },
+  {
+   "job_id": "J113",
+   "company": "mpool",
+   "type": "Materials",
+   "amount": 38057.82,
+   "date": "2026-05-23"
+  },
+  {
+   "job_id": "J113",
+   "company": "mpool",
+   "type": "Subcontractor",
+   "amount": 20148.26,
+   "date": "2026-05-23"
+  },
+  {
+   "job_id": "J113",
+   "company": "mpool",
+   "type": "Equipment",
+   "amount": 6716.09,
+   "date": "2026-05-23"
+  },
+  {
+   "job_id": "J113",
+   "company": "mpool",
+   "type": "Other",
+   "amount": 4477.39,
+   "date": "2026-05-23"
+  },
+  {
+   "job_id": "J114",
+   "company": "mpool",
+   "type": "Labor",
+   "amount": 23980.81,
+   "date": "2026-07-17"
+  },
+  {
+   "job_id": "J114",
+   "company": "mpool",
+   "type": "Materials",
+   "amount": 21456.51,
+   "date": "2026-07-17"
+  },
+  {
+   "job_id": "J114",
+   "company": "mpool",
+   "type": "Subcontractor",
+   "amount": 11359.33,
+   "date": "2026-07-17"
+  },
+  {
+   "job_id": "J114",
+   "company": "mpool",
+   "type": "Equipment",
+   "amount": 3786.44,
+   "date": "2026-07-17"
+  },
+  {
+   "job_id": "J114",
+   "company": "mpool",
+   "type": "Other",
+   "amount": 2524.3,
+   "date": "2026-07-17"
+  },
+  {
+   "job_id": "J115",
+   "company": "mpool",
+   "type": "Labor",
+   "amount": 64011.16,
+   "date": "2026-08-04"
+  },
+  {
+   "job_id": "J115",
+   "company": "mpool",
+   "type": "Materials",
+   "amount": 57273.15,
+   "date": "2026-08-04"
+  },
+  {
+   "job_id": "J115",
+   "company": "mpool",
+   "type": "Subcontractor",
+   "amount": 30321.08,
+   "date": "2026-08-04"
+  },
+  {
+   "job_id": "J115",
+   "company": "mpool",
+   "type": "Equipment",
+   "amount": 10107.03,
+   "date": "2026-08-04"
+  },
+  {
+   "job_id": "J115",
+   "company": "mpool",
+   "type": "Other",
+   "amount": 6738.02,
+   "date": "2026-08-04"
+  },
+  {
+   "job_id": "J116",
+   "company": "vizex",
+   "type": "Labor",
+   "amount": 1858.54,
+   "date": "2026-08-01"
+  },
+  {
+   "job_id": "J116",
+   "company": "vizex",
+   "type": "Materials",
+   "amount": 1662.91,
+   "date": "2026-08-01"
+  },
+  {
+   "job_id": "J116",
+   "company": "vizex",
+   "type": "Subcontractor",
+   "amount": 880.36,
+   "date": "2026-08-01"
+  },
+  {
+   "job_id": "J116",
+   "company": "vizex",
+   "type": "Equipment",
+   "amount": 293.45,
+   "date": "2026-08-01"
+  },
+  {
+   "job_id": "J116",
+   "company": "vizex",
+   "type": "Other",
+   "amount": 195.64,
+   "date": "2026-08-01"
+  },
+  {
+   "job_id": "J117",
+   "company": "vizex",
+   "type": "Labor",
+   "amount": 5282.13,
+   "date": "2026-06-03"
+  },
+  {
+   "job_id": "J117",
+   "company": "vizex",
+   "type": "Materials",
+   "amount": 4726.12,
+   "date": "2026-06-03"
+  },
+  {
+   "job_id": "J117",
+   "company": "vizex",
+   "type": "Subcontractor",
+   "amount": 2502.06,
+   "date": "2026-06-03"
+  },
+  {
+   "job_id": "J117",
+   "company": "vizex",
+   "type": "Equipment",
+   "amount": 834.02,
+   "date": "2026-06-03"
+  },
+  {
+   "job_id": "J117",
+   "company": "vizex",
+   "type": "Other",
+   "amount": 556.01,
+   "date": "2026-06-03"
+  },
+  {
+   "job_id": "J118",
+   "company": "vizex",
+   "type": "Labor",
+   "amount": 3317.51,
+   "date": "2026-04-28"
+  },
+  {
+   "job_id": "J118",
+   "company": "vizex",
+   "type": "Materials",
+   "amount": 2968.3,
+   "date": "2026-04-28"
+  },
+  {
+   "job_id": "J118",
+   "company": "vizex",
+   "type": "Subcontractor",
+   "amount": 1571.45,
+   "date": "2026-04-28"
+  },
+  {
+   "job_id": "J118",
+   "company": "vizex",
+   "type": "Equipment",
+   "amount": 523.82,
+   "date": "2026-04-28"
+  },
+  {
+   "job_id": "J118",
+   "company": "vizex",
+   "type": "Other",
+   "amount": 349.21,
+   "date": "2026-04-28"
+  },
+  {
+   "job_id": "J119",
+   "company": "vizex",
+   "type": "Labor",
+   "amount": 1492.55,
+   "date": "2026-07-31"
+  },
+  {
+   "job_id": "J119",
+   "company": "vizex",
+   "type": "Materials",
+   "amount": 1335.44,
+   "date": "2026-07-31"
+  },
+  {
+   "job_id": "J119",
+   "company": "vizex",
+   "type": "Subcontractor",
+   "amount": 707.0,
+   "date": "2026-07-31"
+  },
+  {
+   "job_id": "J119",
+   "company": "vizex",
+   "type": "Equipment",
+   "amount": 235.66,
+   "date": "2026-07-31"
+  },
+  {
+   "job_id": "J119",
+   "company": "vizex",
+   "type": "Other",
+   "amount": 157.11,
+   "date": "2026-07-31"
+  },
+  {
+   "job_id": "J120",
+   "company": "vizex",
+   "type": "Labor",
+   "amount": 2164.19,
+   "date": "2026-08-07"
+  },
+  {
+   "job_id": "J120",
+   "company": "vizex",
+   "type": "Materials",
+   "amount": 1936.38,
+   "date": "2026-08-07"
+  },
+  {
+   "job_id": "J120",
+   "company": "vizex",
+   "type": "Subcontractor",
+   "amount": 1025.14,
+   "date": "2026-08-07"
+  },
+  {
+   "job_id": "J120",
+   "company": "vizex",
+   "type": "Equipment",
+   "amount": 341.71,
+   "date": "2026-08-07"
+  },
+  {
+   "job_id": "J120",
+   "company": "vizex",
+   "type": "Other",
+   "amount": 227.81,
+   "date": "2026-08-07"
+  }
+ ],
+ "bills": [
+  {
+   "id": "BILL-5001",
+   "company": "wayne",
+   "vendor": "United Rentals",
+   "job_id": "J101",
+   "amount": 58379.88,
+   "issue_date": "2026-07-24",
+   "due_date": "2026-08-23",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5002",
+   "company": "wayne",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J101",
+   "amount": 85354.11,
+   "issue_date": "2026-05-25",
+   "due_date": "2026-06-24",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5003",
+   "company": "wayne",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J101",
+   "amount": 137755.62,
+   "issue_date": "2026-10-03",
+   "due_date": "2026-11-02",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5004",
+   "company": "wayne",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J102",
+   "amount": 107779.64,
+   "issue_date": "2026-08-23",
+   "due_date": "2026-09-22",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5005",
+   "company": "wayne",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J102",
+   "amount": 95863.14,
+   "issue_date": "2026-06-12",
+   "due_date": "2026-07-12",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5006",
+   "company": "wayne",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J102",
+   "amount": 73360.26,
+   "issue_date": "2026-08-12",
+   "due_date": "2026-09-11",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5007",
+   "company": "wayne",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J102",
+   "amount": 115463.27,
+   "issue_date": "2026-07-01",
+   "due_date": "2026-07-31",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5008",
+   "company": "wayne",
+   "vendor": "United Rentals",
+   "job_id": "J103",
+   "amount": 29484.58,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-18",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5009",
+   "company": "wayne",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J103",
+   "amount": 42067.13,
+   "issue_date": "2026-05-14",
+   "due_date": "2026-06-13",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5010",
+   "company": "wayne",
+   "vendor": "Sherwin Materials",
+   "job_id": "J103",
+   "amount": 54801.13,
+   "issue_date": "2026-05-13",
+   "due_date": "2026-06-12",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5011",
+   "company": "wayne",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J104",
+   "amount": 12892.19,
+   "issue_date": "2026-08-19",
+   "due_date": "2026-09-18",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5012",
+   "company": "wayne",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J104",
+   "amount": 22723.23,
+   "issue_date": "2026-06-23",
+   "due_date": "2026-07-23",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5013",
+   "company": "wayne",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J105",
+   "amount": 68646.0,
+   "issue_date": "2026-06-15",
+   "due_date": "2026-07-15",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5014",
+   "company": "wayne",
+   "vendor": "United Rentals",
+   "job_id": "J105",
+   "amount": 92278.16,
+   "issue_date": "2026-07-27",
+   "due_date": "2026-08-26",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5015",
+   "company": "mhard",
+   "vendor": "United Rentals",
+   "job_id": "J106",
+   "amount": 2457.28,
+   "issue_date": "2026-08-14",
+   "due_date": "2026-09-13",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5016",
+   "company": "mhard",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J106",
+   "amount": 3605.23,
+   "issue_date": "2026-07-08",
+   "due_date": "2026-08-07",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5017",
+   "company": "mhard",
+   "vendor": "Sherwin Materials",
+   "job_id": "J106",
+   "amount": 2066.02,
+   "issue_date": "2026-06-24",
+   "due_date": "2026-07-24",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5018",
+   "company": "mhard",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J107",
+   "amount": 5568.18,
+   "issue_date": "2026-05-30",
+   "due_date": "2026-06-29",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5019",
+   "company": "mhard",
+   "vendor": "United Rentals",
+   "job_id": "J107",
+   "amount": 3052.82,
+   "issue_date": "2026-08-10",
+   "due_date": "2026-09-09",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5020",
+   "company": "mhard",
+   "vendor": "ProPlumb Mechanical (sub)",
+   "job_id": "J108",
+   "amount": 5381.49,
+   "issue_date": "2026-08-16",
+   "due_date": "2026-09-15",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5021",
+   "company": "mhard",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J108",
+   "amount": 9456.21,
+   "issue_date": "2026-07-26",
+   "due_date": "2026-08-25",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5022",
+   "company": "mhard",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J109",
+   "amount": 1870.6,
+   "issue_date": "2026-05-22",
+   "due_date": "2026-06-21",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5023",
+   "company": "mhard",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J109",
+   "amount": 2048.44,
+   "issue_date": "2026-08-14",
+   "due_date": "2026-09-13",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5024",
+   "company": "mhard",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J110",
+   "amount": 4871.1,
+   "issue_date": "2026-06-07",
+   "due_date": "2026-07-07",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5025",
+   "company": "mhard",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J110",
+   "amount": 5513.73,
+   "issue_date": "2026-09-01",
+   "due_date": "2026-10-01",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5026",
+   "company": "mhard",
+   "vendor": "ProPlumb Mechanical (sub)",
+   "job_id": "J110",
+   "amount": 5626.87,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-10-09",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5027",
+   "company": "mhard",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J110",
+   "amount": 6263.89,
+   "issue_date": "2026-09-18",
+   "due_date": "2026-10-18",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5028",
+   "company": "mpool",
+   "vendor": "ProPlumb Mechanical (sub)",
+   "job_id": "J111",
+   "amount": 5764.94,
+   "issue_date": "2026-05-28",
+   "due_date": "2026-06-27",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5029",
+   "company": "mpool",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J111",
+   "amount": 4066.05,
+   "issue_date": "2026-06-25",
+   "due_date": "2026-07-25",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5030",
+   "company": "mpool",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J112",
+   "amount": 8771.35,
+   "issue_date": "2026-05-22",
+   "due_date": "2026-06-21",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5031",
+   "company": "mpool",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J112",
+   "amount": 9171.19,
+   "issue_date": "2026-09-01",
+   "due_date": "2026-10-01",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5032",
+   "company": "mpool",
+   "vendor": "Sherwin Materials",
+   "job_id": "J112",
+   "amount": 3441.67,
+   "issue_date": "2026-07-22",
+   "due_date": "2026-08-21",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5033",
+   "company": "mpool",
+   "vendor": "United Rentals",
+   "job_id": "J113",
+   "amount": 9489.86,
+   "issue_date": "2026-08-07",
+   "due_date": "2026-09-06",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5034",
+   "company": "mpool",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J113",
+   "amount": 12850.85,
+   "issue_date": "2026-09-14",
+   "due_date": "2026-10-14",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5035",
+   "company": "mpool",
+   "vendor": "ProPlumb Mechanical (sub)",
+   "job_id": "J113",
+   "amount": 10803.48,
+   "issue_date": "2026-09-03",
+   "due_date": "2026-10-03",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5036",
+   "company": "mpool",
+   "vendor": "United Rentals",
+   "job_id": "J114",
+   "amount": 8135.68,
+   "issue_date": "2026-08-03",
+   "due_date": "2026-09-02",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5037",
+   "company": "mpool",
+   "vendor": "United Rentals",
+   "job_id": "J114",
+   "amount": 8395.41,
+   "issue_date": "2026-06-29",
+   "due_date": "2026-07-29",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5038",
+   "company": "mpool",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J115",
+   "amount": 7956.52,
+   "issue_date": "2026-06-03",
+   "due_date": "2026-07-03",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5039",
+   "company": "mpool",
+   "vendor": "United Rentals",
+   "job_id": "J115",
+   "amount": 10275.0,
+   "issue_date": "2026-08-14",
+   "due_date": "2026-09-13",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5040",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J116",
+   "amount": 560.14,
+   "issue_date": "2026-07-07",
+   "due_date": "2026-08-06",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5041",
+   "company": "vizex",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J116",
+   "amount": 600.74,
+   "issue_date": "2026-06-19",
+   "due_date": "2026-07-19",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5042",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J117",
+   "amount": 2170.41,
+   "issue_date": "2026-06-15",
+   "due_date": "2026-07-15",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5043",
+   "company": "vizex",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J117",
+   "amount": 2309.2,
+   "issue_date": "2026-09-22",
+   "due_date": "2026-10-22",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5044",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J117",
+   "amount": 4724.46,
+   "issue_date": "2026-09-27",
+   "due_date": "2026-10-27",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5045",
+   "company": "vizex",
+   "vendor": "SignFab Aluminum",
+   "job_id": "J117",
+   "amount": 2605.97,
+   "issue_date": "2026-09-10",
+   "due_date": "2026-10-10",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5046",
+   "company": "vizex",
+   "vendor": "SignFab Aluminum",
+   "job_id": "J118",
+   "amount": 1908.94,
+   "issue_date": "2026-07-01",
+   "due_date": "2026-07-31",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5047",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J118",
+   "amount": 1255.04,
+   "issue_date": "2026-08-27",
+   "due_date": "2026-09-26",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5048",
+   "company": "vizex",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J119",
+   "amount": 1064.11,
+   "issue_date": "2026-05-30",
+   "due_date": "2026-06-29",
+   "terms_days": 30,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5049",
+   "company": "vizex",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J119",
+   "amount": 1308.81,
+   "issue_date": "2026-09-24",
+   "due_date": "2026-10-24",
+   "terms_days": 30,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5050",
+   "company": "vizex",
+   "vendor": "SignFab Aluminum",
+   "job_id": "J120",
+   "amount": 853.62,
+   "issue_date": "2026-07-13",
+   "due_date": "2026-08-12",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5051",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J120",
+   "amount": 816.68,
+   "issue_date": "2026-07-05",
+   "due_date": "2026-08-04",
+   "terms_days": 30,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5052",
+   "company": "csw",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 6091.92,
+   "issue_date": "2026-09-19",
+   "due_date": "2026-10-04",
+   "terms_days": 15,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5053",
+   "company": "csw",
+   "vendor": "Bayou Shellfish",
+   "job_id": null,
+   "amount": 6460.56,
+   "issue_date": "2026-09-04",
+   "due_date": "2026-09-19",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5054",
+   "company": "csw",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 8751.38,
+   "issue_date": "2026-09-21",
+   "due_date": "2026-10-06",
+   "terms_days": 15,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5055",
+   "company": "csw",
+   "vendor": "Bayou Shellfish",
+   "job_id": null,
+   "amount": 11704.29,
+   "issue_date": "2026-09-04",
+   "due_date": "2026-09-19",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5056",
+   "company": "csw",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 17632.17,
+   "issue_date": "2026-09-07",
+   "due_date": "2026-09-22",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5057",
+   "company": "csw",
+   "vendor": "North Atlantic Fisheries",
+   "job_id": null,
+   "amount": 17887.86,
+   "issue_date": "2026-09-08",
+   "due_date": "2026-09-23",
+   "terms_days": 15,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5058",
+   "company": "csw",
+   "vendor": "North Atlantic Fisheries",
+   "job_id": null,
+   "amount": 7297.84,
+   "issue_date": "2026-09-29",
+   "due_date": "2026-10-14",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5059",
+   "company": "csw",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 14054.73,
+   "issue_date": "2026-10-03",
+   "due_date": "2026-10-18",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5060",
+   "company": "csw",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 7522.49,
+   "issue_date": "2026-10-01",
+   "due_date": "2026-10-16",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5061",
+   "company": "csw",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 8784.05,
+   "issue_date": "2026-09-17",
+   "due_date": "2026-10-02",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5062",
+   "company": "csr",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 17818.76,
+   "issue_date": "2026-09-28",
+   "due_date": "2026-10-13",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5063",
+   "company": "csr",
+   "vendor": "North Atlantic Fisheries",
+   "job_id": null,
+   "amount": 16552.74,
+   "issue_date": "2026-09-09",
+   "due_date": "2026-09-24",
+   "terms_days": 15,
+   "status": "overdue"
+  },
+  {
+   "id": "BILL-5064",
+   "company": "csr",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 11180.39,
+   "issue_date": "2026-09-25",
+   "due_date": "2026-10-10",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5065",
+   "company": "csr",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 1613.01,
+   "issue_date": "2026-09-14",
+   "due_date": "2026-09-29",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5066",
+   "company": "csr",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 3750.21,
+   "issue_date": "2026-09-30",
+   "due_date": "2026-10-15",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5067",
+   "company": "csr",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 8123.21,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-19",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5068",
+   "company": "csr",
+   "vendor": "North Atlantic Fisheries",
+   "job_id": null,
+   "amount": 16052.77,
+   "issue_date": "2026-10-06",
+   "due_date": "2026-10-21",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5069",
+   "company": "csr",
+   "vendor": "Pacific Catch Distributors",
+   "job_id": null,
+   "amount": 4681.48,
+   "issue_date": "2026-09-22",
+   "due_date": "2026-10-07",
+   "terms_days": 15,
+   "status": "paid"
+  },
+  {
+   "id": "BILL-5070",
+   "company": "csr",
+   "vendor": "Bayou Shellfish",
+   "job_id": null,
+   "amount": 17930.0,
+   "issue_date": "2026-10-04",
+   "due_date": "2026-10-19",
+   "terms_days": 15,
+   "status": "open"
+  },
+  {
+   "id": "BILL-5071",
+   "company": "csr",
+   "vendor": "Gulf Coast Seafood Co",
+   "job_id": null,
+   "amount": 4289.4,
+   "issue_date": "2026-09-29",
+   "due_date": "2026-10-14",
+   "terms_days": 15,
+   "status": "open"
+  }
+ ],
+ "purchase_orders": [
+  {
+   "id": "PO-7001",
+   "company": "mhard",
+   "vendor": "Gateway Electric (sub)",
+   "job_id": "J106",
+   "amount": 7344.11,
+   "status": "open",
+   "date": "2026-09-06"
+  },
+  {
+   "id": "PO-7002",
+   "company": "wayne",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J105",
+   "amount": 133360.38,
+   "status": "received",
+   "date": "2026-07-29"
+  },
+  {
+   "id": "PO-7003",
+   "company": "vizex",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J119",
+   "amount": 691.91,
+   "status": "open",
+   "date": "2026-07-17"
+  },
+  {
+   "id": "PO-7004",
+   "company": "vizex",
+   "vendor": "Vinyl Pro Media",
+   "job_id": "J116",
+   "amount": 1190.61,
+   "status": "open",
+   "date": "2026-09-08"
+  },
+  {
+   "id": "PO-7005",
+   "company": "wayne",
+   "vendor": "Midwest Rebar & Steel",
+   "job_id": "J102",
+   "amount": 71957.73,
+   "status": "open",
+   "date": "2026-09-02"
+  },
+  {
+   "id": "PO-7006",
+   "company": "mpool",
+   "vendor": "BuildPro Lumber",
+   "job_id": "J114",
+   "amount": 11929.68,
+   "status": "open",
+   "date": "2026-08-22"
+  },
+  {
+   "id": "PO-7007",
+   "company": "mpool",
+   "vendor": "ABC Concrete Supply",
+   "job_id": "J113",
+   "amount": 6444.11,
+   "status": "open",
+   "date": "2026-08-05"
+  },
+  {
+   "id": "PO-7008",
+   "company": "vizex",
+   "vendor": "Vinyl Pro Media",
+   "job_id": "J120",
+   "amount": 1686.54,
+   "status": "received",
+   "date": "2026-07-26"
+  },
+  {
+   "id": "PO-7009",
+   "company": "mpool",
+   "vendor": "United Rentals",
+   "job_id": "J111",
+   "amount": 5161.92,
+   "status": "open",
+   "date": "2026-09-24"
+  },
+  {
+   "id": "PO-7010",
+   "company": "vizex",
+   "vendor": "Vinyl Pro Media",
+   "job_id": "J118",
+   "amount": 4582.6,
+   "status": "open",
+   "date": "2026-08-30"
+  }
+ ],
+ "inventory": [
+  {
+   "company": "csw",
+   "item": "Atlantic Salmon (lb)",
+   "unit_cost": 8.9,
+   "qty_on_hand": 811,
+   "reorder_point": 400,
+   "value": 7217.9,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Yellowfin Tuna (lb)",
+   "unit_cost": 14.5,
+   "qty_on_hand": 484,
+   "reorder_point": 200,
+   "value": 7018.0,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Gulf Shrimp 16/20 (lb)",
+   "unit_cost": 9.75,
+   "qty_on_hand": 314,
+   "reorder_point": 300,
+   "value": 3061.5,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Blue Point Oysters (dz)",
+   "unit_cost": 11.0,
+   "qty_on_hand": 354,
+   "reorder_point": 150,
+   "value": 3894.0,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Sea Scallops U10 (lb)",
+   "unit_cost": 22.0,
+   "qty_on_hand": 348,
+   "reorder_point": 120,
+   "value": 7656.0,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Cod Fillet (lb)",
+   "unit_cost": 7.4,
+   "qty_on_hand": 353,
+   "reorder_point": 250,
+   "value": 2612.2,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "King Crab Legs (lb)",
+   "unit_cost": 34.0,
+   "qty_on_hand": 95,
+   "reorder_point": 80,
+   "value": 3230.0,
+   "low_stock": false
+  },
+  {
+   "company": "csw",
+   "item": "Mahi Mahi (lb)",
+   "unit_cost": 10.2,
+   "qty_on_hand": 533,
+   "reorder_point": 180,
+   "value": 5436.6,
+   "low_stock": false
+  }
+ ],
+ "_note": "Company PROFILES are REAL (publicly sourced; see each 'source'). Transactions (jobs, invoices, bills, POs, inventory quantities/prices) are SYNTHETIC, modeled on Burns' real operations for demo - NOT actual Burns financials. City Seafood products: Salmon & Shrimp confirmed real; others representative."
+}

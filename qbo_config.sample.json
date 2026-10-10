@@ -1,0 +1,7 @@
+{
+  "_comment": "Copy this file to qbo_config.json and fill in your Intuit app's Development keys. qbo_config.json is gitignored.",
+  "client_id": "YOUR_INTUIT_CLIENT_ID",
+  "client_secret": "YOUR_INTUIT_CLIENT_SECRET",
+  "redirect_uri": "http://localhost:8750/qb/callback",
+  "environment": "sandbox"
+}
