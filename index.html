@@ -102,6 +102,32 @@
   .render img{width:100%;height:100%;object-fit:cover;border-radius:11px}
   .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.3s;z-index:50}
   .toast.on{opacity:1}
+  /* clickable rows + detail drawer */
+  .clickrow{cursor:pointer;transition:background .1s}
+  .clickrow:hover{background:#f0f6fc}
+  .clickrow:hover td:last-child::after{content:'›';position:absolute;right:6px;color:var(--mut);font-weight:700}
+  .clickrow td:last-child{position:relative}
+  .drawer-bg{position:fixed;inset:0;background:rgba(15,23,42,.38);opacity:0;visibility:hidden;transition:.2s;z-index:40}
+  .drawer-bg.open{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;height:100vh;width:430px;max-width:93vw;background:var(--card);box-shadow:-10px 0 34px rgba(15,23,42,.2);transform:translateX(100%);transition:transform .22s cubic-bezier(.4,0,.2,1);z-index:41;overflow:auto}
+  .drawer.open{transform:none}
+  .dhead{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 15px;border-bottom:1px solid var(--line)}
+  .dhead h3{margin:3px 0 0;font-size:20px}
+  .dkind{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);font-weight:800}
+  .dsub{color:var(--mut);font-size:13px;margin-top:3px}
+  .dx{margin-left:auto;background:var(--soft);border:0;border-radius:8px;width:30px;height:30px;font-size:15px;cursor:pointer;color:var(--mut);flex:0 0 auto}
+  .dx:hover{background:#e9eef5}
+  .dfields{padding:6px 22px}
+  .df{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--soft);font-size:13.5px}
+  .df:last-child{border-bottom:none}
+  .df span{color:var(--mut)} .df b{font-variant-numeric:tabular-nums;text-align:right}
+  .dnote{margin:6px 22px 0;padding:10px 12px;background:var(--soft);border-radius:9px;font-size:12.5px;color:var(--mut)}
+  .dactions{padding:16px 22px;display:flex;flex-direction:column;gap:9px}
+  .dactions .btn{width:100%}
+  #dfoot{padding:0 22px 24px}
+  .confirmbar{background:#f4f7f5;border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-size:13px}
+  .dresult{padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.55;white-space:pre-wrap}
+  .dresult.ok{background:#e9f7ec;color:#166534} .dresult.err{background:#fde8e8;color:var(--red)}
 </style>
 </head>
 <body>
@@ -137,6 +163,8 @@
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="drawer-bg" id="drawerbg" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer"><div id="drawerbody"></div></aside>
 
 <script>
 const $=s=>document.querySelector(s);
@@ -152,6 +180,75 @@ const get=u=>{ if(SCOPED.some(p=>u.startsWith(p))){ if(SRC) u+=(u.includes('?')?
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200);}
 function tbl(head,rows){return `<div style="overflow:auto"><table><tr>${head}</tr>${rows}</table></div>`;}
+
+// ---------- DETAIL DRAWER (click any row to drill in + act) ----------
+const STORE={};                 // kind -> list of row objects (set by each module)
+let DREF=null;                  // {kind,i,actions} currently open
+function clk(kind,i){ return `class="clickrow" onclick="openDetail('${kind}',${i})"`; }
+
+function buildDetail(kind,o){
+ const money=v=>(v>0?F(v):'—');
+ switch(kind){
+  case 'po': return {kind:'Purchase Order',title:o.id,sub:(o.vendor||'')+' · '+(o.company_name||''),
+    fields:[['Vendor',esc(o.vendor)],['Company',esc(o.company_name||'—')],['Amount',F(o.amount),'amt green'],['Date',esc(o.date||'—')]],
+    actions:[{label:'🧾 Convert to vendor bill',action:'create_bill',params:{vendor:o.vendor,amount:o.amount,description:'From '+o.id},summary:`Post a ${F(o.amount)} vendor bill from ${o.vendor} (converted from ${o.id}).`}]};
+  case 'inv':{ const od=o.status==='overdue'; const a=[{label:'💵 Record payment',action:'record_payment',params:{customer:o.customer,amount:o.amount},summary:`Record a ${F(o.amount)} payment from ${o.customer}, applied to ${o.id}.`}];
+    if(od)a.push({label:'✉️ Send payment reminder',action:'send_reminder',params:{customer:o.customer,amount:o.amount,days:o.days_past_due},summary:`Send a payment reminder to ${o.customer} for ${F(o.amount)} (${o.days_past_due} days overdue).`});
+    return {kind:'Invoice',title:o.id,sub:o.customer,fields:[['Customer',esc(o.customer)],['Company',esc(o.company_name||'—')],['Amount',F(o.amount),'amt'],['Status',o.status],['Days past due',o.days_past_due||'—']],actions:a}; }
+  case 'draft': return {kind:'Invoice draft',title:o.customer,sub:o.job,
+    fields:[['Customer',esc(o.customer)],['Company',esc(o.company)],['Job',esc(o.job)],['% complete',(o.pct_complete||0)+'%'],['Billable now',F(o.amount),'amt green'],['Terms','Net '+o.terms_days]],
+    actions:[{label:'📄 Create this invoice in QuickBooks',action:'create_invoice',params:{customer:o.customer,amount:o.amount,description:o.job+' ('+o.pct_complete+'% complete)'},summary:`Create a ${F(o.amount)} invoice for ${o.customer} — ${o.job}.`}]};
+  case 'bill': return {kind:'Vendor bill',title:o.id,sub:o.vendor,
+    fields:[['Vendor',esc(o.vendor)],['Company',esc(o.company_name||'—')],['Amount',F(o.amount),'amt'],['Status',o.status],['Days past due',o.days_past_due||'—']],
+    note:'Bills are tracked here; recording a bill as paid happens in QuickBooks.',actions:[]};
+  case 'cust':{ const a=[]; if(o.open>0)a.push({label:'💵 Record payment',action:'record_payment',params:{customer:o.customer,amount:o.open},summary:`Record a ${F(o.open)} payment from ${o.customer}.`});
+    if(o.overdue>0)a.push({label:'✉️ Send payment reminder',action:'send_reminder',params:{customer:o.customer,amount:o.overdue},summary:`Send a payment reminder to ${o.customer} for ${F(o.overdue)} overdue.`});
+    return {kind:'Customer',title:o.customer,sub:o.company,fields:[['Total invoiced',F(o.invoiced)],['Open balance',money(o.open),'amt'],['Overdue',money(o.overdue),o.overdue>0?'amt red':'']],actions:a}; }
+  case 'vend': return {kind:'Vendor',title:o.vendor,sub:o.company,
+    fields:[['Total billed',F(o.billed)],['Open payable',money(o.open),o.open>0?'amt amber':'']],
+    note:'To raise a PO or post a bill to this vendor, tell the copilot the amount (e.g. "raise a PO to '+o.vendor+' for $4,000").',actions:[]};
+  case 'job':{ const a=[]; if(o.under_billed>0)a.push({label:'📄 Invoice this job',action:'create_invoice',params:{customer:o.customer,amount:o.under_billed,description:o.name+' progress billing ('+o.pct_complete+'%)'},summary:`Create a ${F(o.under_billed)} invoice for ${o.customer} — ${o.name}.`});
+    return {kind:'Job'+(o.over_budget?' ⚠️ over budget':''),title:o.name,sub:(o.company_name||'')+' · '+(o.customer||''),
+    fields:[['Company',esc(o.company_name)],['Customer',esc(o.customer)],['Contract',F(o.contract)],['% complete',o.pct_complete+'%'],['Budget cost',F(o.budget_cost)],['Actual cost',F(o.actual_cost)],['Variance',(o.cost_variance>0?'+':'')+F(o.cost_variance),o.cost_variance>0?'amt red':'amt green'],['Proj. margin',o.proj_margin_pct+'%'],['Un-billed',money(o.under_billed),o.under_billed>0?'amt green':'']],actions:a}; }
+  case 'item': return {kind:'Inventory item',title:o.item,sub:o.low_stock?'⚠️ Below reorder point':'In stock',
+    fields:[['On hand',o.qty_on_hand],['Reorder point',o.reorder_point],['Unit cost',F(o.unit_cost)],['Value',F(o.value)],['Status',o.low_stock?'Reorder':'OK',o.low_stock?'amt red':'amt green']],
+    note:o.low_stock?'Stock is below the reorder point — consider raising a purchase order to restock.':'',actions:[]};
+  case 'co': return {kind:'Company',title:o.name,sub:o.industry,
+    fields:[['Active jobs',o.active_jobs],['Contract value',F(o.contract_value)],['Un-billed',money(o.under_billed),'amt green'],['Open A/R',F(o.open_ar)],['Overdue A/R',money(o.overdue_ar),o.overdue_ar>0?'amt red':'']],
+    actions:[{label:'🔎 View this company only',cls:'ghost',action:'_scope',params:{id:o.id},summary:''}]};
+ }
+ return {kind:'Record',title:'Detail',sub:'',fields:Object.entries(o).map(([k,v])=>[k,esc(''+v)]),actions:[]};
+}
+
+function openDetail(kind,i){
+ const o=(STORE[kind]||[])[i]; if(!o)return;
+ const d=buildDetail(kind,o); DREF={kind,i,actions:d.actions};
+ $('#drawerbody').innerHTML=`<div class="dhead"><div><div class="dkind">${d.kind}</div><h3>${esc(d.title)}</h3>${d.sub?`<div class="dsub">${esc(d.sub)}</div>`:''}</div><button class="dx" onclick="closeDrawer()">✕</button></div>
+  <div class="dfields">${d.fields.map(f=>`<div class="df"><span>${f[0]}</span><b class="${f[2]||''}">${f[1]}</b></div>`).join('')}</div>
+  ${d.note?`<div class="dnote">${d.note}</div>`:''}
+  <div class="dactions" id="dactions">${d.actions.length?d.actions.map((a,ai)=>`<button class="btn ${a.cls||''}" onclick="drawerAct(${ai})">${a.label}</button>`).join(''):'<div class="muted" style="padding:2px">View-only record — no write-back action here.</div>'}</div>
+  <div id="dfoot"></div>`;
+ $('#drawer').classList.add('open'); $('#drawerbg').classList.add('open');
+}
+function closeDrawer(){ $('#drawer').classList.remove('open'); $('#drawerbg').classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeDrawer(); });
+
+function drawerAct(ai){
+ const a=DREF.actions[ai];
+ if(a.action==='_scope'){ closeDrawer(); $('#cosel').value=a.params.id||''; $('#cosel').dispatchEvent(new Event('change')); return; }
+ $('#dactions').style.display='none';
+ const f=$('#dfoot');
+ f.innerHTML=`<div class="confirmbar">⚡ <b>Confirm action</b><div style="margin:6px 0 11px">${esc(a.summary)}</div>
+   <button class="btn" style="background:var(--green)" id="dgo">✅ Confirm — post to QuickBooks</button> <button class="btn ghost" id="dno" style="width:auto">Cancel</button></div>`;
+ $('#dno').onclick=()=>{ f.innerHTML=''; $('#dactions').style.display=''; };
+ $('#dgo').onclick=async()=>{
+   f.innerHTML='<div class="confirmbar"><span class="spin"></span> posting to QuickBooks…</div>';
+   try{ const res=await post('/api/action/execute',{action:a.action,params:a.params});
+     f.innerHTML=`<div class="dresult ${res.ok?'ok':'err'}">${res.ok?cmd(res.message):('⚠️ '+esc(res.error||'failed'))}</div>`;
+     if(res.ok){ toast('✅ Done'); setTimeout(()=>route(CUR),1500); }
+   }catch(e){ f.innerHTML='<div class="dresult err">⚠️ error posting to QuickBooks</div>'; }
+ };
+}
 
 const NAV=[
  {sec:'Overview'},
@@ -197,7 +294,7 @@ async function vDash(){
    ['Un-billed work',M(g.under_billed),'done, not invoiced','green'],['Open A/P',M(g.open_ap),'bills to pay','amber'],
    ['DSO',g.dso_days+'d',g.over_budget_job_count+' jobs over budget','blue'],['Inventory',M(g.inventory_value),'City Seafood','']];
  let co=`<tr><th>Company</th><th>Industry</th><th class="num">Jobs</th><th class="num">Contract</th><th class="num">Un-billed</th><th class="num">Open A/R</th><th class="num">Overdue</th></tr>`;
- s.companies.forEach(c=>co+=`<tr><td><b>${c.name}</b></td><td class="muted">${c.industry}</td><td class="num">${c.active_jobs}</td><td class="num">${M(c.contract_value)}</td><td class="num amt green">${c.under_billed>0?M(c.under_billed):'—'}</td><td class="num">${M(c.open_ar)}</td><td class="num amt ${c.overdue_ar>0?'red':''}">${c.overdue_ar>0?M(c.overdue_ar):'—'}</td></tr>`);
+ STORE.co=s.companies;s.companies.forEach((c,i)=>co+=`<tr ${clk('co',i)}><td><b>${c.name}</b></td><td class="muted">${c.industry}</td><td class="num">${c.active_jobs}</td><td class="num">${M(c.contract_value)}</td><td class="num amt green">${c.under_billed>0?M(c.under_billed):'—'}</td><td class="num">${M(c.open_ar)}</td><td class="num amt ${c.overdue_ar>0?'red':''}">${c.overdue_ar>0?M(c.overdue_ar):'—'}</td></tr>`);
  $('#main').innerHTML=`
   <div class="kpis">${kpi.map(k=>`<div class="kpi ${k[3]}"><div class="k">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
   <div class="card"><h2>🏢 Companies <span class="tag">${s.companies.length} entities</span></h2>${tbl('',co).replace('<tr></tr>','')}</div>
@@ -240,7 +337,7 @@ async function vCompanies(){
 async function vJobs(){
  const d=await get('/api/jobs');
  let r=`<tr><th>Job</th><th>Company</th><th>Customer</th><th class="num">Contract</th><th class="num">%</th><th class="num">Budget</th><th class="num">Actual</th><th class="num">Variance</th><th class="num">Margin</th><th class="num">Un-billed</th></tr>`;
- d.jobs.forEach(j=>r+=`<tr><td><b>${j.name}</b> ${j.over_budget?'<span class="pill red">over</span>':''}</td><td class="muted">${j.company_name}</td><td class="muted">${j.customer}</td><td class="num">${M(j.contract)}</td><td class="num">${j.pct_complete}%</td><td class="num">${M(j.budget_cost)}</td><td class="num">${M(j.actual_cost)}</td><td class="num amt ${j.cost_variance>0?'red':'green'}">${j.cost_variance>0?'+':''}${M(j.cost_variance)}</td><td class="num">${j.proj_margin_pct}%</td><td class="num amt ${j.under_billed>0?'green':''}">${j.under_billed>0?M(j.under_billed):'—'}</td></tr>`);
+ STORE.job=d.jobs;d.jobs.forEach((j,i)=>r+=`<tr ${clk('job',i)}><td><b>${j.name}</b> ${j.over_budget?'<span class="pill red">over</span>':''}</td><td class="muted">${j.company_name}</td><td class="muted">${j.customer}</td><td class="num">${M(j.contract)}</td><td class="num">${j.pct_complete}%</td><td class="num">${M(j.budget_cost)}</td><td class="num">${M(j.actual_cost)}</td><td class="num amt ${j.cost_variance>0?'red':'green'}">${j.cost_variance>0?'+':''}${M(j.cost_variance)}</td><td class="num">${j.proj_margin_pct}%</td><td class="num amt ${j.under_billed>0?'green':''}">${j.under_billed>0?M(j.under_billed):'—'}</td></tr>`);
  $('#main').innerHTML=`<div class="card"><h2>🏗️ Job Costing <span class="tag">${d.jobs.length} jobs · budget vs actual</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
@@ -248,9 +345,9 @@ async function vJobs(){
 async function vAR(){
  const d=await get('/api/ar');
  let inv=`<tr><th>Invoice</th><th>Company</th><th>Customer</th><th class="num">Amount</th><th>Status</th><th class="num">Past due</th></tr>`;
- d.open.slice(0,25).forEach(i=>inv+=`<tr><td>${i.id}</td><td class="muted">${i.company_name}</td><td>${i.customer}</td><td class="num">${F(i.amount)}</td><td><span class="pill ${i.status==='overdue'?'red':'blue'}">${i.status}</span></td><td class="num">${i.days_past_due||'—'}</td></tr>`);
+ STORE.inv=d.open;d.open.slice(0,25).forEach((it,i)=>inv+=`<tr ${clk('inv',i)}><td>${it.id}</td><td class="muted">${it.company_name}</td><td>${it.customer}</td><td class="num">${F(it.amount)}</td><td><span class="pill ${it.status==='overdue'?'red':'blue'}">${it.status}</span></td><td class="num">${it.days_past_due||'—'}</td></tr>`);
  let dr=`<tr><th>Customer</th><th>Job</th><th class="num">Amount</th><th>Terms</th></tr>`;
- d.drafts.slice(0,12).forEach(x=>dr+=`<tr><td><b>${x.customer}</b> <span class="pill gray">${x.company}</span></td><td class="muted">${x.job} · ${x.pct_complete}%</td><td class="num amt green">${F(x.amount)}</td><td>Net ${x.terms_days}</td></tr>`);
+ STORE.draft=d.drafts;d.drafts.slice(0,12).forEach((x,i)=>dr+=`<tr ${clk('draft',i)}><td><b>${x.customer}</b> <span class="pill gray">${x.company}</span></td><td class="muted">${x.job} · ${x.pct_complete}%</td><td class="num amt green">${F(x.amount)}</td><td>Net ${x.terms_days}</td></tr>`);
  const draftTot=d.drafts.reduce((a,b)=>a+b.amount,0);
  $('#main').innerHTML=`
   <div class="card"><h2>📅 A/R Aging <span class="tag">DSO ${d.dso.overall.dso_days}d</span></h2><div style="padding:14px 16px">${agingBars(d.aging.overall)}</div></div>
@@ -262,7 +359,7 @@ async function vAR(){
 async function vAP(){
  const d=await get('/api/ap');
  let r=`<tr><th>Bill</th><th>Company</th><th>Vendor</th><th class="num">Amount</th><th>Status</th><th class="num">Past due</th></tr>`;
- d.bills.slice(0,30).forEach(b=>r+=`<tr><td>${b.id}</td><td class="muted">${b.company_name}</td><td>${b.vendor}</td><td class="num">${F(b.amount)}</td><td><span class="pill ${b.status==='overdue'?'red':'amber'}">${b.status}</span></td><td class="num">${b.days_past_due||'—'}</td></tr>`);
+ STORE.bill=d.bills;d.bills.slice(0,30).forEach((b,i)=>r+=`<tr ${clk('bill',i)}><td>${b.id}</td><td class="muted">${b.company_name}</td><td>${b.vendor}</td><td class="num">${F(b.amount)}</td><td><span class="pill ${b.status==='overdue'?'red':'amber'}">${b.status}</span></td><td class="num">${b.days_past_due||'—'}</td></tr>`);
  $('#main').innerHTML=`
   <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
    <div class="kpi amber"><div class="k">Open A/P</div><div class="v">${M(d.open_ap)}</div></div>
@@ -276,7 +373,7 @@ async function vAP(){
 async function vPO(){
  const d=await get('/api/po');
  let r=`<tr><th>PO</th><th>Company</th><th>Vendor</th><th class="num">Amount</th><th>Date</th></tr>`;
- d.open_pos.forEach(p=>r+=`<tr><td>${p.id}</td><td class="muted">${p.company_name}</td><td>${p.vendor}</td><td class="num">${F(p.amount)}</td><td class="muted">${p.date}</td></tr>`);
+ STORE.po=d.open_pos;d.open_pos.forEach((p,i)=>r+=`<tr ${clk('po',i)}><td>${p.id}</td><td class="muted">${p.company_name}</td><td>${p.vendor}</td><td class="num">${F(p.amount)}</td><td class="muted">${p.date}</td></tr>`);
  $('#main').innerHTML=`<div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi blue"><div class="k">Committed (open POs)</div><div class="v">${M(d.committed)}</div></div><div class="kpi"><div class="k">Open POs</div><div class="v">${d.count}</div></div></div><div class="card"><h2>📦 Open purchase orders</h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
@@ -284,7 +381,7 @@ async function vPO(){
 async function vInv(){
  const d=await get('/api/inventory');
  let r=`<tr><th>Item</th><th class="num">On hand</th><th class="num">Reorder pt</th><th class="num">Unit cost</th><th class="num">Value</th><th>Status</th></tr>`;
- d.items.forEach(i=>r+=`<tr><td><b>${i.item}</b></td><td class="num">${i.qty_on_hand}</td><td class="num">${i.reorder_point}</td><td class="num">${F(i.unit_cost)}</td><td class="num">${F(i.value)}</td><td>${i.low_stock?'<span class="pill red">reorder</span>':'<span class="pill green">ok</span>'}</td></tr>`);
+ STORE.item=d.items;d.items.forEach((it,i)=>r+=`<tr ${clk('item',i)}><td><b>${it.item}</b></td><td class="num">${it.qty_on_hand}</td><td class="num">${it.reorder_point}</td><td class="num">${F(it.unit_cost)}</td><td class="num">${F(it.value)}</td><td>${it.low_stock?'<span class="pill red">reorder</span>':'<span class="pill green">ok</span>'}</td></tr>`);
  $('#main').innerHTML=`<div class="kpis" style="grid-template-columns:repeat(3,1fr)"><div class="kpi"><div class="k">Inventory value</div><div class="v">${M(d.total_value)}</div></div><div class="kpi"><div class="k">SKUs</div><div class="v">${d.item_count}</div></div><div class="kpi red"><div class="k">Low stock</div><div class="v">${d.low_stock.length}</div></div></div><div class="card"><h2>🐟 City Seafood inventory <span class="tag">Fenton facility</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
@@ -292,7 +389,7 @@ async function vInv(){
 async function vCRM(){
  const d=await get('/api/crm');
  let r=`<tr><th>Customer</th><th>Company</th><th class="num">Invoiced</th><th class="num">Open balance</th><th class="num">Overdue</th></tr>`;
- d.customers.forEach(c=>r+=`<tr><td><b>${c.customer}</b></td><td class="muted">${c.company}</td><td class="num">${F(c.invoiced)}</td><td class="num">${c.open>0?F(c.open):'—'}</td><td class="num amt ${c.overdue>0?'red':''}">${c.overdue>0?F(c.overdue):'—'}</td></tr>`);
+ STORE.cust=d.customers;d.customers.forEach((c,i)=>r+=`<tr ${clk('cust',i)}><td><b>${c.customer}</b></td><td class="muted">${c.company}</td><td class="num">${F(c.invoiced)}</td><td class="num">${c.open>0?F(c.open):'—'}</td><td class="num amt ${c.overdue>0?'red':''}">${c.overdue>0?F(c.overdue):'—'}</td></tr>`);
  $('#main').innerHTML=`<div class="card"><h2>👥 Customers <span class="tag">${d.customers.length} · across all companies</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
@@ -300,7 +397,7 @@ async function vCRM(){
 async function vVendors(){
  const d=await get('/api/vendors');
  let r=`<tr><th>Vendor</th><th>Company</th><th class="num">Billed</th><th class="num">Open payable</th></tr>`;
- d.vendors.forEach(v=>r+=`<tr><td><b>${v.vendor}</b></td><td class="muted">${v.company}</td><td class="num">${F(v.billed)}</td><td class="num amt ${v.open>0?'amber':''}">${v.open>0?F(v.open):'—'}</td></tr>`);
+ STORE.vend=d.vendors;d.vendors.forEach((v,i)=>r+=`<tr ${clk('vend',i)}><td><b>${v.vendor}</b></td><td class="muted">${v.company}</td><td class="num">${F(v.billed)}</td><td class="num amt ${v.open>0?'amber':''}">${v.open>0?F(v.open):'—'}</td></tr>`);
  $('#main').innerHTML=`<div class="card"><h2>🚚 Vendors <span class="tag">${d.vendors.length} suppliers</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
@@ -445,7 +542,8 @@ function vGuide(){
  $('#main').innerHTML=`
   <div class="card" style="padding:18px"><h2 style="border:0;padding:0 0 9px">📖 Welcome to KEYSTONE</h2>
     <div class="muted" style="line-height:1.65">KEYSTONE is an <b>AI-native ERP for The Burns Companies</b> — one system that runs all the operating companies (general contracting, hardscaping, pools, graphics &amp; signage, and seafood) with <b>QuickBooks built in</b>. QuickBooks stays your system of record for the books; KEYSTONE adds everything QuickBooks can't do on its own — <b>multi-company job costing, purchasing, inventory, CRM, AI renderings, and email automation</b> — all in one screen.
-    <br><br><b>Getting around:</b> use the <b>left sidebar</b> to switch modules. The top bar shows the module you're in, the books date, and whether the AI copilot &amp; renderings are online (green dots).</div></div>
+    <br><br><b>Getting around:</b> use the <b>left sidebar</b> to switch modules. The top bar shows the module you're in, the books date, and whether the AI copilot &amp; renderings are online (green dots).
+    <br><br>🖱️ <b>Everything is clickable.</b> Click any row — a purchase order, invoice, bill, job, customer, vendor, or inventory item — and its <b>full detail opens in a side panel</b>, with the relevant one-click actions right there: convert a PO to a bill, record a payment, send a reminder, invoice a job. Each action still asks you to <b>Confirm</b> before it posts to QuickBooks. Press <b>Esc</b> or click away to close.</div></div>
 
   ${gSec('📊','Overview',[
     ['Dashboard','Your group-wide snapshot: open A/R, overdue, un-billed work, open A/P, DSO, and inventory value, plus every company side-by-side, A/R & A/P aging, over-budget jobs, and slow payers. Start here each morning.'],
