@@ -128,6 +128,13 @@
   .confirmbar{background:#f4f7f5;border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-size:13px}
   .dresult{padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.55;white-space:pre-wrap}
   .dresult.ok{background:#e9f7ec;color:#166534} .dresult.err{background:#fde8e8;color:var(--red)}
+  /* interpreter */
+  .xlate{margin-top:12px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px 13px}
+  .xmeta{font-size:11.5px;color:var(--mut);margin-bottom:5px}
+  .xtext{font-size:15px;line-height:1.5;white-space:pre-wrap}
+  textarea{resize:vertical;font-family:inherit}
+  .btn.rec{background:var(--red)!important;color:#fff!important;animation:recp 1s infinite}
+  @keyframes recp{50%{opacity:.55}}
 </style>
 </head>
 <body>
@@ -266,7 +273,8 @@ const NAV=[
  {id:'crm',label:'Customers',icon:'👥',sub:'Customer balances & history (CRM)'},
  {id:'vendors',label:'Vendors',icon:'🚚',sub:'Supplier spend & payables'},
  {sec:'AI & Integrations'},
- {id:'copilot',label:'AI Copilot',icon:'🤖',sub:'Ask anything about the books'},
+ {id:'copilot',label:'AI Copilot',icon:'🤖',sub:'Ask anything about the books — in any language'},
+ {id:'interpret',label:'Interpreter',icon:'🌐',sub:'Live multilingual translator for customer communication (speak or type)'},
  {id:'studio',label:'Design Studio',icon:'🎨',sub:'AI pool & outdoor renderings (Meramec Pools)'},
  {id:'email',label:'Email → ERP',icon:'📧',sub:'Turn vendor-invoice emails into bills automatically'},
  {id:'qbsync',label:'QuickBooks Sync',icon:'🔌',sub:'Two-way sync with QuickBooks Online'},
@@ -286,7 +294,7 @@ function route(id){
  $('#mtitle').textContent=META[id].label;
  $('#msub').textContent=META[id].sub+(CO?(' — scoped to '+CONAME[CO]):'');
  $('#main').innerHTML='<div class="muted"><span class="spin"></span> loading…</div>';
- ({dashboard:vDash,companies:vCompanies,jobs:vJobs,ar:vAR,ap:vAP,po:vPO,inventory:vInv,crm:vCRM,vendors:vVendors,copilot:vCopilot,studio:vStudio,email:vEmail,qbsync:vQB,guide:vGuide})[id]();
+ ({dashboard:vDash,companies:vCompanies,jobs:vJobs,ar:vAR,ap:vAP,po:vPO,inventory:vInv,crm:vCRM,vendors:vVendors,copilot:vCopilot,interpret:vInterpret,studio:vStudio,email:vEmail,qbsync:vQB,guide:vGuide})[id]();
 }
 
 // ---------- DASHBOARD ----------
@@ -410,9 +418,10 @@ function vCopilot(){
    <h2>🤖 KEYSTONE Copilot <span class="tag">grounded · asks, answers &amp; <b>acts</b> (posts to QuickBooks on your OK)</span></h2>
    <div class="chat" id="chat"><div class="msg a">Ask me anything about jobs, costs, invoices, A/P, inventory, or cash flow across all the Burns companies. Every figure I give is computed live from the books.</div></div>
    <div class="chips">${CHIPS.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
-   <div class="ask"><input id="q" placeholder="Ask about costs, invoices, cash flow…" autocomplete="off"><button class="btn" id="send">Ask</button></div></div>`;
+   <div class="ask"><input id="q" placeholder="Ask in any language — costs, invoices, cash flow…" autocomplete="off"><button class="btn ghost" id="qmic" title="Speak your question">🎤</button><button class="btn" id="send">Ask</button></div></div>`;
  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{$('#q').value=c.textContent;csend();});
  $('#send').onclick=csend;$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')csend();});$('#q').focus();
+ $('#qmic').onclick=function(){listen($('#q'),(navigator.language||'en-US'),this);};
 }
 function cmd(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^- /gm,'• ');}
 let cbusy=false;
@@ -439,6 +448,69 @@ function renderAction(bubble, act){
    $('#chat').scrollTop=1e9;
  };
  $('#chat').scrollTop=1e9;
+}
+
+// ---------- INTERPRETER (multilingual) ----------
+const LANGS=[['English','en-US'],['French','fr-FR'],['Spanish','es-ES'],['German','de-DE'],['Italian','it-IT'],
+ ['Portuguese','pt-BR'],['Mandarin Chinese','zh-CN'],['Cantonese','zh-HK'],['Japanese','ja-JP'],['Korean','ko-KR'],
+ ['Arabic','ar-SA'],['Hindi','hi-IN'],['Russian','ru-RU'],['Dutch','nl-NL'],['Polish','pl-PL'],['Vietnamese','vi-VN'],
+ ['Tagalog','fil-PH'],['Ukrainian','uk-UA'],['Haitian Creole','ht-HT'],['Somali','so-SO']];
+let REC=null;
+function listen(el,langCode,btn){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast('🎤 Voice needs Chrome or Edge');return;}
+ if(REC){REC.stop();REC=null;if(btn)btn.classList.remove('rec');return;}
+ REC=new SR();REC.lang=langCode;REC.interimResults=true;REC.continuous=false;
+ if(btn)btn.classList.add('rec');
+ REC.onresult=e=>{let t='';for(const r of e.results)t+=r[0].transcript;el.value=t;};
+ REC.onend=()=>{REC=null;if(btn)btn.classList.remove('rec');};
+ REC.onerror=()=>{REC=null;if(btn)btn.classList.remove('rec');toast('🎤 mic error — check permissions');};
+ REC.start();
+}
+function speak(text,langCode){
+ if(!window.speechSynthesis)return;
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(text);u.lang=langCode||'en-US';u.rate=.98;speechSynthesis.speak(u);
+}
+function vInterpret(){
+ const opts=LANGS.filter(l=>l[1]!=='en-US').map(l=>`<option value="${l[1]}">${l[0]}</option>`).join('');
+ $('#main').innerHTML=`
+  <div class="card" style="padding:16px"><h2 style="border:0;padding:0 0 8px">🌐 Live Interpreter <span class="tag">speak or type · auto-detects language</span></h2>
+    <div class="muted" style="line-height:1.6">Communicate with customers in any language. What the customer says (spoken or typed) is translated into English for you; your English reply is translated into their language — so you both understand each other. 🎤 to speak, 🔊 to hear it.</div>
+    <div style="margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><b>Customer's language:</b>
+      <select id="clang" style="width:auto;font-weight:600">${opts}</select></div></div>
+  <div class="grid2">
+    <div class="card"><h2>🗣️ Customer → English</h2><div style="padding:14px 16px">
+      <textarea id="inA" rows="4" placeholder="Type what the customer said, or tap 🎤 to listen in their language…"></textarea>
+      <div style="display:flex;gap:8px;margin-top:9px"><button class="btn ghost" id="micA">🎤 Listen</button><button class="btn" id="goA">Translate → English</button></div>
+      <div id="outA" class="xlate" style="display:none"></div></div></div>
+    <div class="card"><h2>✍️ Your reply → <span id="cl2"></span></h2><div style="padding:14px 16px">
+      <textarea id="inB" rows="4" placeholder="Type your reply in English, or tap 🎤…"></textarea>
+      <div style="display:flex;gap:8px;margin-top:9px"><button class="btn ghost" id="micB">🎤 Listen</button><button class="btn" id="goB">Translate → their language</button></div>
+      <div id="outB" class="xlate" style="display:none"></div></div></div>
+  </div>`;
+ const clang=()=>$('#clang').value, clangName=()=>$('#clang').selectedOptions[0].text;
+ $('#cl2').textContent=clangName();
+ $('#clang').onchange=()=>$('#cl2').textContent=clangName();
+ $('#micA').onclick=function(){listen($('#inA'),clang(),this);};
+ $('#micB').onclick=function(){listen($('#inB'),'en-US',this);};
+ $('#goA').onclick=()=>doXlate($('#inA').value,'English','#outA','en-US','#goA');
+ $('#goB').onclick=()=>doXlate($('#inB').value,clangName(),'#outB',clang(),'#goB');
+}
+async function doXlate(text,to,outSel,speakCode,btnSel){
+ text=(text||'').trim(); if(!text){toast('Type or speak something first');return;}
+ const out=$(outSel),btn=$(btnSel); out.style.display='block'; out.innerHTML='<span class="spin"></span> translating…'; btn.disabled=true;
+ try{const r=await post('/api/translate',{text,to});
+   if(r.error){out.innerHTML='⚠️ '+esc(r.error);}
+   else{
+     out.innerHTML=`<div class="xmeta">detected: <b>${esc(r.source_language)}</b> &nbsp;→&nbsp; ${esc(to)}</div><div class="xtext">${esc(r.translation)}</div>
+       <div style="margin-top:9px;display:flex;gap:8px"><button class="btn ghost" data-speak>🔊 Speak</button><button class="btn ghost" data-copy>📋 Copy</button></div>`;
+     out.querySelector('[data-speak]').onclick=()=>speak(r.translation,speakCode);
+     out.querySelector('[data-copy]').onclick=()=>{navigator.clipboard.writeText(r.translation);toast('Copied');};
+     speak(r.translation,speakCode);
+   }
+ }catch(e){out.innerHTML='⚠️ translation error';}
+ btn.disabled=false;
 }
 
 // ---------- DESIGN STUDIO ----------
@@ -569,6 +641,7 @@ function vGuide(){
 
   ${gSec('🤖','AI & Integrations — the differentiators',[
     ['AI Copilot (agentic) ⚡','Ask anything in plain English — "which jobs are over budget?", "who\'s slow to pay?" — and every number is computed live from the books (<b>the AI never makes figures up</b>). In <b>Demo</b> mode it answers from the Burns sample books; flip the top bar to <b>Live</b> and it answers from your <b>real QuickBooks numbers</b>. But it doesn\'t just <i>answer</i> — <b>it acts</b>: tell it "invoice the Pryor Residence pool job", "record the payment from the Pryor Residence", "raise a PO to United Rentals for $4,000", or "remind our biggest overdue customer" and the copilot drafts the exact action, shows you what it will do, and <b>writes it straight into QuickBooks once you click Confirm</b>. See the write-back explainer below. ✅'],
+    ['Interpreter 🌐 (multilingual)','Burns has customers in other countries — so KEYSTONE speaks their language. The <b>AI Copilot auto-detects whatever language you write or speak and replies in that same language</b> (ask in French, get French — grounded in the same real numbers). The <b>Interpreter</b> module is a live two-way translator for customer calls &amp; chats: the customer\'s message (typed or spoken with 🎤) is translated into English for you, and your English reply is translated into their language to send back — each with 🔊 read-aloud. Pick the customer\'s language or let it auto-detect (English ↔ French, Spanish, Mandarin, Arabic, and ~18 more).'],
     ['Design Studio 🎨','For Meramec Pools: describe a pool / outdoor design (or pick a preset) and KEYSTONE generates a <b>photorealistic rendering</b> to show the client before you build. Production adds img2img on the client\'s actual backyard photo, saved to their job record.'],
     ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry.'],
     ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online — live counts of your customers, vendors, invoices, bills, and items — plus what\'s queued to push. <b>Click any count card</b> (e.g. "Bills in QB") to jump straight into that list in <b>Live</b> mode, then click a row to see the detail and act. QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.'],

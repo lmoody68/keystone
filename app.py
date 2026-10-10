@@ -69,6 +69,10 @@ def _facts(co=None):
 SYSTEM = (
     "You are KEYSTONE — the AI copilot inside an ERP for The Burns Companies (a multi-company group: general "
     "contracting, hardscaping, pools, graphics/signage, and wholesale+retail seafood, running on QuickBooks). "
+    "MULTILINGUAL: detect the language of the user's message and write your ENTIRE reply in that SAME language — the "
+    "FACTS are in English, so translate your answer (but keep company/app/product names, invoice IDs, and $ amounts "
+    "as-is). For a write-back ACTION, still output the JSON exactly as specified with English field names and values, "
+    "but write the \"summary\" in the user's language. "
     "Answer using ONLY the FACTS JSON — every number is pre-computed and authoritative; quote it, never invent or "
     "recompute. Be concise and sharp like a construction financial controller. Use $ and round sensibly ($44K, $1.07M). "
     "Name the specific company/job/customer and the action to take. Lead with the headline number, then short bullets "
@@ -456,6 +460,29 @@ def action_execute(data: dict = Body(...)):
     except (urllib.error.HTTPError, urllib.error.URLError) as e:
         detail = e.read().decode()[:300] if isinstance(e, urllib.error.HTTPError) else str(e)
         return JSONResponse({"error": f"QuickBooks rejected it: {detail}"}, status_code=502)
+    except Exception as e:
+        return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
+
+
+@app.post("/api/translate")
+def translate(data: dict = Body(...)):
+    text = (data.get("text") or "").strip()[:2000]
+    to = (data.get("to") or "English").strip()[:40]
+    if not text:
+        return JSONResponse({"error": "Nothing to translate."}, status_code=400)
+    msgs = [{"role": "system", "content":
+             "You are a professional business interpreter for The Burns Companies. Detect the source language of the "
+             f"user's text, then translate it faithfully and naturally into {to}. Preserve names, numbers, currency, "
+             "and a professional tone. Respond with ONLY strict JSON (no other text): "
+             "{\"source_language\":\"<source language name in English>\",\"translation\":\"<the " + to + " translation>\"}."},
+            {"role": "user", "content": text}]
+    try:
+        raw = _groq(msgs, max_tokens=900)
+        m = re.search(r"\{.*\}", raw, re.S)
+        obj = json.loads(m.group(0)) if m else {}
+        return {"source_language": obj.get("source_language", "?"), "translation": obj.get("translation", raw), "to": to}
+    except RuntimeError:
+        return JSONResponse({"error": "No Groq API key found."}, status_code=500)
     except Exception as e:
         return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
 
