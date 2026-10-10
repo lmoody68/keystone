@@ -62,22 +62,25 @@ def ar():
             "open": sorted(rows, key=lambda r: r["amount"], reverse=True), "drafts": []}
 
 def ap():
-    rows = []
+    rows = []       # ALL bills (so the user can see & click them, even when paid)
     for b in _bills():
-        bal = _f(b.get("Balance"))
-        if bal <= 0.009:
-            continue
-        dpd = _dpd(b.get("DueDate"))
+        bal = _f(b.get("Balance")); total = _f(b.get("TotalAmt"))
+        paid = bal <= 0.009
+        dpd = 0 if paid else _dpd(b.get("DueDate"))
         rows.append({"id": "BILL-" + str(b.get("DocNumber") or b.get("Id", "")), "company_name": "QuickBooks",
-                     "vendor": (b.get("VendorRef") or {}).get("name", ""), "amount": round(bal, 2),
-                     "status": "overdue" if dpd > 0 else "open", "days_past_due": max(0, dpd), "bucket": _bucket(dpd)})
+                     "vendor": (b.get("VendorRef") or {}).get("name", ""),
+                     "amount": round(total if paid else bal, 2),
+                     "status": "paid" if paid else ("overdue" if dpd > 0 else "open"),
+                     "days_past_due": max(0, dpd), "bucket": "current" if paid else _bucket(dpd)})
+    open_rows = [r for r in rows if r["status"] != "paid"]
     aging = {b: 0.0 for b in _BUCKETS}
-    for r in rows:
+    for r in open_rows:
         aging[r["bucket"]] += r["amount"]
-    return {"open_ap": round(sum(r["amount"] for r in rows), 2),
-            "overdue_ap": round(sum(r["amount"] for r in rows if r["status"] == "overdue"), 2),
-            "bill_count": len(rows), "aging": {k: round(v, 2) for k, v in aging.items()},
-            "bills": sorted(rows, key=lambda r: r["amount"], reverse=True)}
+    return {"open_ap": round(sum(r["amount"] for r in open_rows), 2),
+            "overdue_ap": round(sum(r["amount"] for r in open_rows if r["status"] == "overdue"), 2),
+            "bill_count": len(open_rows), "total_bills": len(rows),
+            "aging": {k: round(v, 2) for k, v in aging.items()},
+            "bills": sorted(rows, key=lambda r: (r["status"] == "paid", -r["amount"]))}
 
 def customers():
     inv_by = {}

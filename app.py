@@ -292,10 +292,11 @@ def qbsync():
                "bills_to_post": sum(1 for b in d["bills"] if b["status"] == "open")}
     if st["connected"]:
         try:
-            cust = qbo.query("Customer"); inv = qbo.query("Invoice"); item = qbo.query("Item"); vend = qbo.query("Vendor")
+            cust = qbo.query("Customer"); inv = qbo.query("Invoice"); item = qbo.query("Item")
+            vend = qbo.query("Vendor"); bill = qbo.query("Bill")
             return {"connected": True, "live": True, "environment": f"QuickBooks Online — {st['environment'].upper()} (LIVE)",
                     "realm": st["realm_id"], "last_sync": "just now",
-                    "synced": {"customers": len(cust), "vendors": len(vend), "invoices": len(inv), "items": len(item), "bills": 0},
+                    "synced": {"customers": len(cust), "vendors": len(vend), "invoices": len(inv), "items": len(item), "bills": len(bill)},
                     "pending_push": pending,
                     "note": "Connected to a REAL QuickBooks Online company via OAuth2 — the counts above are pulled live from QuickBooks."}
         except Exception as e:

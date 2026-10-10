@@ -359,14 +359,14 @@ async function vAR(){
 async function vAP(){
  const d=await get('/api/ap');
  let r=`<tr><th>Bill</th><th>Company</th><th>Vendor</th><th class="num">Amount</th><th>Status</th><th class="num">Past due</th></tr>`;
- STORE.bill=d.bills;d.bills.slice(0,30).forEach((b,i)=>r+=`<tr ${clk('bill',i)}><td>${b.id}</td><td class="muted">${b.company_name}</td><td>${b.vendor}</td><td class="num">${F(b.amount)}</td><td><span class="pill ${b.status==='overdue'?'red':'amber'}">${b.status}</span></td><td class="num">${b.days_past_due||'—'}</td></tr>`);
+ STORE.bill=d.bills;d.bills.slice(0,30).forEach((b,i)=>r+=`<tr ${clk('bill',i)}><td>${b.id}</td><td class="muted">${b.company_name}</td><td>${b.vendor}</td><td class="num">${F(b.amount)}</td><td><span class="pill ${b.status==='overdue'?'red':b.status==='paid'?'green':'amber'}">${b.status}</span></td><td class="num">${b.days_past_due||'—'}</td></tr>`);
  $('#main').innerHTML=`
   <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
    <div class="kpi amber"><div class="k">Open A/P</div><div class="v">${M(d.open_ap)}</div></div>
    <div class="kpi red"><div class="k">Overdue A/P</div><div class="v">${M(d.overdue_ap)}</div></div>
    <div class="kpi"><div class="k">Open bills</div><div class="v">${d.bill_count}</div></div></div>
   <div class="card"><h2>💳 A/P Aging</h2><div style="padding:14px 16px">${agingBars(d.aging)}</div></div>
-  <div class="card"><h2>📂 Open bills</h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+  <div class="card"><h2>📂 Bills <span class="tag">${d.bill_count} open · ${(d.total_bills??d.bill_count)} total · click a row</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
 }
 
 // ---------- PO ----------
@@ -506,6 +506,10 @@ function showEmail(id){
 }
 
 // ---------- QUICKBOOKS SYNC ----------
+function goLive(mod){
+ if(!$('#srcsel').disabled){ SRC='qb'; $('#srcsel').value='qb'; $('#cosel').style.display='none'; CO=''; updateBanner(); }
+ route(mod);
+}
 async function vQB(){
  const d=await get('/api/qbsync');
  const sy=d.synced||{}, pp=d.pending_push||{};
@@ -524,11 +528,12 @@ async function vQB(){
   <div class="card" style="padding:16px"><h2 style="border:0;padding:0 0 8px">🔌 QuickBooks Online ${badge}</h2>
    <div class="muted">${esc(d.environment)} · Realm: <b>${esc(''+d.realm)}</b> · Last sync <b>${esc(''+d.last_sync)}</b></div>${d.error?'<div class="muted" style="color:var(--red);margin-top:6px">'+esc(d.error)+'</div>':''}</div>
   <div class="kpis" style="grid-template-columns:repeat(5,1fr)">
-   ${[['Customers',sy.customers],['Vendors',sy.vendors],['Invoices',sy.invoices],['Bills',sy.bills],['Items',sy.items]].map(k=>`<div class="kpi"><div class="k">${k[0]} ${live?'in QB':'(demo)'}</div><div class="v">${k[1]??'—'}</div></div>`).join('')}</div>
+   ${[['Customers',sy.customers,'crm'],['Vendors',sy.vendors,'vendors'],['Invoices',sy.invoices,'ar'],['Bills',sy.bills,'ap'],['Items',sy.items,'inventory']].map(k=>`<div class="kpi" style="cursor:pointer" onclick="goLive('${k[2]}')" title="Open the ${k[0]} list"><div class="k">${k[0]} ${live?'in QB':'(demo)'}</div><div class="v">${k[1]??'—'}</div><div class="s" style="color:var(--blue);font-weight:600">${live?'open live →':'view →'}</div></div>`).join('')}</div>
+  <div class="muted" style="margin:-4px 0 16px;font-size:12.5px">👆 Click any count to open that list${live?' with <b>live QuickBooks data</b>':''}, then click a row to see details and act — record a payment, send a reminder, convert a PO to a bill.</div>
   <div class="grid2">
    <div class="card"><h2>⬆️ Pending push to QuickBooks</h2>
-     <div class="flagrow"><div><b>Invoice drafts</b><div class="sm">auto-generated from job progress</div></div><span class="pill blue">${pp.invoice_drafts}</span></div>
-     <div class="flagrow"><div><b>Bills to post</b><div class="sm">from Email → ERP extraction</div></div><span class="pill amber">${pp.bills_to_post}</span></div>
+     <div class="flagrow" style="cursor:pointer" onclick="route('ar')" title="Open Invoicing / AR"><div><b>Invoice drafts</b><div class="sm">auto-generated from job progress → open AR</div></div><span class="pill blue">${pp.invoice_drafts}</span></div>
+     <div class="flagrow" style="cursor:pointer" onclick="route('email')" title="Open Email → ERP"><div><b>Bills to post</b><div class="sm">from Email → ERP extraction → open inbox</div></div><span class="pill amber">${pp.bills_to_post}</span></div>
      <div style="padding:14px 16px"><button class="btn" onclick="route('qbsync')">↻ Refresh</button></div></div>
    <div class="card"><h2>ℹ️ How it works</h2><div style="padding:14px 16px" class="muted">${esc(d.note)}<br><br>KEYSTONE adds the modules QuickBooks can't do — <b>multi-company job costing, POs, inventory, CRM, renderings, and email automation</b> — while QuickBooks stays the system of record for the general ledger.</div></div>
   </div>`;
@@ -564,7 +569,8 @@ function vGuide(){
     ['AI Copilot (agentic) ⚡','Ask anything in plain English — "which jobs are over budget?", "who\'s slow to pay?" — and every number is computed live from the books (<b>the AI never makes figures up</b>). In <b>Demo</b> mode it answers from the Burns sample books; flip the top bar to <b>Live</b> and it answers from your <b>real QuickBooks numbers</b>. But it doesn\'t just <i>answer</i> — <b>it acts</b>: tell it "invoice the Pryor Residence pool job", "record the payment from the Pryor Residence", "raise a PO to United Rentals for $4,000", or "remind our biggest overdue customer" and the copilot drafts the exact action, shows you what it will do, and <b>writes it straight into QuickBooks once you click Confirm</b>. See the write-back explainer below. ✅'],
     ['Design Studio 🎨','For Meramec Pools: describe a pool / outdoor design (or pick a preset) and KEYSTONE generates a <b>photorealistic rendering</b> to show the client before you build. Production adds img2img on the client\'s actual backyard photo, saved to their job record.'],
     ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry.'],
-    ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online and what\'s queued to push (invoice drafts, extracted bills). QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.']])}
+    ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online — live counts of your customers, vendors, invoices, bills, and items — plus what\'s queued to push. <b>Click any count card</b> (e.g. "Bills in QB") to jump straight into that list in <b>Live</b> mode, then click a row to see the detail and act. QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.'],
+    ['Seeing your real QuickBooks data 👀','Two ways: flip the <b>top-bar toggle to "Live QuickBooks"</b> on any module (Invoicing/AR, Bills/AP, Customers, Vendors, Inventory) to see the real QB records, <b>or</b> click a count on the QuickBooks Sync screen. A green banner confirms you\'re on live data. Bills show every bill with a <b>paid / open / overdue</b> status — the A/P totals count only what\'s still owed.']])}
 
   <div class="card" style="padding:18px;border-left:4px solid #1a6e2e"><h2 style="border:0;padding:0 0 9px">⚡ What is an "Agentic Write-back Copilot"?</h2>
     <div class="muted" style="line-height:1.66">
