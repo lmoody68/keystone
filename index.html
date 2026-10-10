@@ -213,6 +213,8 @@ function buildDetail(kind,o){
   case 'item': return {kind:'Inventory item',title:o.item,sub:o.low_stock?'⚠️ Below reorder point':'In stock',
     fields:[['On hand',o.qty_on_hand],['Reorder point',o.reorder_point],['Unit cost',F(o.unit_cost)],['Value',F(o.value)],['Status',o.low_stock?'Reorder':'OK',o.low_stock?'amt red':'amt green']],
     note:o.low_stock?'Stock is below the reorder point — consider raising a purchase order to restock.':'',actions:[]};
+  case 'slow':{ const a=[{label:'✉️ Send payment reminder',action:'send_reminder',params:{customer:o.customer,amount:o.overdue},summary:`Send a payment reminder to ${o.customer} for ${F(o.overdue)} overdue.`},{label:'💵 Record payment',action:'record_payment',params:{customer:o.customer,amount:o.overdue},summary:`Record a ${F(o.overdue)} payment from ${o.customer}.`}];
+    return {kind:'Slow payer',title:o.customer,sub:o.company,fields:[['Company',esc(o.company)],['Overdue',F(o.overdue),'amt red']],actions:a}; }
   case 'co': return {kind:'Company',title:o.name,sub:o.industry,
     fields:[['Active jobs',o.active_jobs],['Contract value',F(o.contract_value)],['Un-billed',money(o.under_billed),'amt green'],['Open A/R',F(o.open_ar)],['Overdue A/R',money(o.overdue_ar),o.overdue_ar>0?'amt red':'']],
     actions:[{label:'🔎 View this company only',cls:'ghost',action:'_scope',params:{id:o.id},summary:''}]};
@@ -289,22 +291,22 @@ function route(id){
 
 // ---------- DASHBOARD ----------
 async function vDash(){
- const s=await get('/api/overview'),g=s.group;
- const kpi=[['Open A/R',M(g.open_ar),'',''],['Overdue A/R',M(g.overdue_ar),'needs chasing','red'],
-   ['Un-billed work',M(g.under_billed),'done, not invoiced','green'],['Open A/P',M(g.open_ap),'bills to pay','amber'],
-   ['DSO',g.dso_days+'d',g.over_budget_job_count+' jobs over budget','blue'],['Inventory',M(g.inventory_value),'City Seafood','']];
+ const s=await get('/api/overview'),g=s.group; STORE.slow=s.flags.slow_payers;
+ const kpi=[['Open A/R',M(g.open_ar),'','','ar'],['Overdue A/R',M(g.overdue_ar),'needs chasing','red','ar'],
+   ['Un-billed work',M(g.under_billed),'done, not invoiced','green','ar'],['Open A/P',M(g.open_ap),'bills to pay','amber','ap'],
+   ['DSO',g.dso_days+'d',g.over_budget_job_count+' jobs over budget','blue','jobs'],['Inventory',M(g.inventory_value),'City Seafood','','inventory']];
  let co=`<tr><th>Company</th><th>Industry</th><th class="num">Jobs</th><th class="num">Contract</th><th class="num">Un-billed</th><th class="num">Open A/R</th><th class="num">Overdue</th></tr>`;
  STORE.co=s.companies;s.companies.forEach((c,i)=>co+=`<tr ${clk('co',i)}><td><b>${c.name}</b></td><td class="muted">${c.industry}</td><td class="num">${c.active_jobs}</td><td class="num">${M(c.contract_value)}</td><td class="num amt green">${c.under_billed>0?M(c.under_billed):'—'}</td><td class="num">${M(c.open_ar)}</td><td class="num amt ${c.overdue_ar>0?'red':''}">${c.overdue_ar>0?M(c.overdue_ar):'—'}</td></tr>`);
  $('#main').innerHTML=`
-  <div class="kpis">${kpi.map(k=>`<div class="kpi ${k[3]}"><div class="k">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  <div class="kpis">${kpi.map(k=>`<div class="kpi ${k[3]}" style="cursor:pointer" onclick="route('${k[4]}')" title="Open ${k[0]}"><div class="k">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
   <div class="card"><h2>🏢 Companies <span class="tag">${s.companies.length} entities</span></h2>${tbl('',co).replace('<tr></tr>','')}</div>
   <div class="grid2">
    <div class="card"><h2>📅 A/R Aging</h2><div style="padding:14px 16px">${agingBars(s.aging.overall)}</div></div>
    <div class="card"><h2>💳 A/P Aging</h2><div style="padding:14px 16px">${agingBars(s.ap.aging)}</div></div>
   </div>
   <div class="grid2">
-   <div class="card"><h2>🚨 Over-budget jobs</h2>${s.flags.over_budget_jobs.map(j=>`<div class="flagrow"><div><b>${j.name}</b><div class="sm">${j.company_name} · ${j.pct_complete}% · margin ${j.proj_margin_pct}%</div></div><div class="amt red">+${M(j.cost_variance)}</div></div>`).join('')||'<div class="flagrow sm">All on budget</div>'}</div>
-   <div class="card"><h2>⏰ Slow payers</h2>${s.flags.slow_payers.map(x=>`<div class="flagrow"><div><b>${x.customer}</b><div class="sm">${x.company}</div></div><div class="amt red">${M(x.overdue)}</div></div>`).join('')||'<div class="flagrow sm">None</div>'}</div>
+   <div class="card"><h2>🚨 Over-budget jobs</h2>${s.flags.over_budget_jobs.map(j=>`<div class="flagrow clickrow" onclick="route('jobs')"><div><b>${j.name}</b><div class="sm">${j.company_name} · ${j.pct_complete}% · margin ${j.proj_margin_pct}%</div></div><div class="amt red">+${M(j.cost_variance)}</div></div>`).join('')||'<div class="flagrow sm">All on budget</div>'}</div>
+   <div class="card"><h2>⏰ Slow payers</h2>${s.flags.slow_payers.map((x,i)=>`<div class="flagrow clickrow" onclick="openDetail('slow',${i})"><div><b>${x.customer}</b><div class="sm">${x.company}</div></div><div class="amt red">${M(x.overdue)}</div></div>`).join('')||'<div class="flagrow sm">None</div>'}</div>
   </div>`;
 }
 function agingBars(a){
@@ -551,7 +553,7 @@ function vGuide(){
     <br><br>🖱️ <b>Everything is clickable.</b> Click any row — a purchase order, invoice, bill, job, customer, vendor, or inventory item — and its <b>full detail opens in a side panel</b>, with the relevant one-click actions right there: convert a PO to a bill, record a payment, send a reminder, invoice a job. Each action still asks you to <b>Confirm</b> before it posts to QuickBooks. Press <b>Esc</b> or click away to close.</div></div>
 
   ${gSec('📊','Overview',[
-    ['Dashboard','Your group-wide snapshot: open A/R, overdue, un-billed work, open A/P, DSO, and inventory value, plus every company side-by-side, A/R & A/P aging, over-budget jobs, and slow payers. Start here each morning.'],
+    ['Dashboard','Your group-wide snapshot: open A/R, overdue, un-billed work, open A/P, DSO, and inventory value (the <b>KPI tiles</b> — Key Performance Indicators, your headline numbers), plus every company side-by-side, A/R & A/P aging, over-budget jobs, and slow payers. <b>Click any KPI tile</b> to drill into that list, a <b>company</b> row to see its numbers, an <b>over-budget job</b> to open Job Costing, or a <b>slow payer</b> to send a reminder on the spot. Start here each morning.'],
     ['Companies','The 7 real Burns operating companies with sourced profiles — owners, founding, services, sectors, and the real story (e.g. City Seafood is "Bob\'s 2.0" out of Fenton). This is factual, publicly-sourced data.']])}
 
   ${gSec('🏗️','Operations',[
