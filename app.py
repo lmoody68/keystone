@@ -72,7 +72,23 @@ SYSTEM = (
     "Answer using ONLY the FACTS JSON — every number is pre-computed and authoritative; quote it, never invent or "
     "recompute. Be concise and sharp like a construction financial controller. Use $ and round sensibly ($44K, $1.07M). "
     "Name the specific company/job/customer and the action to take. Lead with the headline number, then short bullets "
-    "('- '). No markdown tables (the panel is narrow). If it's not in FACTS, say so briefly.\n\nFACTS:\n"
+    "('- '). No markdown tables (the panel is narrow). If it's not in FACTS, say so briefly.\n\n"
+    "ACTIONS (write-back — you can DO things, not just report): if the user clearly asks you to perform one of the "
+    "operations below, respond with ONLY a JSON object (no prose, no code fence, no markdown): "
+    "{\"action\":\"<name>\",\"params\":{...},\"summary\":\"<one sentence saying exactly what you will do>\"}. "
+    "The five actions and their params:\n"
+    "- create_invoice {customer, amount, description} — raise a customer invoice.\n"
+    "- create_bill {vendor, amount, description} — post a vendor bill you owe.\n"
+    "- record_payment {customer, amount} — record a customer payment received (applied to their open invoice).\n"
+    "- create_po {vendor, amount, description} — raise a purchase order to a vendor.\n"
+    "- send_reminder {customer, amount, days} — send a payment reminder to an overdue customer "
+    "(amount = their overdue balance, days = days past due, both from FACTS).\n"
+    "Use the amount and customer/vendor the user states explicitly; otherwise pull them from FACTS when the user "
+    "refers to a specific job, draft, invoice, overdue item, or slow payer. Only when NEITHER the user NOR FACTS "
+    "gives you an amount should you ask instead of acting — never make up a number the user didn't give. "
+    "If the user says something like 'remind everyone overdue', pick the single largest overdue customer and send_reminder "
+    "for them (one action per turn). For every other request (questions, summaries), answer in prose as usual (no JSON)."
+    "\n\nFACTS:\n"
 )
 
 def _groq(messages, max_tokens=1500):
@@ -86,11 +102,51 @@ def _groq(messages, max_tokens=1500):
     with urllib.request.urlopen(req, timeout=45) as r:
         return json.loads(r.read().decode())["choices"][0]["message"]["content"].strip()
 
-def groq_chat(user, co=None):
-    scope = (f"(CURRENT SCOPE: {engine._co_name(co)} ONLY — every figure below is for this one company, "
-             f"not the group.)\n") if co else ""
-    return _groq([{"role": "system", "content": SYSTEM + scope + json.dumps(_facts(co), default=str)},
+def _facts_live():
+    """Lean grounding facts built from the LIVE QuickBooks company (used when source=qb)."""
+    o = qbo_map.overview()
+    a = qbo_map.ar()
+    custs = qbo_map.customers()[:10]
+    vends = qbo_map.vendors()[:8]
+    return {
+        "as_of": o["as_of"], "source": "LIVE QuickBooks Online", "company": o["holding"]["name"],
+        "group": o["group"], "dso": o["dso"]["overall"], "ar_aging": o["aging"]["overall"],
+        "ap": {"open_ap": o["ap"]["open_ap"], "overdue_ap": o["ap"]["overdue_ap"], "aging": o["ap"]["aging"]},
+        "inventory": {"value": o["inventory"]["total_value"], "low_stock": [i["item"] for i in o["inventory"]["low_stock"]]},
+        "purchase_orders": {"open": o["po"]["count"], "committed": o["po"]["committed"]},
+        "top_open_invoices": [{"id": r["id"], "cust": r["customer"], "amount": _r(r["amount"]),
+                               "days_past_due": r["days_past_due"]} for r in a["open"][:10]],
+        "overdue_invoices": [{"cust": r["customer"], "amount": _r(r["amount"]), "days_past_due": r["days_past_due"]}
+                             for r in o["flags"]["overdue_invoices"][:8]],
+        "slow_payers": o["flags"]["slow_payers"],
+        "top_customers": [{"cust": c["customer"], "invoiced": _r(c["invoiced"]), "open": _r(c["open"]),
+                           "overdue": _r(c["overdue"])} for c in custs],
+        "top_vendors": [{"vendor": v["vendor"], "billed": _r(v["billed"]), "open": _r(v["open"])} for v in vends],
+        "note": "This is a live QuickBooks company — it has no construction job-costing/budget data, so "
+                "job-margin and over-budget questions have no live data to answer from.",
+    }
+
+def groq_chat(user, co=None, source=None):
+    if _live(source):
+        facts = _facts_live()
+        scope = "(CURRENT SCOPE: LIVE QuickBooks Online company — every figure below is REAL data pulled from QuickBooks right now.)\n"
+    else:
+        facts = _facts(co)
+        scope = (f"(CURRENT SCOPE: {engine._co_name(co)} ONLY — every figure below is for this one company, "
+                 f"not the group.)\n") if co else ""
+    return _groq([{"role": "system", "content": SYSTEM + scope + json.dumps(facts, default=str)},
                   {"role": "user", "content": user}])
+
+def draft_reminder(customer, amount, days):
+    """AI-draft a short, professional payment-reminder email for an overdue customer."""
+    tone = "firm but courteous" if (float(days or 0) > 45) else "polite"
+    msgs = [{"role": "system", "content":
+             "You are the Accounts Receivable manager at The Burns Companies. Write a SHORT, professional, "
+             f"{tone} payment-reminder email as plain text (90 words max). State the amount outstanding and how many "
+             "days past due it is, give a clear call to pay, and offer to help if there's a question. "
+             "Sign off 'Accounts Receivable, The Burns Companies'. Output ONLY the email body."},
+            {"role": "user", "content": f"Customer: {customer}. Amount overdue: ${float(amount or 0):,.2f}. Days past due: {days}."}]
+    return _groq(msgs, max_tokens=320)
 
 
 # ---------------- EMAIL -> ERP (inbound AP automation) ----------------
@@ -332,14 +388,73 @@ def render_edit(data: dict = Body(...)):
 def ask(data: dict = Body(...)):
     q = (data.get("question") or "").strip()[:500]
     co = data.get("company") or None
+    source = data.get("source") or None
     if not q:
         return JSONResponse({"error": "Ask a question about the books."}, status_code=400)
     try:
-        return {"answer": groq_chat(q, co)}
+        raw = groq_chat(q, co, source)
+        m = re.search(r"\{.*\}", raw, re.S)   # did the copilot propose a write-back action?
+        if m:
+            try:
+                obj = json.loads(m.group(0))
+                if isinstance(obj, dict) and obj.get("action") in ACTIONS and obj.get("params"):
+                    return {"action": obj}
+            except Exception:
+                pass
+        return {"answer": raw}
     except RuntimeError:
         return {"answer": "⚠️ No Groq API key found — the dashboard numbers are still live."}
     except (urllib.error.URLError, urllib.error.HTTPError) as e:
         return {"answer": f"⚠️ The AI model is unreachable ({type(e).__name__}). The numbers are still live."}
+    except Exception as e:
+        return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
+
+
+QB_WRITES = ("create_invoice", "create_bill", "record_payment", "create_po")
+ACTIONS = QB_WRITES + ("send_reminder",)
+
+@app.post("/api/action/execute")
+def action_execute(data: dict = Body(...)):
+    act = (data.get("action") or "").strip()
+    p = data.get("params") or {}
+    amt = float(p.get("amount") or 0)
+
+    # send_reminder is not a QuickBooks write — it drafts & queues a dunning email (works in demo too)
+    if act == "send_reminder":
+        cust = p.get("customer", "the customer")
+        days = p.get("days")
+        try:
+            draft = draft_reminder(cust, amt, days)
+        except Exception:
+            draft = (f"Dear {cust},\n\nOur records show ${amt:,.2f} is {days or 'some'} days past due. "
+                     "We'd appreciate payment at your earliest convenience — please reach out if you have any "
+                     "questions.\n\nAccounts Receivable, The Burns Companies")
+        return {"ok": True, "message": f"✉️ **Payment reminder queued for {cust}** — ${amt:,.0f}"
+                + (f", {days} days overdue" if days else "") + f".\n\n_Draft:_\n{draft}"}
+
+    if act not in QB_WRITES:
+        return JSONResponse({"error": "unknown action"}, status_code=400)
+    if not qbo.connected():
+        return {"ok": True, "demo": True,
+                "message": f"(Demo) Would {act.replace('_', ' ')} for ${amt:,.0f} — "
+                           f"{p.get('customer') or p.get('vendor') or ''}. Connect QuickBooks to post for real."}
+    try:
+        if act == "create_invoice":
+            r = qbo.create_invoice(p.get("customer", ""), amt, p.get("description", ""))
+            return {"ok": True, "message": f"✅ **Invoice #{r['doc']}** created in QuickBooks — ${float(r['total']):,.2f} to **{p.get('customer')}**."}
+        if act == "create_bill":
+            r = qbo.create_bill(p.get("vendor", ""), amt, p.get("description", ""))
+            return {"ok": True, "message": f"✅ **Bill #{r['doc']}** posted to QuickBooks — ${float(r['total']):,.2f} ({p.get('vendor')})."}
+        if act == "record_payment":
+            r = qbo.create_payment(p.get("customer", ""), amt, p.get("description", ""))
+            where = f" applied to invoice #{r['invoice']}" if r.get("invoice") and r.get("applied") else " (recorded as unapplied credit)"
+            return {"ok": True, "message": f"✅ **Payment recorded** in QuickBooks — ${float(r['total']):,.2f} from **{p.get('customer')}**{where}."}
+        if act == "create_po":
+            r = qbo.create_po(p.get("vendor", ""), amt, p.get("description", ""))
+            return {"ok": True, "message": f"✅ **PO #{r['doc']}** raised in QuickBooks — ${float(r['total']):,.2f} to **{p.get('vendor')}**."}
+    except (urllib.error.HTTPError, urllib.error.URLError) as e:
+        detail = e.read().decode()[:300] if isinstance(e, urllib.error.HTTPError) else str(e)
+        return JSONResponse({"error": f"QuickBooks rejected it: {detail}"}, status_code=502)
     except Exception as e:
         return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
 

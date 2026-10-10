@@ -305,10 +305,10 @@ async function vVendors(){
 }
 
 // ---------- COPILOT ----------
-const CHIPS=["Which jobs are over budget?","How much can we invoice right now?","Who's slow to pay?","What's our DSO?","Give me a cash-flow summary","Which company has the most overdue A/R?"];
+const CHIPS=["Which jobs are over budget?","⚡ Invoice the Pryor Residence pool job","Who's slow to pay?","⚡ Send a payment reminder to our biggest overdue customer","⚡ Record a payment from the Pryor Residence","⚡ Raise a PO to United Rentals for $4,000","⚡ Post the ABC Concrete bill, $7,506","Give me a cash-flow summary"];
 function vCopilot(){
  $('#main').innerHTML=`<div class="card">
-   <h2>🤖 KEYSTONE Copilot <span class="tag">grounded in live numbers — never guesses</span></h2>
+   <h2>🤖 KEYSTONE Copilot <span class="tag">grounded · asks, answers &amp; <b>acts</b> (posts to QuickBooks on your OK)</span></h2>
    <div class="chat" id="chat"><div class="msg a">Ask me anything about jobs, costs, invoices, A/P, inventory, or cash flow across all the Burns companies. Every figure I give is computed live from the books.</div></div>
    <div class="chips">${CHIPS.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
    <div class="ask"><input id="q" placeholder="Ask about costs, invoices, cash flow…" autocomplete="off"><button class="btn" id="send">Ask</button></div></div>`;
@@ -321,9 +321,25 @@ async function csend(){
  const q=$('#q').value.trim();if(!q||cbusy)return;cbusy=true;$('#send').disabled=true;$('#q').value='';
  const c=$('#chat');c.insertAdjacentHTML('beforeend',`<div class="msg u">${cmd(q)}</div>`);
  c.insertAdjacentHTML('beforeend',`<div class="msg a" id="pend"><span class="spin"></span> checking the books…</div>`);c.scrollTop=1e9;
- try{const r=await post('/api/ask',{question:q,company:CO});$('#pend').innerHTML=cmd(r.answer||r.error||'(no answer)');$('#pend').id='';}
- catch(e){$('#pend').innerHTML='⚠️ error';}
+ try{const r=await post('/api/ask',{question:q,company:CO,source:SRC}); const p=$('#pend'); p.id='';
+   if(r.action){ renderAction(p, r.action); } else { p.innerHTML=cmd(r.answer||r.error||'(no answer)'); }
+ }catch(e){ const p=$('#pend'); if(p){ p.innerHTML='⚠️ error'; p.id=''; } }
  c.scrollTop=1e9;cbusy=false;$('#send').disabled=false;$('#q').focus();
+}
+
+function renderAction(bubble, act){
+ const p=act.params||{};
+ bubble.innerHTML=`<b>⚡ Proposed action</b> <span style="color:var(--mut);font-size:11px">needs your OK — nothing is written until you confirm</span><br>${cmd(act.summary||act.action)}
+   <div style="margin-top:10px;display:flex;gap:8px"><button class="btn" style="background:var(--green)" data-go>✅ Confirm → post to QuickBooks</button><button class="btn ghost" data-no>Cancel</button></div>`;
+ bubble.querySelector('[data-no]').onclick=()=>{ bubble.innerHTML='<span class="muted">Canceled — nothing was written to QuickBooks.</span>'; };
+ bubble.querySelector('[data-go]').onclick=async()=>{
+   bubble.innerHTML='<span class="spin"></span> posting to QuickBooks…';
+   try{ const res=await post('/api/action/execute',{action:act.action,params:p});
+     bubble.innerHTML = res.ok ? cmd(res.message) : ('⚠️ '+esc(res.error||'failed')); }
+   catch(e){ bubble.innerHTML='⚠️ error posting to QuickBooks'; }
+   $('#chat').scrollTop=1e9;
+ };
+ $('#chat').scrollTop=1e9;
 }
 
 // ---------- DESIGN STUDIO ----------
@@ -447,13 +463,34 @@ function vGuide(){
     ['Vendors','Supplier spend and open payables across the group.']])}
 
   ${gSec('🤖','AI & Integrations — the differentiators',[
-    ['AI Copilot','Ask anything in plain English — "which jobs are over budget?", "how much can we invoice right now?", "who\'s slow to pay?" Click a suggested question or type your own. <b>Every number is computed live from the books — the AI never makes figures up.</b>'],
+    ['AI Copilot (agentic) ⚡','Ask anything in plain English — "which jobs are over budget?", "who\'s slow to pay?" — and every number is computed live from the books (<b>the AI never makes figures up</b>). In <b>Demo</b> mode it answers from the Burns sample books; flip the top bar to <b>Live</b> and it answers from your <b>real QuickBooks numbers</b>. But it doesn\'t just <i>answer</i> — <b>it acts</b>: tell it "invoice the Pryor Residence pool job", "record the payment from the Pryor Residence", "raise a PO to United Rentals for $4,000", or "remind our biggest overdue customer" and the copilot drafts the exact action, shows you what it will do, and <b>writes it straight into QuickBooks once you click Confirm</b>. See the write-back explainer below. ✅'],
     ['Design Studio 🎨','For Meramec Pools: describe a pool / outdoor design (or pick a preset) and KEYSTONE generates a <b>photorealistic rendering</b> to show the client before you build. Production adds img2img on the client\'s actual backyard photo, saved to their job record.'],
     ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry.'],
     ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online and what\'s queued to push (invoice drafts, extracted bills). QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.']])}
 
+  <div class="card" style="padding:18px;border-left:4px solid #1a6e2e"><h2 style="border:0;padding:0 0 9px">⚡ What is an "Agentic Write-back Copilot"?</h2>
+    <div class="muted" style="line-height:1.66">
+      Most business AI only <i>talks</i> about your data — it answers questions and writes summaries, but <b>you</b> still do all the clicking. KEYSTONE's copilot is <b>agentic</b>: it <b>takes real actions on your behalf</b>. And <b>"write-back"</b> means it doesn't just <i>read</i> from QuickBooks — it <b>writes transactions back into it</b>.
+      <br><br>
+      <b>Its role in the ERP.</b> An ERP exists to run the day-to-day operational work — raising customer invoices, posting vendor bills, cutting purchase orders. A plain chatbot can only <i>describe</i> that work; an agentic write-back copilot actually <b>does it</b>. You state the outcome in plain English — <i>"invoice the Pryor Residence pool job"</i> — and the copilot performs the real QuickBooks transaction. The ERP stops being a screen you type data <i>into</i> and becomes a system you can simply <b>tell what you want done</b>.
+      <br><br>
+      <b>How a write-back works — 3 steps:</b>
+      <div style="margin-top:7px;padding:11px 13px;background:#f4f7f5;border-radius:9px;line-height:1.7">
+        <b>1. You ask</b> in plain English&nbsp; → &nbsp;<b>2. The copilot proposes</b> the exact action (who · how much · what for) and <b>waits</b>&nbsp; → &nbsp;<b>3. You click ✅ Confirm</b> and it posts straight into QuickBooks.
+        <br><span style="color:#1a6e2e"><b>Nothing is ever written without your explicit OK.</b></span> You stay in control; the copilot does the work. (This "human-in-the-loop" confirm is deliberate — an ERP touches real money, so every write is reviewed before it happens. Click <b>Cancel</b> and nothing is posted.)
+      </div>
+      <br>
+      <b>What it can do today — five live actions:</b>
+      <div style="margin-top:6px;line-height:1.8">
+        📄 <b>Create invoices</b> &nbsp;·&nbsp; 🧾 <b>Post vendor bills</b> &nbsp;·&nbsp; 💵 <b>Record customer payments</b> (auto-applied to their open invoice) &nbsp;·&nbsp; 📦 <b>Raise purchase orders</b> — all written straight into QuickBooks with a real document number — &nbsp;·&nbsp; ✉️ <b>Send AI-drafted payment reminders</b> to overdue customers (the collections assistant).
+      </div>
+      <br><b>Roadmap:</b> batch "remind <i>everyone</i> overdue" in one go, recurring invoices, and live job-cost sync — all the same <i>ask → confirm → done</i> pattern.
+      <br><br>
+      <b>Why it matters for Burns:</b> the manual work flagged on the call — job-cost reporting and customer invoicing done by hand — becomes "tell KEYSTONE and confirm." Hours of data entry collapse into a sentence.
+    </div></div>
+
   <div class="card" style="padding:16px"><h2 style="border:0;padding:0 0 7px">✅ The promise</h2>
-    <div class="muted">KEYSTONE computes every dollar figure <b>deterministically</b> from your QuickBooks data — the AI only explains, extracts, and renders. So the numbers you see and the answers the copilot gives are always grounded in the real books.</div></div>`;
+    <div class="muted">KEYSTONE computes every dollar figure <b>deterministically</b> from your QuickBooks data — the AI explains, extracts, renders, and <b>acts only on your explicit Confirm</b>. So the numbers you see and the answers the copilot gives are always grounded in the real books — and <b>nothing is ever written to QuickBooks without your OK</b>.</div></div>`;
 }
 
 // ---------- BOOT ----------
