@@ -455,6 +455,7 @@ const LANGS=[['English','en-US'],['French','fr-FR'],['Spanish','es-ES'],['German
  ['Portuguese','pt-BR'],['Mandarin Chinese','zh-CN'],['Cantonese','zh-HK'],['Japanese','ja-JP'],['Korean','ko-KR'],
  ['Arabic','ar-SA'],['Hindi','hi-IN'],['Russian','ru-RU'],['Dutch','nl-NL'],['Polish','pl-PL'],['Vietnamese','vi-VN'],
  ['Tagalog','fil-PH'],['Ukrainian','uk-UA'],['Haitian Creole','ht-HT'],['Somali','so-SO']];
+let DEFLANG='English', DEFCODE='en-US';   // recipient's default language (Email module)
 let REC=null;
 function listen(el,langCode,btn){
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -558,16 +559,33 @@ function vStudio(){
 async function vEmail(){
  const d=await get('/api/email');
  let list=d.inbox.map(e=>`<div class="flagrow" style="cursor:pointer" data-id="${e.id}"><div><b>${esc(e.subject)}</b><div class="sm">${esc(e.from)} · ${e.received}</div></div><span class="pill blue">vendor invoice</span></div>`).join('');
- $('#main').innerHTML=`<div class="grid2">
+ const opts=LANGS.map(l=>`<option value="${l[1]}" ${l[0]===DEFLANG?'selected':''}>${l[0]}</option>`).join('');
+ $('#main').innerHTML=`
+   <div class="card" style="padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><b>📥 Recipient's language:</b>
+     <select id="deflang" style="width:auto;font-weight:600">${opts}</select>
+     <span class="muted">An email in another language shows a one-click “Translate to your language” button.</span></div>
+   <div class="grid2">
    <div class="card"><h2>📧 Inbox <span class="tag">vendor invoices</span></h2>${list}</div>
-   <div class="card"><h2>✨ Extracted bill</h2><div id="extract" style="padding:16px"><div class="muted">Select an email, then extract it into a QuickBooks bill with AI.</div></div></div></div>`;
+   <div class="card"><h2>✨ Extracted bill</h2><div id="extract" style="padding:16px"><div class="muted">Select an email to translate it (if needed) and extract it into a QuickBooks bill with AI.</div></div></div></div>`;
  window.__emails=Object.fromEntries(d.inbox.map(e=>[e.id,e]));
+ $('#deflang').onchange=e=>{DEFLANG=e.target.selectedOptions[0].text;DEFCODE=e.target.value; const x=$('#xlto'); if(x)x.textContent=DEFLANG;};
  document.querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>showEmail(el.dataset.id));
 }
 function showEmail(id){
  const e=window.__emails[id];
  $('#extract').innerHTML=`<div class="muted" style="white-space:pre-wrap;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12.5px;max-height:180px;overflow:auto">${esc(e.body)}</div>
-   <button class="btn" id="ex" style="margin-top:12px;width:100%">✨ Extract to QuickBooks bill</button><div id="exout"></div>`;
+   <button class="btn ghost" id="xl" style="margin-top:10px;width:100%">🌐 Translate to <span id="xlto">${esc(DEFLANG)}</span></button><div id="xlout"></div>
+   <button class="btn" id="ex" style="margin-top:10px;width:100%">✨ Extract to QuickBooks bill</button><div id="exout"></div>`;
+ $('#xl').onclick=async()=>{
+   $('#xl').disabled=true;$('#xlout').innerHTML='<div class="muted" style="margin-top:10px"><span class="spin"></span> translating…</div>';
+   try{const r=await post('/api/translate',{text:e.body,to:DEFLANG});
+     if(r.error){$('#xlout').innerHTML='<div class="muted" style="margin-top:10px">⚠️ '+esc(r.error)+'</div>';}
+     else if((r.source_language||'').toLowerCase().includes((DEFLANG||'').toLowerCase())){
+       $('#xlout').innerHTML='<div class="muted" style="margin-top:10px">✓ This email is already in '+esc(DEFLANG)+'.</div>';}
+     else{$('#xlout').innerHTML=`<div class="xlate" style="margin-top:10px"><div class="xmeta">detected: <b>${esc(r.source_language)}</b> &nbsp;→&nbsp; ${esc(DEFLANG)}</div><div class="xtext">${esc(r.translation)}</div><div style="margin-top:8px"><button class="btn ghost" onclick="speak(this.closest('.xlate').querySelector('.xtext').textContent,DEFCODE)">🔊 Speak</button></div></div>`;}
+   }catch(err){$('#xlout').innerHTML='<div class="muted">⚠️ error</div>';}
+   $('#xl').disabled=false;
+ };
  $('#ex').onclick=async()=>{
    $('#ex').disabled=true;$('#exout').innerHTML='<div class="muted" style="margin-top:12px"><span class="spin"></span> AI reading the invoice…</div>';
    try{const r=await post('/api/email/extract',{body:e.body});const b=r.bill||{};
@@ -643,7 +661,7 @@ function vGuide(){
     ['AI Copilot (agentic) ⚡','Ask anything in plain English — "which jobs are over budget?", "who\'s slow to pay?" — and every number is computed live from the books (<b>the AI never makes figures up</b>). In <b>Demo</b> mode it answers from the Burns sample books; flip the top bar to <b>Live</b> and it answers from your <b>real QuickBooks numbers</b>. But it doesn\'t just <i>answer</i> — <b>it acts</b>: tell it "invoice the Pryor Residence pool job", "record the payment from the Pryor Residence", "raise a PO to United Rentals for $4,000", or "remind our biggest overdue customer" and the copilot drafts the exact action, shows you what it will do, and <b>writes it straight into QuickBooks once you click Confirm</b>. See the write-back explainer below. ✅'],
     ['Interpreter 🌐 (multilingual)','Burns has customers in other countries — so KEYSTONE speaks their language. The <b>AI Copilot auto-detects whatever language you write or speak and replies in that same language</b> (ask in French, get French — grounded in the same real numbers). The <b>Interpreter</b> module is a live two-way translator for customer calls &amp; chats: the customer\'s message (typed or spoken with 🎤) is translated into English for you, and your English reply is translated into their language to send back — each with 🔊 read-aloud. Pick the customer\'s language or let it auto-detect (English ↔ French, Spanish, Mandarin, Arabic, and ~18 more).'],
     ['Design Studio 🎨','For Meramec Pools: describe a pool / outdoor design (or pick a preset) and KEYSTONE generates a <b>photorealistic rendering</b> to show the client before you build. Production adds img2img on the client\'s actual backyard photo, saved to their job record.'],
-    ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry.'],
+    ['Email → ERP 📧','Vendor-invoice emails land in the inbox. Click one, hit <b>Extract to QuickBooks bill</b>, and AI reads the invoice — vendor, amount, the right job, and GL account — then you post it to QuickBooks in one click. No manual data entry. <b>Multilingual:</b> set your <b>Recipient\'s language</b> at the top; any email in another language shows a one-click <b>🌐 Translate to [your language]</b> button (with 🔊 read-aloud) — so a French or Spanish supplier invoice is instantly readable before you extract it.'],
     ['QuickBooks Sync 🔌','Shows what\'s synced with QuickBooks Online — live counts of your customers, vendors, invoices, bills, and items — plus what\'s queued to push. <b>Click any count card</b> (e.g. "Bills in QB") to jump straight into that list in <b>Live</b> mode, then click a row to see the detail and act. QuickBooks stays the ledger of record; KEYSTONE handles the rest and syncs two-way.'],
     ['Seeing your real QuickBooks data 👀','Two ways: flip the <b>top-bar toggle to "Live QuickBooks"</b> on any module (Invoicing/AR, Bills/AP, Customers, Vendors, Inventory) to see the real QB records, <b>or</b> click a count on the QuickBooks Sync screen. A green banner confirms you\'re on live data. Bills show every bill with a <b>paid / open / overdue</b> status — the A/P totals count only what\'s still owed.']])}
 

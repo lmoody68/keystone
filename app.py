@@ -167,6 +167,16 @@ SAMPLE_EMAILS = [
      "received": "yesterday",
      "body": "Your order INV-55120 shipped to City Seafood (Fenton). 400 lb salmon, 250 lb Gulf shrimp. "
              "Total $9,420.00. Net 15. Thank you for your business."},
+    {"id": "e4", "from": "facturation@quebec-beton.ca", "subject": "Facture QB-7781 — livraison de béton",
+     "received": "today",
+     "body": "Bonjour,\n\nVeuillez trouver la facture QB-7781 pour le béton livré le 06/10 au projet de piscine "
+             "Henderson (bon de commande 7003). 38 mètres cubes à 185 $/m³ = 7 030,00 $, plus 480 $ de livraison. "
+             "Total dû : 7 510,00 $, net 30 jours.\n\nMerci de votre confiance,\nQuébec Béton inc."},
+    {"id": "e5", "from": "cobros@aceros-delnorte.mx", "subject": "Factura AN-4420 — varilla de refuerzo",
+     "received": "yesterday",
+     "body": "Estimados,\n\nAdjunto la factura AN-4420 por varilla de refuerzo entregada a la obra Gateway "
+             "(Wayne Contracting). 12 toneladas por un total de $8,640.00 USD. Condiciones: neto 30 días.\n\n"
+             "Gracias,\nAceros del Norte S.A."},
 ]
 
 def groq_extract(body):
