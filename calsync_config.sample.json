@@ -1,0 +1,7 @@
+{
+  "_comment": "Copy to calsync_config.json (gitignored) and fill in. 'provider' = 'google' or 'microsoft'. For Google: create an OAuth 2.0 Client (Web) in Google Cloud Console, enable the Google Calendar API, and register the redirect_uri below. For Microsoft: register an app in Entra ID (Azure AD) with delegated Calendars.Read. Once connected, KEYSTONE overlays real free/busy onto the Availability board; until then it runs on demo data.",
+  "provider": "google",
+  "client_id": "YOUR_OAUTH_CLIENT_ID",
+  "client_secret": "YOUR_OAUTH_CLIENT_SECRET",
+  "redirect_uri": "http://localhost:8750/cal/callback"
+}

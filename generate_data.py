@@ -201,10 +201,100 @@ PROFILES = {
      "source":"theburnscos.com"},
 }
 
+# ===== PEOPLE: employee directory (the GAL) + group calendar / availability =====
+# SYNTHETIC staff modeled on the Burns org so KEYSTONE has an address book + shared availability.
+# Names/phones/emails are demo placeholders (NOT real people) — except Brad Burns & Mike Vujevic, who are
+# publicly sourced (theburnscos.com / stlmag). company "holding" = Burns Holdings shared services.
+EMPLOYEES = [
+ # Burns Holdings — leadership & shared services
+ {"id":"e-bburns","name":"Brad Burns","title":"Owner & Chief Executive Officer","dept":"Executive","company":"holding","email":"bburns@theburnscos.com","phone":"314-441-4150","location":"Maryland Heights HQ","manager":None},
+ {"id":"e-cfo","name":"Dana Whitfield","title":"Chief Financial Officer","dept":"Finance","company":"holding","email":"dwhitfield@theburnscos.com","phone":"314-441-4152","location":"Maryland Heights HQ","manager":"e-bburns"},
+ {"id":"e-ctrl","name":"Priya Raman","title":"Controller","dept":"Finance","company":"holding","email":"praman@theburnscos.com","phone":"314-441-4153","location":"Maryland Heights HQ","manager":"e-cfo"},
+ {"id":"e-hr","name":"Monica Alvarez","title":"Human Resources Manager","dept":"People & Culture","company":"holding","email":"malvarez@theburnscos.com","phone":"314-441-4155","location":"Maryland Heights HQ","manager":"e-bburns"},
+ {"id":"e-it","name":"Marcus Webb","title":"IT & Systems Administrator","dept":"Information Technology","company":"holding","email":"mwebb@theburnscos.com","phone":"314-441-4157","location":"Maryland Heights HQ","manager":"e-cfo"},
+ {"id":"e-ea","name":"Grace Kim","title":"Executive Assistant","dept":"Executive","company":"holding","email":"gkim@theburnscos.com","phone":"314-441-4151","location":"Maryland Heights HQ","manager":"e-bburns"},
+ # Wayne Contracting (GC)
+ {"id":"e-wvp","name":"Tom Delgado","title":"VP of Construction","dept":"Construction","company":"wayne","email":"tdelgado@theburnscos.com","phone":"314-555-2101","location":"Maryland Heights HQ","manager":"e-bburns"},
+ {"id":"e-wspm","name":"Sarah Nolan","title":"Senior Project Manager","dept":"Project Management","company":"wayne","email":"snolan@theburnscos.com","phone":"314-555-2102","location":"Field / HQ","manager":"e-wvp"},
+ {"id":"e-wpm","name":"Derek Price","title":"Project Manager","dept":"Project Management","company":"wayne","email":"dprice@theburnscos.com","phone":"314-555-2103","location":"Field / HQ","manager":"e-wvp"},
+ {"id":"e-wsuper","name":"Luis Ortega","title":"Superintendent","dept":"Field Operations","company":"wayne","email":"lortega@theburnscos.com","phone":"636-555-2104","location":"Gateway Retail jobsite","manager":"e-wvp"},
+ {"id":"e-west","name":"Hannah Fisher","title":"Estimator","dept":"Preconstruction","company":"wayne","email":"hfisher@theburnscos.com","phone":"314-555-2105","location":"Maryland Heights HQ","manager":"e-wvp"},
+ # Meramec Hardscapes
+ {"id":"e-mhops","name":"Ray Gibson","title":"Operations Manager","dept":"Operations","company":"mhard","email":"rgibson@theburnscos.com","phone":"314-555-3201","location":"Fenton yard","manager":"e-bburns"},
+ {"id":"e-mhfore","name":"Carlos Mendez","title":"Crew Foreman","dept":"Field Operations","company":"mhard","email":"cmendez@theburnscos.com","phone":"636-555-3202","location":"Field","manager":"e-mhops"},
+ {"id":"e-mhest","name":"Beth Snyder","title":"Estimator","dept":"Preconstruction","company":"mhard","email":"bsnyder@theburnscos.com","phone":"314-555-3203","location":"Fenton yard","manager":"e-mhops"},
+ # Meramec Pools & Outdoors
+ {"id":"e-mpmgr","name":"Nick Ferraro","title":"Pool Division Manager","dept":"Operations","company":"mpool","email":"nferraro@theburnscos.com","phone":"314-555-4301","location":"Fenton yard","manager":"e-bburns"},
+ {"id":"e-mpdes","name":"Amber Cole","title":"Design Consultant","dept":"Design & Sales","company":"mpool","email":"acole@theburnscos.com","phone":"314-555-4302","location":"Showroom","manager":"e-mpmgr"},
+ {"id":"e-mpsuper","name":"Jamal Carter","title":"Build Superintendent","dept":"Field Operations","company":"mpool","email":"jcarter@theburnscos.com","phone":"636-555-4303","location":"Henderson jobsite","manager":"e-mpmgr"},
+ # Vizex (graphics / signage)
+ {"id":"e-vzcd","name":"Elena Vargas","title":"Creative Director","dept":"Creative","company":"vizex","email":"evargas@theburnscos.com","phone":"314-555-5401","location":"Maryland Heights HQ","manager":"e-bburns"},
+ {"id":"e-vzam","name":"Ryan Brooks","title":"Account Manager","dept":"Sales","company":"vizex","email":"rbrooks@theburnscos.com","phone":"314-555-5402","location":"Maryland Heights HQ","manager":"e-vzcd"},
+ {"id":"e-vzinst","name":"Pete Hansen","title":"Install Lead","dept":"Field Operations","company":"vizex","email":"phansen@theburnscos.com","phone":"636-555-5403","location":"Field (national)","manager":"e-vzcd"},
+ # City Seafood (Wholesale)
+ {"id":"e-cswops","name":"Mike Vujevic","title":"Wholesale Operations Lead","dept":"Operations","company":"csw","email":"mvujevic@theburnscos.com","phone":"314-555-6501","location":"Fenton processing facility","manager":"e-bburns"},
+ {"id":"e-cswsales","name":"Tonya Reed","title":"Sales Manager","dept":"Sales","company":"csw","email":"treed@theburnscos.com","phone":"314-555-6502","location":"Fenton processing facility","manager":"e-cswops"},
+ {"id":"e-cswlog","name":"Victor Nguyen","title":"Logistics & Delivery Coordinator","dept":"Logistics","company":"csw","email":"vnguyen@theburnscos.com","phone":"636-555-6503","location":"Fenton processing facility","manager":"e-cswops"},
+ # City Seafood (Retail)
+ {"id":"e-csrmgr","name":"Kelly Burns","title":"Retail Manager","dept":"Retail","company":"csr","email":"kburns@theburnscos.com","phone":"314-555-7601","location":"Fenton retail counter","manager":"e-bburns"},
+ {"id":"e-csrlead","name":"Sam Diaz","title":"Counter Lead","dept":"Retail","company":"csr","email":"sdiaz@theburnscos.com","phone":"636-555-7602","location":"Fenton retail counter","manager":"e-csrmgr"},
+]
+
+# group calendar — deterministic (local RNG so financial data above is untouched)
+_crnd = random.Random(20261009)
+_DEPT_TITLES = {
+ "Executive":["Leadership sync","Strategy review","Investor update","1:1"],
+ "Finance":["AR review","Month-end close","Budget review","Cash-flow review","Payroll run"],
+ "People & Culture":["Interview","Benefits review","Onboarding","1:1"],
+ "Information Technology":["QuickBooks sync check","Systems maintenance","Vendor call","Ticket triage"],
+ "Construction":["Project review","Owner meeting","Subcontractor coordination","Site walk"],
+ "Project Management":["Project check-in","Client call","Schedule review","Submittal review"],
+ "Field Operations":["Site walk","Crew briefing","Safety meeting","Inspection"],
+ "Preconstruction":["Estimate review","Bid walk","Takeoff","Scope review"],
+ "Operations":["Ops standup","Scheduling","Vendor call","Capacity planning"],
+ "Design & Sales":["Design consult","Client walkthrough","Showroom appointment","Proposal review"],
+ "Creative":["Design review","Client presentation","Press-check","Brand workshop"],
+ "Sales":["Sales call","Pipeline review","Customer check-in","Proposal review"],
+ "Logistics":["Route planning","Delivery dispatch","Inventory count","Carrier call"],
+ "Retail":["Shift planning","Vendor delivery","Counter prep","Inventory count"],
+}
+def _business_days(n):
+    out, dd = [], TODAY
+    while len(out) < n:
+        if dd.weekday() < 5:
+            out.append(dd)
+        dd += dt.timedelta(days=1)
+    return out
+
+_SLOTS = [("09:00","09:30"),("10:30","11:30"),("13:00","14:00"),("14:30","15:00"),("15:30","16:30")]
+_OOO_TODAY = {"e-wsuper":"PTO — personal day","e-mhest":"On-site all day — Frontenac Plaza bid walk"}
+calendar_events, _evno = [], 9000
+def _add_event(emp, title, date, start, end, typ="meeting", attendees=None):
+    global _evno
+    _evno += 1
+    calendar_events.append({"id":f"EV-{_evno}","employee":emp,"title":title,"date":date,
+                            "start":start,"end":end,"type":typ,"attendees":attendees or []})
+_bdays = _business_days(5)
+for _emp in EMPLOYEES:
+    for _di, _day in enumerate(_bdays):
+        _ds = _day.isoformat()
+        if _di == 0 and _emp["id"] in _OOO_TODAY:
+            _add_event(_emp["id"], _OOO_TODAY[_emp["id"]], _ds, "00:00", "23:59", "ooo")
+            continue
+        _titles = _DEPT_TITLES.get(_emp["dept"], ["Team meeting","Project check-in","Planning"])
+        for _s in _SLOTS:
+            if _crnd.random() < 0.32:
+                _add_event(_emp["id"], _crnd.choice(_titles), _ds, _s[0], _s[1],
+                           _crnd.choice(["meeting","meeting","busy","focus"]))
+# one real cross-company standing meeting today so the calendar shows a shared event
+_add_event("e-bburns", "Weekly operations sync (all divisions)", _bdays[0].isoformat(), "08:00", "08:45",
+           "meeting", ["e-cfo","e-wvp","e-mhops","e-mpmgr","e-vzcd","e-cswops","e-csrmgr"])
+
 data = {"as_of":TODAY.isoformat(),
         "holding":PROFILES["holding"], "profiles":PROFILES,
         "companies":COMPANIES,"jobs":jobs,"invoices":invoices,"cost_entries":cost_entries,
         "bills":bills,"purchase_orders":pos,"inventory":inventory,
+        "employees":EMPLOYEES,"calendar_events":calendar_events,
         "_note":"Company PROFILES are REAL (publicly sourced; see each 'source'). Transactions (jobs, invoices, "
                 "bills, POs, inventory quantities/prices) are SYNTHETIC, modeled on Burns' real operations for demo - "
                 "NOT actual Burns financials. City Seafood products: Salmon & Shrimp confirmed real; others representative."}
@@ -215,6 +305,7 @@ overdue = sum(i['amount'] for i in invoices if i['status']=='overdue')
 print(f"wrote {OUT}")
 print(f"  companies={len(COMPANIES)} jobs={len(jobs)} invoices={len(invoices)} cost_entries={len(cost_entries)}")
 print(f"  bills={len(bills)} purchase_orders={len(pos)} inventory_items={len(inventory)} profiles={len(PROFILES)}")
+print(f"  employees={len(EMPLOYEES)} calendar_events={len(calendar_events)}")
 ap_open = sum(b['amount'] for b in bills if b['status'] in ('open','overdue'))
 inv_val = sum(i['value'] for i in inventory)
 print(f"  open AR=${open_ar:,.0f}  overdue=${overdue:,.0f}  ({overdue/open_ar*100:.0f}% overdue)")

@@ -206,6 +206,161 @@ def invoice_drafts(co=None):
 
 def profiles(): return load().get("profiles", {})
 
+# ---------- PEOPLE: directory (GAL) + group calendar / availability ----------
+def _emp_co_name(cid):
+    return "Burns Holdings (shared services)" if cid == "holding" else _co_name(cid)
+
+def _now_dt():
+    """Demo 'now' = the books' as_of date at the real local time-of-day (so the board moves through the day)."""
+    a = _as_of(); n = dt.datetime.now()
+    return dt.datetime(a.year, a.month, a.day, n.hour, n.minute)
+
+def _emp_status(eid, events, now=None):
+    """Compute an employee's CURRENT availability from today's calendar: OOO > in a meeting/busy/focus > available."""
+    now = now or _now_dt()
+    today = now.date().isoformat(); hhmm = now.strftime("%H:%M")
+    todays = [e for e in events if e["employee"] == eid and e["date"] == today]
+    for e in todays:
+        if e["type"] == "ooo":
+            return "Out of office", e["title"]
+    for e in sorted(todays, key=lambda x: x["start"]):
+        if e["type"] != "ooo" and e["start"] <= hhmm < e["end"]:
+            label = {"meeting": "In a meeting", "focus": "Focus time"}.get(e["type"], "Busy")
+            return label, f"{e['title']} ({e['start']}–{e['end']})"
+    nxt = next((e for e in sorted(todays, key=lambda x: x["start"]) if e["start"] > hhmm and e["type"] != "ooo"), None)
+    return "Available", (f"next: {nxt['title']} at {nxt['start']}" if nxt else "no more meetings today")
+
+def directory(co=None):
+    evs = load().get("calendar_events", []); now = _now_dt()
+    out = []
+    for e in load().get("employees", []):
+        if not _match(e["company"], co):
+            continue
+        st, detail = _emp_status(e["id"], evs, now)
+        out.append({**e, "company_name": _emp_co_name(e["company"]), "status": st, "status_detail": detail})
+    _apply_live_presence(out)   # overlay REAL free/busy if a calendar account is connected (else no-op)
+    return sorted(out, key=lambda x: (x["company_name"], x["name"]))
+
+def calendar(co=None):
+    emps = {e["id"]: e for e in directory(co)}
+    rows = []
+    for e in load().get("calendar_events", []):
+        if e["employee"] not in emps:
+            continue
+        m = emps[e["employee"]]
+        rows.append({**e, "employee_name": m["name"], "company_name": m["company_name"]})
+    rows.sort(key=lambda r: (r["date"], r["start"]))
+    board = sorted(emps.values(), key=lambda b: (b["status"] != "Available", b["company_name"], b["name"]))
+    counts = {}
+    for b in board:
+        counts[b["status"]] = counts.get(b["status"], 0) + 1
+    live = False
+    try:
+        import calsync
+        live = calsync.connected()
+    except Exception:
+        live = False
+    return {"as_of": load()["as_of"], "now": _now_dt().strftime("%Y-%m-%d %H:%M"),
+            "events": rows, "board": board, "counts": counts, "people": len(board), "live": live}
+
+def emp_by_name(name):
+    name = (name or "").strip().lower()
+    if not name:
+        return None
+    emps = load().get("employees", [])
+    return (next((e for e in emps if e["name"].lower() == name), None)
+            or next((e for e in emps if name in e["name"].lower()), None))
+
+def add_event(employee, title, date, start, end, typ="meeting", attendees=None):
+    """Append an event to the group calendar (persists to data.json so it shows on the board)."""
+    d = load()
+    evs = d.setdefault("calendar_events", [])
+    nid = "EV-" + str(9000 + len(evs) + 1)
+    ev = {"id": nid, "employee": employee, "title": title, "date": date, "start": start,
+          "end": end, "type": typ, "attendees": attendees or []}
+    evs.append(ev)
+    (BASE / "data.json").write_text(json.dumps(d, indent=1), encoding="utf-8")
+    return ev
+
+# role / group resolution — "the pool crew leads", "all estimators", "the Meramec Pools team"
+_CO_KEYWORDS = {
+    "wayne": ["wayne", "contracting", "general contractor", "gc"],
+    "mhard": ["meramec hardscapes", "hardscape", "hardscapes", "concrete"],
+    "mpool": ["meramec pools", "pool", "pools", "outdoor", "spa"],
+    "vizex": ["vizex", "signage", "graphics", "sign", "creative"],
+    "csw":   ["city seafood", "wholesale", "seafood", "fish", "fenton"],
+    "csr":   ["retail seafood", "retail", "counter", "storefront"],
+    "holding": ["burns holdings", "holding", "corporate", "shared services", "head office", "hq"],
+}
+_ROLE_KEYWORDS = ("estimator", "manager", "lead", "foreman", "superintendent", "sales", "design",
+                  "project", "creative", "logistics", "retail", "counter", "operations", "controller",
+                  "cfo", "ceo", "owner", "executive", "hr", "human", "it", "systems", "crew", "field",
+                  "install", "account", "director", "assistant", "coordinator", "vp", "pm")
+# role words whose TITLE text differs from the spoken term (expand so "the CFO" matches "Chief Financial Officer")
+_ROLE_SYN = {"cfo": ["chief financial", "cfo"], "ceo": ["chief executive", "ceo", "owner"],
+             "owner": ["owner", "chief executive"], "hr": ["human resources"], "human": ["human resources"],
+             "it": ["systems administrator", "information technology"], "systems": ["systems administrator"],
+             "pm": ["project manager"], "vp": ["vp ", "vice president"], "executive": ["executive", "chief"]}
+
+def resolve_people(query):
+    """Resolve a name OR a role/group phrase to a list of employees (for group scheduling)."""
+    q = (query or "").lower().strip()
+    if not q:
+        return []
+    emps = [{**e, "company_name": _emp_co_name(e["company"])} for e in load().get("employees", [])]
+    named = [e for e in emps if e["name"].lower() in q]
+    if named:
+        return named
+    comp_ids = [cid for cid, kws in _CO_KEYWORDS.items() if any(k in q for k in kws)]
+    pool = [e for e in emps if e["company"] in comp_ids] if comp_ids else emps
+    role_words = [w for w in _ROLE_KEYWORDS if w in q]
+    want = []
+    for w in role_words:
+        want += _ROLE_SYN.get(w, [w])
+    def hit(e):
+        hay = (e["title"] + " " + e["dept"]).lower()
+        if ("crew" in role_words or "field" in role_words) and ("field operations" in hay
+                or any(k in hay for k in ("foreman", "superintendent", "install", "crew"))):
+            return True
+        return any(s in hay for s in want)
+    if role_words:
+        res = [e for e in pool if hit(e)]
+    elif comp_ids and any(w in q for w in ("team", "everyone", "all", "staff", "crew", "people")):
+        res = pool
+    else:
+        res = pool if comp_ids else []
+    return res[:12]
+
+def _apply_live_presence(emps):
+    """If a calendar account is connected, overlay REAL free/busy onto each employee's status (best-effort).
+    No-op (demo stays) when not connected or on any error — never breaks the board."""
+    try:
+        import calsync
+        if not calsync.connected():
+            return False
+        fb = calsync.freebusy([e["email"] for e in emps])
+    except Exception:
+        return False
+    now = dt.datetime.now(dt.timezone.utc)
+    for e in emps:
+        busy_until = None
+        for b in (fb.get(e["email"]) or []):
+            try:
+                s = dt.datetime.fromisoformat((b.get("start") or "").replace("Z", "+00:00"))
+                en = dt.datetime.fromisoformat((b.get("end") or "").replace("Z", "+00:00"))
+            except Exception:
+                continue
+            if s <= now < en:
+                busy_until = en
+                break
+        if busy_until:
+            e["status"] = "In a meeting"
+            e["status_detail"] = "busy per live calendar until " + busy_until.astimezone().strftime("%H:%M")
+        else:
+            e["status"] = "Available"
+            e["status_detail"] = "free per live calendar"
+    return True
+
 # ---------- SNAPSHOT (group or single-company) ----------
 def snapshot(co=None):
     roll = company_rollup(co); d = dso(co); fl = flags(co)

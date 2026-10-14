@@ -182,7 +182,8 @@ let CO='';            // selected company id ('' = consolidated group)
 let CUR='dashboard';  // current module
 const CONAME={wayne:'Wayne Contracting',mhard:'Meramec Hardscapes',mpool:'Meramec Pools & Outdoors',vizex:'Vizex',csw:'City Seafood (Wholesale)',csr:'City Seafood (Retail)'};
 let SRC='';           // '' = demo (Burns model), 'qb' = live QuickBooks
-const SCOPED=['/api/overview','/api/jobs','/api/ar','/api/ap','/api/inventory','/api/po','/api/crm','/api/vendors'];
+let PEND_SCHED=null;  // employee name to pre-select in the Schedule-a-meeting form (set from a drawer)
+const SCOPED=['/api/overview','/api/jobs','/api/ar','/api/ap','/api/inventory','/api/po','/api/crm','/api/vendors','/api/directory','/api/calendar'];
 const get=u=>{ if(SCOPED.some(p=>u.startsWith(p))){ if(SRC) u+=(u.includes('?')?'&':'?')+'source='+SRC; else if(CO) u+=(u.includes('?')?'&':'?')+'company='+CO; } return fetch(u).then(r=>r.json()); };
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2200);}
@@ -222,6 +223,12 @@ function buildDetail(kind,o){
     note:o.low_stock?'Stock is below the reorder point — consider raising a purchase order to restock.':'',actions:[]};
   case 'slow':{ const a=[{label:'✉️ Send payment reminder',action:'send_reminder',params:{customer:o.customer,amount:o.overdue},summary:`Send a payment reminder to ${o.customer} for ${F(o.overdue)} overdue.`},{label:'💵 Record payment',action:'record_payment',params:{customer:o.customer,amount:o.overdue},summary:`Record a ${F(o.overdue)} payment from ${o.customer}.`}];
     return {kind:'Slow payer',title:o.customer,sub:o.company,fields:[['Company',esc(o.company)],['Overdue',F(o.overdue),'amt red']],actions:a}; }
+  case 'emp': return {kind:'Employee',title:o.name,sub:(o.title||'')+' · '+(o.company_name||''),
+    fields:[['Title',esc(o.title)],['Department',esc(o.dept||'—')],['Company',esc(o.company_name)],['Phone',esc(o.phone)],['Email',esc(o.email)],['Location',esc(o.location||'—')],['Status',o.status]],
+    note:o.status_detail?('Currently: '+esc(o.status_detail)):'',
+    actions:[{label:'📞 Call '+esc(o.phone),cls:'ghost',action:'_tel',params:{v:o.phone},summary:''},
+             {label:'✉️ Email '+esc((o.name||'').split(' ')[0]),cls:'ghost',action:'_mail',params:{v:o.email},summary:''},
+             {label:'📅 Schedule a meeting',action:'_sched',params:{v:o.name},summary:''}]};
   case 'co': return {kind:'Company',title:o.name,sub:o.industry,
     fields:[['Active jobs',o.active_jobs],['Contract value',F(o.contract_value)],['Un-billed',money(o.under_billed),'amt green'],['Open A/R',F(o.open_ar)],['Overdue A/R',money(o.overdue_ar),o.overdue_ar>0?'amt red':'']],
     actions:[{label:'🔎 View this company only',cls:'ghost',action:'_scope',params:{id:o.id},summary:''}]};
@@ -245,6 +252,9 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeDrawer(); });
 function drawerAct(ai){
  const a=DREF.actions[ai];
  if(a.action==='_scope'){ closeDrawer(); $('#cosel').value=a.params.id||''; $('#cosel').dispatchEvent(new Event('change')); return; }
+ if(a.action==='_tel'){ window.location.href='tel:'+(a.params.v||'').replace(/[^0-9+]/g,''); return; }
+ if(a.action==='_mail'){ window.location.href='mailto:'+(a.params.v||''); return; }
+ if(a.action==='_sched'){ closeDrawer(); PEND_SCHED=a.params.v||null; route('calendar'); return; }
  $('#dactions').style.display='none';
  const f=$('#dfoot');
  f.innerHTML=`<div class="confirmbar">⚡ <b>Confirm action</b><div style="margin:6px 0 11px">${esc(a.summary)}</div>
@@ -272,6 +282,9 @@ const NAV=[
  {sec:'Relationships'},
  {id:'crm',label:'Customers',icon:'👥',sub:'Customer balances & history (CRM)'},
  {id:'vendors',label:'Vendors',icon:'🚚',sub:'Supplier spend & payables'},
+ {sec:'People'},
+ {id:'directory',label:'Directory',icon:'📒',sub:'Company address book — everyone across all companies'},
+ {id:'calendar',label:'Availability',icon:'📅',sub:"Who's free, in a meeting, or out — plus the group calendar"},
  {sec:'AI & Integrations'},
  {id:'copilot',label:'AI Copilot',icon:'🤖',sub:'Ask anything about the books — in any language'},
  {id:'interpret',label:'Interpreter',icon:'🌐',sub:'Live multilingual translator for customer communication (speak or type)'},
@@ -294,7 +307,7 @@ function route(id){
  $('#mtitle').textContent=META[id].label;
  $('#msub').textContent=META[id].sub+(CO?(' — scoped to '+CONAME[CO]):'');
  $('#main').innerHTML='<div class="muted"><span class="spin"></span> loading…</div>';
- ({dashboard:vDash,companies:vCompanies,jobs:vJobs,ar:vAR,ap:vAP,po:vPO,inventory:vInv,crm:vCRM,vendors:vVendors,copilot:vCopilot,interpret:vInterpret,studio:vStudio,email:vEmail,qbsync:vQB,guide:vGuide})[id]();
+ ({dashboard:vDash,companies:vCompanies,jobs:vJobs,ar:vAR,ap:vAP,po:vPO,inventory:vInv,crm:vCRM,vendors:vVendors,directory:vDirectory,calendar:vCalendar,copilot:vCopilot,interpret:vInterpret,studio:vStudio,email:vEmail,qbsync:vQB,guide:vGuide})[id]();
 }
 
 // ---------- DASHBOARD ----------
@@ -409,6 +422,83 @@ async function vVendors(){
  let r=`<tr><th>Vendor</th><th>Company</th><th class="num">Billed</th><th class="num">Open payable</th></tr>`;
  STORE.vend=d.vendors;d.vendors.forEach((v,i)=>r+=`<tr ${clk('vend',i)}><td><b>${v.vendor}</b></td><td class="muted">${v.company}</td><td class="num">${F(v.billed)}</td><td class="num amt ${v.open>0?'amber':''}">${v.open>0?F(v.open):'—'}</td></tr>`);
  $('#main').innerHTML=`<div class="card"><h2>🚚 Vendors <span class="tag">${d.vendors.length} suppliers</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>`;
+}
+
+// ---------- DIRECTORY (GAL) ----------
+function sPill(s){const m={'Available':'green','In a meeting':'amber','Busy':'amber','Focus time':'blue','Out of office':'gray'};return `<span class="pill ${m[s]||'gray'}">${esc(s)}</span>`;}
+function evPill(t){const lbl={meeting:'meeting',busy:'busy',focus:'focus',ooo:'out of office'},m={meeting:'blue',busy:'amber',focus:'green',ooo:'gray'};return `<span class="pill ${m[t]||'gray'}">${lbl[t]||t}</span>`;}
+function fmtDate(iso){try{return new Date(iso+'T00:00').toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});}catch(e){return iso;}}
+async function vDirectory(){
+ const d=await get('/api/directory'); STORE.emp=d.employees;
+ let r=`<tr><th>Name</th><th>Title</th><th>Department</th><th>Company</th><th>Phone</th><th>Status</th></tr>`;
+ d.employees.forEach((e,i)=>r+=`<tr ${clk('emp',i)}><td><b>${esc(e.name)}</b><div class="sm muted">${esc(e.email)}</div></td><td>${esc(e.title)}</td><td class="muted">${esc(e.dept)}</td><td class="muted">${esc(e.company_name)}</td><td class="muted">${esc(e.phone)}</td><td>${sPill(e.status)}</td></tr>`);
+ $('#main').innerHTML=`
+  <div class="card" style="padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <b>📒 Employee Directory</b><span class="muted">${d.employees.length} people${CO?(' · '+CONAME[CO]):' · all companies'}</span>
+    <input id="empq" placeholder="Search name, title, department…" style="margin-left:auto;max-width:300px">
+  </div>
+  <div class="card"><h2>👥 People <span class="tag">click anyone for contact details &amp; actions</span></h2>${tbl('',r).replace('<tr></tr>','')}</div>
+  <div class="muted" style="margin-top:8px;font-size:11.5px">The directory is modeled demo staff for The Burns Companies — names, phone numbers and emails are sample data (Brad Burns &amp; Mike Vujevic are publicly sourced).</div>`;
+ const q=$('#empq'); q.oninput=()=>{const t=q.value.toLowerCase();document.querySelectorAll('#main table tr').forEach((tr,idx)=>{if(idx===0)return;tr.style.display=tr.textContent.toLowerCase().includes(t)?'':'none';});};
+}
+
+// ---------- AVAILABILITY / GROUP CALENDAR ----------
+async function vCalendar(){
+ const d=await get('/api/calendar'); STORE.emp=d.board;
+ let cs={}; try{cs=await fetch('/api/calsync').then(r=>r.json());}catch(e){}
+ const liveCal=d.live;
+ const calStrip=liveCal
+   ? `<div class="card" style="padding:11px 16px;background:#e9f7ec;border-color:#bfe6c6"><b style="color:#1a6e2e">🟢 Live calendar connected</b> <span class="muted">— availability below is real free/busy from ${esc(cs.provider||'your calendar')}.</span></div>`
+   : `<div class="card" style="padding:11px 16px;background:#fdf6e3;border-color:#f0e3c0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+       <b style="color:#8a6d1a">📅 Demo availability</b>
+       <span class="muted">Connect a Google Workspace or Microsoft 365 calendar to show <b>real</b> free/busy.</span>
+       <a class="btn gold" href="/cal/connect" target="_blank" style="margin-left:auto;text-decoration:none">🔗 Connect calendar</a>
+      </div>`;
+ const order=['Available','In a meeting','Busy','Focus time','Out of office'];
+ const shown=order.filter(s=>d.counts[s]);
+ const tiles=shown.map(s=>`<div class="kpi ${s==='Available'?'green':s==='Out of office'?'':'amber'}"><div class="k">${s}</div><div class="v">${d.counts[s]}</div></div>`).join('');
+ const board=d.board.map((b,i)=>`<div class="flagrow clickrow" onclick="openDetail('emp',${i})"><div><b>${esc(b.name)}</b><div class="sm">${esc(b.title)} · ${esc(b.company_name)}</div></div><div style="text-align:right">${sPill(b.status)}<div class="sm muted">${esc(b.status_detail||'')}</div></div></div>`).join('');
+ const byDate={}; d.events.forEach(e=>{(byDate[e.date]=byDate[e.date]||[]).push(e);});
+ let agenda='';
+ Object.keys(byDate).sort().forEach(date=>{
+   agenda+=`<div style="padding:8px 16px;background:var(--soft);font-weight:700;font-size:12px;border-bottom:1px solid var(--line)">${fmtDate(date)}</div>`;
+   byDate[date].forEach(e=>agenda+=`<div class="flagrow"><div><b>${esc(e.start)}–${esc(e.end)}</b> ${esc(e.title)}<div class="sm">${esc(e.employee_name)} · ${esc(e.company_name)}</div></div>${evPill(e.type)}</div>`);
+ });
+ const opts=d.board.map(b=>`<option value="${esc(b.name)}" ${PEND_SCHED===b.name?'selected':''}>${esc(b.name)} — ${esc(b.title)}</option>`).join('');
+ $('#main').innerHTML=`
+  ${calStrip}
+  <div class="kpis" style="grid-template-columns:repeat(${shown.length||1},1fr)">${tiles}</div>
+  <div class="muted" style="margin:-6px 0 14px;font-size:12px">${liveCal?'Live free/busy':'Demo availability'} as of <b>${esc(d.now)}</b> · ${d.people} people${CO?(' · '+CONAME[CO]):''}</div>
+  <div class="grid2">
+   <div class="card"><h2>🟢 Who's available right now <span class="tag">click a person to call, email or book</span></h2><div style="max-height:54vh;overflow:auto">${board||'<div class="flagrow sm">No one in scope</div>'}</div></div>
+   <div>
+    <div class="card"><h2>📅 Schedule a meeting <span class="tag">adds to the group calendar</span></h2>
+     <div style="padding:14px 16px">
+      <label class="muted">With</label><select id="sEmp" style="margin:4px 0 10px">${opts}</select>
+      <label class="muted">Title</label><input id="sTitle" value="Meeting" style="margin:4px 0 10px">
+      <div class="grid2" style="gap:10px">
+        <div><label class="muted">Date</label><input id="sDate" type="date" value="${d.as_of}" style="margin:4px 0 10px"></div>
+        <div><label class="muted">Start</label><input id="sStart" type="time" value="11:00" style="margin:4px 0 10px"></div></div>
+      <label class="muted">End</label><input id="sEnd" type="time" value="11:30" style="margin:4px 0 10px">
+      <label class="muted">Also invite <span style="font-weight:400">(names or roles, comma-separated)</span></label>
+      <input id="sAtt" placeholder="e.g. the pool crew leads, all estimators" style="margin:4px 0 12px">
+      <button class="btn" id="sGo" style="width:100%">📅 Schedule meeting</button><div id="sOut"></div>
+     </div></div>
+    <div class="card"><h2>🗓️ Group calendar <span class="tag">${d.events.length} events</span></h2><div style="max-height:40vh;overflow:auto">${agenda||'<div class="flagrow sm">No events in scope</div>'}</div></div>
+   </div>
+  </div>`;
+ PEND_SCHED=null;
+ $('#sGo').onclick=async()=>{
+   const att=$('#sAtt').value.split(',').map(s=>s.trim()).filter(Boolean);
+   const params={employee:$('#sEmp').value,title:($('#sTitle').value.trim()||'Meeting'),date:$('#sDate').value,start:$('#sStart').value,end:$('#sEnd').value,attendees:att};
+   if(!params.date){toast('Pick a date');return;}
+   $('#sGo').disabled=true;$('#sOut').innerHTML='<div class="muted" style="margin-top:10px"><span class="spin"></span> scheduling…</div>';
+   try{const res=await post('/api/action/execute',{action:'schedule_meeting',params});
+     $('#sOut').innerHTML=`<div class="dresult ${res.ok?'ok':'err'}" style="margin-top:10px">${res.ok?cmd(res.message):('⚠️ '+esc(res.error||'failed'))}</div>`;
+     if(res.ok){toast('✅ Scheduled');setTimeout(()=>route('calendar'),1300);}
+   }catch(e){$('#sOut').innerHTML='<div class="dresult err" style="margin-top:10px">⚠️ error</div>';}
+   $('#sGo').disabled=false;
+ };
 }
 
 // ---------- COPILOT ----------
@@ -656,6 +746,11 @@ function vGuide(){
   ${gSec('👥','Relationships',[
     ['Customers (CRM)','Every customer across all companies with total invoiced, open balance, and overdue — know who owes you and who to chase.'],
     ['Vendors','Supplier spend and open payables across the group.']])}
+
+  ${gSec('📒','People',[
+    ['Directory (the company address book)','Everyone across all the Burns companies in one place — name, title, department, company, phone, and email, each tagged with a live <b>availability</b> badge. Use the company switcher to see one company\'s team or the whole group, and the search box to find anyone fast. <b>Click a person</b> to open their card and <b>📞 call, ✉️ email, or 📅 schedule a meeting</b> with them right there.'],
+    ['Availability (the group calendar)','See at a glance <b>who\'s available, in a meeting, busy, in focus time, or out of office</b> right now — computed from everyone\'s calendar. The right side has a one-click <b>Schedule a meeting</b> form (it drops onto the group calendar) and the shared agenda of upcoming events. The <b>Also invite</b> box takes <b>names or roles</b> — type "the pool crew leads" or "all estimators" and KEYSTONE books the right people. Ask the copilot too — "who\'s free this afternoon?" or "set up a meeting with the Meramec Pools team Thursday at 2" — and it answers/acts from the same availability.'],
+    ['Connecting a real calendar','Availability ships on <b>demo data</b> so it works out of the box. Click <b>🔗 Connect calendar</b> on the Availability screen to link a <b>Google Workspace</b> or <b>Microsoft 365</b> account — once connected, the board shows <b>real free/busy</b> for your staff instead of demo data (a green "Live calendar connected" banner confirms it).']])}
 
   ${gSec('🤖','AI & Integrations — the differentiators',[
     ['AI Copilot (agentic) ⚡','Ask anything in plain English — "which jobs are over budget?", "who\'s slow to pay?" — and every number is computed live from the books (<b>the AI never makes figures up</b>). In <b>Demo</b> mode it answers from the Burns sample books; flip the top bar to <b>Live</b> and it answers from your <b>real QuickBooks numbers</b>. But it doesn\'t just <i>answer</i> — <b>it acts</b>: tell it "invoice the Pryor Residence pool job", "record the payment from the Pryor Residence", "raise a PO to United Rentals for $4,000", or "remind our biggest overdue customer" and the copilot drafts the exact action, shows you what it will do, and <b>writes it straight into QuickBooks once you click Confirm</b>. See the write-back explainer below. ✅'],

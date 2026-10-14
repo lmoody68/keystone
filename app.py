@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 import engine
 import qbo
 import qbo_map
+import calsync
 
 def _live(source):
     return source == "qb" and qbo.connected()
@@ -60,11 +61,18 @@ def _facts(co=None):
              "under_billed": [{"job": j["name"], "co": j["company_name"], "amount": _r(j["under_billed"])} for j in fl["under_billed_jobs"]]}
     comp = [{"co": c["name"], "industry": c["industry"], "active_jobs": c["active_jobs"], "contract_value": _r(c["contract_value"]),
              "unbilled": _r(c["under_billed"]), "open_ar": _r(c["open_ar"]), "overdue": _r(c["overdue_ar"])} for c in s["companies"]]
+    cal = engine.calendar(co)
+    # lean presence facts (names only — the backend resolves names→contacts; keep grounding small for the 8000 TPM cap)
+    people_now = {"now": cal["now"], "headcount": cal["people"],
+                  "available": [b["name"] for b in cal["board"] if b["status"] == "Available"][:16],
+                  "in_meeting": [b["name"] for b in cal["board"] if b["status"] == "In a meeting"][:12],
+                  "busy_or_focus": [b["name"] for b in cal["board"] if b["status"] in ("Busy", "Focus time")][:10],
+                  "out_of_office": [f"{b['name']} — {b['status_detail']}" for b in cal["board"] if b["status"] == "Out of office"]}
     return {"as_of": s["as_of"], "holding": s["holding"]["name"], "group": s["group"], "companies": comp,
             "dso": s["dso"], "aging": s["aging"], "ap": {"open_ap": s["ap"]["open_ap"], "overdue_ap": s["ap"]["overdue_ap"], "aging": s["ap"]["aging"]},
             "inventory": {"value": s["inventory"]["total_value"], "low_stock": [i["item"] for i in s["inventory"]["low_stock"]]},
             "purchase_orders": {"open": s["po"]["count"], "committed": s["po"]["committed"]},
-            "flags": flags, "jobs": jobs, "invoice_drafts": engine.invoice_drafts(co)}
+            "flags": flags, "jobs": jobs, "invoice_drafts": engine.invoice_drafts(co), "people_now": people_now}
 
 SYSTEM = (
     "You are KEYSTONE — the AI copilot inside an ERP for The Burns Companies (a multi-company group: general "
@@ -80,13 +88,20 @@ SYSTEM = (
     "ACTIONS (write-back — you can DO things, not just report): if the user clearly asks you to perform one of the "
     "operations below, respond with ONLY a JSON object (no prose, no code fence, no markdown): "
     "{\"action\":\"<name>\",\"params\":{...},\"summary\":\"<one sentence saying exactly what you will do>\"}. "
-    "The five actions and their params:\n"
+    "The actions and their params:\n"
     "- create_invoice {customer, amount, description} — raise a customer invoice.\n"
     "- create_bill {vendor, amount, description} — post a vendor bill you owe.\n"
     "- record_payment {customer, amount} — record a customer payment received (applied to their open invoice).\n"
     "- create_po {vendor, amount, description} — raise a purchase order to a vendor.\n"
     "- send_reminder {customer, amount, days} — send a payment reminder to an overdue customer "
     "(amount = their overdue balance, days = days past due, both from FACTS).\n"
+    "- schedule_meeting {employee, title, date, start, end, attendees} — put a meeting on people's calendars. "
+    "`employee` and each `attendees` entry may be a PERSON'S NAME or a ROLE/GROUP phrase and KEYSTONE resolves it "
+    "to the right people — e.g. 'the pool crew leads', 'all estimators', 'the Meramec Pools team', 'the CFO'. "
+    "date = YYYY-MM-DD (default today's as_of), start/end = HH:MM 24-hour. `attendees` is a list of names/roles for a "
+    "group meeting. Use for 'schedule/set up/book a meeting with <people/role>'.\n"
+    "For questions about who is available, in a meeting, or out of office, answer from FACTS.people_now "
+    "(do not invent staff or statuses).\n"
     "Use the amount and customer/vendor the user states explicitly; otherwise pull them from FACTS when the user "
     "refers to a specific job, draft, invoice, overdue item, or slow payer. Only when NEITHER the user NOR FACTS "
     "gives you an amount should you ask instead of acting — never make up a number the user didn't give. "
@@ -256,7 +271,9 @@ def index():
 def health():
     return {"ok": True, "app": "KEYSTONE", "companies": len(engine.load()["companies"]),
             "llm_ready": bool(groq_key()), "image_ready": bool(openai_key()),
-            "qb_connected": qbo.connected(), "as_of": engine.load()["as_of"]}
+            "qb_connected": qbo.connected(), "as_of": engine.load()["as_of"],
+            "cal_connected": calsync.connected(), "cal_configured": calsync.configured(),
+            "cal_provider": calsync.provider()}
 
 @app.get("/api/overview")
 def overview(company: str = None, source: str = None):
@@ -297,6 +314,44 @@ def vendors(company: str = None, source: str = None):
 
 @app.get("/api/companies")
 def companies(): return {"profiles": engine.profiles(), "rollup": engine.company_rollup()}
+
+@app.get("/api/directory")
+def directory(company: str = None, source: str = None):
+    return {"employees": engine.directory(company or None)}
+
+@app.get("/api/calendar")
+def calendar(company: str = None, source: str = None):
+    return engine.calendar(company or None)
+
+@app.get("/api/resolve_people")
+def resolve_people(q: str = ""):
+    return {"people": [{"name": p["name"], "title": p["title"], "company": p["company_name"]}
+                       for p in engine.resolve_people(q)]}
+
+@app.get("/api/calsync")
+def calsync_status():
+    return calsync.status()
+
+@app.get("/cal/connect")
+def cal_connect():
+    if not calsync.configured():
+        return HTMLResponse("<h3 style='font-family:system-ui'>&#9888;&#65039; Add your Google (or Microsoft) OAuth "
+                            "<b>client_id</b> / <b>client_secret</b> to <code>calsync_config.json</code> first, then try Connect again.</h3>")
+    return RedirectResponse(calsync.auth_url())
+
+@app.get("/cal/callback", response_class=HTMLResponse)
+def cal_callback(code: str = None, state: str = None, error: str = None):
+    if error:
+        return f"<h3>Calendar connection failed: {error}</h3>"
+    if not code:
+        return "<h3>Missing authorization code from the calendar provider.</h3>"
+    try:
+        calsync.exchange_code(code)
+        return ("<h2 style='font-family:system-ui'>&#9989; Calendar connected!</h2>"
+                "<p style='font-family:system-ui'>KEYSTONE will now overlay live free/busy on the Availability board. "
+                "Returning to KEYSTONE&hellip;</p><script>setTimeout(()=>{window.location='/'},2500)</script>")
+    except Exception as e:
+        return f"<h3>Token exchange failed: {type(e).__name__}: {e}</h3>"
 
 @app.get("/api/qbsync")
 def qbsync():
@@ -426,7 +481,7 @@ def ask(data: dict = Body(...)):
 
 
 QB_WRITES = ("create_invoice", "create_bill", "record_payment", "create_po")
-ACTIONS = QB_WRITES + ("send_reminder",)
+ACTIONS = QB_WRITES + ("send_reminder", "schedule_meeting")
 
 @app.post("/api/action/execute")
 def action_execute(data: dict = Body(...)):
@@ -446,6 +501,33 @@ def action_execute(data: dict = Body(...)):
                      "questions.\n\nAccounts Receivable, The Burns Companies")
         return {"ok": True, "message": f"✉️ **Payment reminder queued for {cust}** — ${amt:,.0f}"
                 + (f", {days} days overdue" if days else "") + f".\n\n_Draft:_\n{draft}"}
+
+    # schedule_meeting is not a QuickBooks write — it puts an event on each attendee's calendar (works in demo).
+    # `employee` and each `attendees` entry may be a NAME or a role/group phrase ("the pool crew leads").
+    if act == "schedule_meeting":
+        tokens = ([p["employee"]] if p.get("employee") else []) + list(p.get("attendees") or [])
+        targets, seen = [], set()
+        for tok in tokens:
+            m = engine.emp_by_name(tok)
+            cands = [m] if m else engine.resolve_people(tok)
+            for c in cands:
+                if c and c["id"] not in seen:
+                    seen.add(c["id"]); targets.append(c)
+        if not targets:
+            who = p.get("employee") or ", ".join(p.get("attendees") or []) or "that"
+            return JSONResponse({"error": f"No one matching '{who}' is in the directory."}, status_code=400)
+        date = (p.get("date") or engine.load()["as_of"])
+        start = (p.get("start") or "09:00"); end = (p.get("end") or "09:30")
+        title = (p.get("title") or "Meeting").strip()
+        ids = [t["id"] for t in targets]
+        try:
+            for t in targets:
+                engine.add_event(t["id"], title, date, start, end, "meeting", [i for i in ids if i != t["id"]])
+        except Exception as e:
+            return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
+        names = ", ".join(t["name"] for t in targets)
+        return {"ok": True, "message": f"\U0001F4C5 **Meeting scheduled** — {title} on {date}, {start}–{end}, "
+                                       f"with **{names}**."}
 
     if act not in QB_WRITES:
         return JSONResponse({"error": "unknown action"}, status_code=400)

@@ -3749,5 +3749,2272 @@
    "low_stock": false
   }
  ],
+ "employees": [
+  {
+   "id": "e-bburns",
+   "name": "Brad Burns",
+   "title": "Owner & Chief Executive Officer",
+   "dept": "Executive",
+   "company": "holding",
+   "email": "bburns@theburnscos.com",
+   "phone": "314-441-4150",
+   "location": "Maryland Heights HQ",
+   "manager": null
+  },
+  {
+   "id": "e-cfo",
+   "name": "Dana Whitfield",
+   "title": "Chief Financial Officer",
+   "dept": "Finance",
+   "company": "holding",
+   "email": "dwhitfield@theburnscos.com",
+   "phone": "314-441-4152",
+   "location": "Maryland Heights HQ",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-ctrl",
+   "name": "Priya Raman",
+   "title": "Controller",
+   "dept": "Finance",
+   "company": "holding",
+   "email": "praman@theburnscos.com",
+   "phone": "314-441-4153",
+   "location": "Maryland Heights HQ",
+   "manager": "e-cfo"
+  },
+  {
+   "id": "e-hr",
+   "name": "Monica Alvarez",
+   "title": "Human Resources Manager",
+   "dept": "People & Culture",
+   "company": "holding",
+   "email": "malvarez@theburnscos.com",
+   "phone": "314-441-4155",
+   "location": "Maryland Heights HQ",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-it",
+   "name": "Marcus Webb",
+   "title": "IT & Systems Administrator",
+   "dept": "Information Technology",
+   "company": "holding",
+   "email": "mwebb@theburnscos.com",
+   "phone": "314-441-4157",
+   "location": "Maryland Heights HQ",
+   "manager": "e-cfo"
+  },
+  {
+   "id": "e-ea",
+   "name": "Grace Kim",
+   "title": "Executive Assistant",
+   "dept": "Executive",
+   "company": "holding",
+   "email": "gkim@theburnscos.com",
+   "phone": "314-441-4151",
+   "location": "Maryland Heights HQ",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-wvp",
+   "name": "Tom Delgado",
+   "title": "VP of Construction",
+   "dept": "Construction",
+   "company": "wayne",
+   "email": "tdelgado@theburnscos.com",
+   "phone": "314-555-2101",
+   "location": "Maryland Heights HQ",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-wspm",
+   "name": "Sarah Nolan",
+   "title": "Senior Project Manager",
+   "dept": "Project Management",
+   "company": "wayne",
+   "email": "snolan@theburnscos.com",
+   "phone": "314-555-2102",
+   "location": "Field / HQ",
+   "manager": "e-wvp"
+  },
+  {
+   "id": "e-wpm",
+   "name": "Derek Price",
+   "title": "Project Manager",
+   "dept": "Project Management",
+   "company": "wayne",
+   "email": "dprice@theburnscos.com",
+   "phone": "314-555-2103",
+   "location": "Field / HQ",
+   "manager": "e-wvp"
+  },
+  {
+   "id": "e-wsuper",
+   "name": "Luis Ortega",
+   "title": "Superintendent",
+   "dept": "Field Operations",
+   "company": "wayne",
+   "email": "lortega@theburnscos.com",
+   "phone": "636-555-2104",
+   "location": "Gateway Retail jobsite",
+   "manager": "e-wvp"
+  },
+  {
+   "id": "e-west",
+   "name": "Hannah Fisher",
+   "title": "Estimator",
+   "dept": "Preconstruction",
+   "company": "wayne",
+   "email": "hfisher@theburnscos.com",
+   "phone": "314-555-2105",
+   "location": "Maryland Heights HQ",
+   "manager": "e-wvp"
+  },
+  {
+   "id": "e-mhops",
+   "name": "Ray Gibson",
+   "title": "Operations Manager",
+   "dept": "Operations",
+   "company": "mhard",
+   "email": "rgibson@theburnscos.com",
+   "phone": "314-555-3201",
+   "location": "Fenton yard",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-mhfore",
+   "name": "Carlos Mendez",
+   "title": "Crew Foreman",
+   "dept": "Field Operations",
+   "company": "mhard",
+   "email": "cmendez@theburnscos.com",
+   "phone": "636-555-3202",
+   "location": "Field",
+   "manager": "e-mhops"
+  },
+  {
+   "id": "e-mhest",
+   "name": "Beth Snyder",
+   "title": "Estimator",
+   "dept": "Preconstruction",
+   "company": "mhard",
+   "email": "bsnyder@theburnscos.com",
+   "phone": "314-555-3203",
+   "location": "Fenton yard",
+   "manager": "e-mhops"
+  },
+  {
+   "id": "e-mpmgr",
+   "name": "Nick Ferraro",
+   "title": "Pool Division Manager",
+   "dept": "Operations",
+   "company": "mpool",
+   "email": "nferraro@theburnscos.com",
+   "phone": "314-555-4301",
+   "location": "Fenton yard",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-mpdes",
+   "name": "Amber Cole",
+   "title": "Design Consultant",
+   "dept": "Design & Sales",
+   "company": "mpool",
+   "email": "acole@theburnscos.com",
+   "phone": "314-555-4302",
+   "location": "Showroom",
+   "manager": "e-mpmgr"
+  },
+  {
+   "id": "e-mpsuper",
+   "name": "Jamal Carter",
+   "title": "Build Superintendent",
+   "dept": "Field Operations",
+   "company": "mpool",
+   "email": "jcarter@theburnscos.com",
+   "phone": "636-555-4303",
+   "location": "Henderson jobsite",
+   "manager": "e-mpmgr"
+  },
+  {
+   "id": "e-vzcd",
+   "name": "Elena Vargas",
+   "title": "Creative Director",
+   "dept": "Creative",
+   "company": "vizex",
+   "email": "evargas@theburnscos.com",
+   "phone": "314-555-5401",
+   "location": "Maryland Heights HQ",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-vzam",
+   "name": "Ryan Brooks",
+   "title": "Account Manager",
+   "dept": "Sales",
+   "company": "vizex",
+   "email": "rbrooks@theburnscos.com",
+   "phone": "314-555-5402",
+   "location": "Maryland Heights HQ",
+   "manager": "e-vzcd"
+  },
+  {
+   "id": "e-vzinst",
+   "name": "Pete Hansen",
+   "title": "Install Lead",
+   "dept": "Field Operations",
+   "company": "vizex",
+   "email": "phansen@theburnscos.com",
+   "phone": "636-555-5403",
+   "location": "Field (national)",
+   "manager": "e-vzcd"
+  },
+  {
+   "id": "e-cswops",
+   "name": "Mike Vujevic",
+   "title": "Wholesale Operations Lead",
+   "dept": "Operations",
+   "company": "csw",
+   "email": "mvujevic@theburnscos.com",
+   "phone": "314-555-6501",
+   "location": "Fenton processing facility",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-cswsales",
+   "name": "Tonya Reed",
+   "title": "Sales Manager",
+   "dept": "Sales",
+   "company": "csw",
+   "email": "treed@theburnscos.com",
+   "phone": "314-555-6502",
+   "location": "Fenton processing facility",
+   "manager": "e-cswops"
+  },
+  {
+   "id": "e-cswlog",
+   "name": "Victor Nguyen",
+   "title": "Logistics & Delivery Coordinator",
+   "dept": "Logistics",
+   "company": "csw",
+   "email": "vnguyen@theburnscos.com",
+   "phone": "636-555-6503",
+   "location": "Fenton processing facility",
+   "manager": "e-cswops"
+  },
+  {
+   "id": "e-csrmgr",
+   "name": "Kelly Burns",
+   "title": "Retail Manager",
+   "dept": "Retail",
+   "company": "csr",
+   "email": "kburns@theburnscos.com",
+   "phone": "314-555-7601",
+   "location": "Fenton retail counter",
+   "manager": "e-bburns"
+  },
+  {
+   "id": "e-csrlead",
+   "name": "Sam Diaz",
+   "title": "Counter Lead",
+   "dept": "Retail",
+   "company": "csr",
+   "email": "sdiaz@theburnscos.com",
+   "phone": "636-555-7602",
+   "location": "Fenton retail counter",
+   "manager": "e-csrmgr"
+  }
+ ],
+ "calendar_events": [
+  {
+   "id": "EV-9001",
+   "employee": "e-bburns",
+   "title": "Leadership sync",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9002",
+   "employee": "e-bburns",
+   "title": "1:1",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9003",
+   "employee": "e-bburns",
+   "title": "Investor update",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9004",
+   "employee": "e-bburns",
+   "title": "1:1",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9005",
+   "employee": "e-bburns",
+   "title": "1:1",
+   "date": "2026-10-13",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9006",
+   "employee": "e-cfo",
+   "title": "Payroll run",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9007",
+   "employee": "e-cfo",
+   "title": "Payroll run",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9008",
+   "employee": "e-cfo",
+   "title": "Month-end close",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9009",
+   "employee": "e-cfo",
+   "title": "Cash-flow review",
+   "date": "2026-10-14",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9010",
+   "employee": "e-cfo",
+   "title": "Budget review",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9011",
+   "employee": "e-cfo",
+   "title": "Month-end close",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9012",
+   "employee": "e-cfo",
+   "title": "Budget review",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9013",
+   "employee": "e-cfo",
+   "title": "Cash-flow review",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9014",
+   "employee": "e-cfo",
+   "title": "Budget review",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9015",
+   "employee": "e-ctrl",
+   "title": "Cash-flow review",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9016",
+   "employee": "e-ctrl",
+   "title": "Budget review",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9017",
+   "employee": "e-ctrl",
+   "title": "Budget review",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9018",
+   "employee": "e-ctrl",
+   "title": "Payroll run",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9019",
+   "employee": "e-ctrl",
+   "title": "Payroll run",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9020",
+   "employee": "e-ctrl",
+   "title": "AR review",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9021",
+   "employee": "e-ctrl",
+   "title": "Cash-flow review",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9022",
+   "employee": "e-hr",
+   "title": "Benefits review",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9023",
+   "employee": "e-hr",
+   "title": "1:1",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9024",
+   "employee": "e-hr",
+   "title": "Onboarding",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9025",
+   "employee": "e-hr",
+   "title": "Onboarding",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9026",
+   "employee": "e-hr",
+   "title": "1:1",
+   "date": "2026-10-13",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9027",
+   "employee": "e-hr",
+   "title": "Benefits review",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9028",
+   "employee": "e-hr",
+   "title": "Interview",
+   "date": "2026-10-14",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9029",
+   "employee": "e-hr",
+   "title": "Interview",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9030",
+   "employee": "e-hr",
+   "title": "Benefits review",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9031",
+   "employee": "e-hr",
+   "title": "Benefits review",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9032",
+   "employee": "e-it",
+   "title": "Systems maintenance",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9033",
+   "employee": "e-it",
+   "title": "Ticket triage",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9034",
+   "employee": "e-it",
+   "title": "Ticket triage",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9035",
+   "employee": "e-it",
+   "title": "QuickBooks sync check",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9036",
+   "employee": "e-it",
+   "title": "Vendor call",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9037",
+   "employee": "e-it",
+   "title": "QuickBooks sync check",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9038",
+   "employee": "e-it",
+   "title": "Systems maintenance",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9039",
+   "employee": "e-ea",
+   "title": "Leadership sync",
+   "date": "2026-10-09",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9040",
+   "employee": "e-ea",
+   "title": "Investor update",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9041",
+   "employee": "e-ea",
+   "title": "Investor update",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9042",
+   "employee": "e-ea",
+   "title": "Leadership sync",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9043",
+   "employee": "e-ea",
+   "title": "1:1",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9044",
+   "employee": "e-wvp",
+   "title": "Subcontractor coordination",
+   "date": "2026-10-09",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9045",
+   "employee": "e-wvp",
+   "title": "Owner meeting",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9046",
+   "employee": "e-wvp",
+   "title": "Owner meeting",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9047",
+   "employee": "e-wvp",
+   "title": "Project review",
+   "date": "2026-10-13",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9048",
+   "employee": "e-wvp",
+   "title": "Project review",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9049",
+   "employee": "e-wspm",
+   "title": "Client call",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9050",
+   "employee": "e-wspm",
+   "title": "Project check-in",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9051",
+   "employee": "e-wspm",
+   "title": "Schedule review",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9052",
+   "employee": "e-wspm",
+   "title": "Submittal review",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9053",
+   "employee": "e-wspm",
+   "title": "Submittal review",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9054",
+   "employee": "e-wspm",
+   "title": "Client call",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9055",
+   "employee": "e-wpm",
+   "title": "Schedule review",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9056",
+   "employee": "e-wpm",
+   "title": "Project check-in",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9057",
+   "employee": "e-wpm",
+   "title": "Project check-in",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9058",
+   "employee": "e-wpm",
+   "title": "Schedule review",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9059",
+   "employee": "e-wpm",
+   "title": "Schedule review",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9060",
+   "employee": "e-wpm",
+   "title": "Submittal review",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9061",
+   "employee": "e-wpm",
+   "title": "Schedule review",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9062",
+   "employee": "e-wsuper",
+   "title": "PTO \u2014 personal day",
+   "date": "2026-10-09",
+   "start": "00:00",
+   "end": "23:59",
+   "type": "ooo",
+   "attendees": []
+  },
+  {
+   "id": "EV-9063",
+   "employee": "e-wsuper",
+   "title": "Safety meeting",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9064",
+   "employee": "e-wsuper",
+   "title": "Inspection",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9065",
+   "employee": "e-wsuper",
+   "title": "Safety meeting",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9066",
+   "employee": "e-wsuper",
+   "title": "Inspection",
+   "date": "2026-10-14",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9067",
+   "employee": "e-wsuper",
+   "title": "Inspection",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9068",
+   "employee": "e-wsuper",
+   "title": "Safety meeting",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9069",
+   "employee": "e-wsuper",
+   "title": "Inspection",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9070",
+   "employee": "e-west",
+   "title": "Takeoff",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9071",
+   "employee": "e-west",
+   "title": "Bid walk",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9072",
+   "employee": "e-west",
+   "title": "Takeoff",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9073",
+   "employee": "e-west",
+   "title": "Takeoff",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9074",
+   "employee": "e-west",
+   "title": "Estimate review",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9075",
+   "employee": "e-mhops",
+   "title": "Vendor call",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9076",
+   "employee": "e-mhops",
+   "title": "Ops standup",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9077",
+   "employee": "e-mhops",
+   "title": "Scheduling",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9078",
+   "employee": "e-mhops",
+   "title": "Vendor call",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9079",
+   "employee": "e-mhops",
+   "title": "Vendor call",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9080",
+   "employee": "e-mhops",
+   "title": "Ops standup",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9081",
+   "employee": "e-mhops",
+   "title": "Vendor call",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9082",
+   "employee": "e-mhops",
+   "title": "Vendor call",
+   "date": "2026-10-13",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9083",
+   "employee": "e-mhops",
+   "title": "Ops standup",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9084",
+   "employee": "e-mhops",
+   "title": "Scheduling",
+   "date": "2026-10-14",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9085",
+   "employee": "e-mhops",
+   "title": "Scheduling",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9086",
+   "employee": "e-mhfore",
+   "title": "Safety meeting",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9087",
+   "employee": "e-mhfore",
+   "title": "Site walk",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9088",
+   "employee": "e-mhfore",
+   "title": "Site walk",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9089",
+   "employee": "e-mhfore",
+   "title": "Site walk",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9090",
+   "employee": "e-mhfore",
+   "title": "Site walk",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9091",
+   "employee": "e-mhfore",
+   "title": "Site walk",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9092",
+   "employee": "e-mhfore",
+   "title": "Crew briefing",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9093",
+   "employee": "e-mhfore",
+   "title": "Inspection",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9094",
+   "employee": "e-mhest",
+   "title": "On-site all day \u2014 Frontenac Plaza bid walk",
+   "date": "2026-10-09",
+   "start": "00:00",
+   "end": "23:59",
+   "type": "ooo",
+   "attendees": []
+  },
+  {
+   "id": "EV-9095",
+   "employee": "e-mhest",
+   "title": "Takeoff",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9096",
+   "employee": "e-mhest",
+   "title": "Bid walk",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9097",
+   "employee": "e-mhest",
+   "title": "Scope review",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9098",
+   "employee": "e-mhest",
+   "title": "Estimate review",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9099",
+   "employee": "e-mhest",
+   "title": "Estimate review",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9100",
+   "employee": "e-mhest",
+   "title": "Bid walk",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9101",
+   "employee": "e-mpmgr",
+   "title": "Ops standup",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9102",
+   "employee": "e-mpmgr",
+   "title": "Vendor call",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9103",
+   "employee": "e-mpmgr",
+   "title": "Scheduling",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9104",
+   "employee": "e-mpmgr",
+   "title": "Ops standup",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9105",
+   "employee": "e-mpmgr",
+   "title": "Capacity planning",
+   "date": "2026-10-13",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9106",
+   "employee": "e-mpmgr",
+   "title": "Ops standup",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9107",
+   "employee": "e-mpmgr",
+   "title": "Scheduling",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9108",
+   "employee": "e-mpmgr",
+   "title": "Vendor call",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9109",
+   "employee": "e-mpdes",
+   "title": "Proposal review",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9110",
+   "employee": "e-mpdes",
+   "title": "Client walkthrough",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9111",
+   "employee": "e-mpdes",
+   "title": "Design consult",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9112",
+   "employee": "e-mpdes",
+   "title": "Showroom appointment",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9113",
+   "employee": "e-mpdes",
+   "title": "Design consult",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9114",
+   "employee": "e-mpdes",
+   "title": "Showroom appointment",
+   "date": "2026-10-13",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9115",
+   "employee": "e-mpdes",
+   "title": "Showroom appointment",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9116",
+   "employee": "e-mpdes",
+   "title": "Client walkthrough",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9117",
+   "employee": "e-mpsuper",
+   "title": "Inspection",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9118",
+   "employee": "e-mpsuper",
+   "title": "Inspection",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9119",
+   "employee": "e-mpsuper",
+   "title": "Safety meeting",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9120",
+   "employee": "e-mpsuper",
+   "title": "Site walk",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9121",
+   "employee": "e-mpsuper",
+   "title": "Crew briefing",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9122",
+   "employee": "e-mpsuper",
+   "title": "Crew briefing",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9123",
+   "employee": "e-mpsuper",
+   "title": "Inspection",
+   "date": "2026-10-13",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9124",
+   "employee": "e-mpsuper",
+   "title": "Safety meeting",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9125",
+   "employee": "e-mpsuper",
+   "title": "Site walk",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9126",
+   "employee": "e-vzcd",
+   "title": "Client presentation",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9127",
+   "employee": "e-vzcd",
+   "title": "Brand workshop",
+   "date": "2026-10-09",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9128",
+   "employee": "e-vzcd",
+   "title": "Press-check",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9129",
+   "employee": "e-vzcd",
+   "title": "Brand workshop",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9130",
+   "employee": "e-vzcd",
+   "title": "Brand workshop",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9131",
+   "employee": "e-vzcd",
+   "title": "Press-check",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9132",
+   "employee": "e-vzcd",
+   "title": "Brand workshop",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9133",
+   "employee": "e-vzcd",
+   "title": "Client presentation",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9134",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-09",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9135",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9136",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9137",
+   "employee": "e-vzam",
+   "title": "Pipeline review",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9138",
+   "employee": "e-vzam",
+   "title": "Customer check-in",
+   "date": "2026-10-13",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9139",
+   "employee": "e-vzam",
+   "title": "Pipeline review",
+   "date": "2026-10-14",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9140",
+   "employee": "e-vzam",
+   "title": "Customer check-in",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9141",
+   "employee": "e-vzam",
+   "title": "Customer check-in",
+   "date": "2026-10-14",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9142",
+   "employee": "e-vzam",
+   "title": "Customer check-in",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9143",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9144",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9145",
+   "employee": "e-vzam",
+   "title": "Proposal review",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9146",
+   "employee": "e-vzinst",
+   "title": "Crew briefing",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9147",
+   "employee": "e-vzinst",
+   "title": "Inspection",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9148",
+   "employee": "e-vzinst",
+   "title": "Inspection",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9149",
+   "employee": "e-vzinst",
+   "title": "Site walk",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9150",
+   "employee": "e-vzinst",
+   "title": "Safety meeting",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9151",
+   "employee": "e-vzinst",
+   "title": "Inspection",
+   "date": "2026-10-12",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9152",
+   "employee": "e-vzinst",
+   "title": "Site walk",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9153",
+   "employee": "e-vzinst",
+   "title": "Crew briefing",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9154",
+   "employee": "e-vzinst",
+   "title": "Crew briefing",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9155",
+   "employee": "e-vzinst",
+   "title": "Inspection",
+   "date": "2026-10-15",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9156",
+   "employee": "e-vzinst",
+   "title": "Inspection",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9157",
+   "employee": "e-cswops",
+   "title": "Vendor call",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9158",
+   "employee": "e-cswops",
+   "title": "Vendor call",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9159",
+   "employee": "e-cswops",
+   "title": "Capacity planning",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9160",
+   "employee": "e-cswops",
+   "title": "Ops standup",
+   "date": "2026-10-14",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9161",
+   "employee": "e-cswops",
+   "title": "Vendor call",
+   "date": "2026-10-14",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9162",
+   "employee": "e-cswops",
+   "title": "Vendor call",
+   "date": "2026-10-15",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9163",
+   "employee": "e-cswops",
+   "title": "Vendor call",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9164",
+   "employee": "e-cswops",
+   "title": "Scheduling",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9165",
+   "employee": "e-cswsales",
+   "title": "Proposal review",
+   "date": "2026-10-09",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9166",
+   "employee": "e-cswsales",
+   "title": "Proposal review",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9167",
+   "employee": "e-cswsales",
+   "title": "Customer check-in",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9168",
+   "employee": "e-cswsales",
+   "title": "Customer check-in",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9169",
+   "employee": "e-cswsales",
+   "title": "Customer check-in",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9170",
+   "employee": "e-cswsales",
+   "title": "Customer check-in",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9171",
+   "employee": "e-cswsales",
+   "title": "Proposal review",
+   "date": "2026-10-13",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9172",
+   "employee": "e-cswsales",
+   "title": "Customer check-in",
+   "date": "2026-10-13",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9173",
+   "employee": "e-cswsales",
+   "title": "Proposal review",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9174",
+   "employee": "e-cswsales",
+   "title": "Pipeline review",
+   "date": "2026-10-14",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9175",
+   "employee": "e-cswlog",
+   "title": "Delivery dispatch",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9176",
+   "employee": "e-cswlog",
+   "title": "Carrier call",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9177",
+   "employee": "e-cswlog",
+   "title": "Route planning",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9178",
+   "employee": "e-cswlog",
+   "title": "Inventory count",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9179",
+   "employee": "e-cswlog",
+   "title": "Carrier call",
+   "date": "2026-10-12",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9180",
+   "employee": "e-cswlog",
+   "title": "Carrier call",
+   "date": "2026-10-13",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9181",
+   "employee": "e-cswlog",
+   "title": "Route planning",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9182",
+   "employee": "e-cswlog",
+   "title": "Delivery dispatch",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9183",
+   "employee": "e-cswlog",
+   "title": "Inventory count",
+   "date": "2026-10-15",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9184",
+   "employee": "e-csrmgr",
+   "title": "Inventory count",
+   "date": "2026-10-09",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9185",
+   "employee": "e-csrmgr",
+   "title": "Shift planning",
+   "date": "2026-10-12",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9186",
+   "employee": "e-csrmgr",
+   "title": "Shift planning",
+   "date": "2026-10-12",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9187",
+   "employee": "e-csrmgr",
+   "title": "Vendor delivery",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9188",
+   "employee": "e-csrmgr",
+   "title": "Counter prep",
+   "date": "2026-10-14",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9189",
+   "employee": "e-csrmgr",
+   "title": "Counter prep",
+   "date": "2026-10-15",
+   "start": "14:30",
+   "end": "15:00",
+   "type": "focus",
+   "attendees": []
+  },
+  {
+   "id": "EV-9190",
+   "employee": "e-csrlead",
+   "title": "Inventory count",
+   "date": "2026-10-09",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9191",
+   "employee": "e-csrlead",
+   "title": "Counter prep",
+   "date": "2026-10-09",
+   "start": "13:00",
+   "end": "14:00",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9192",
+   "employee": "e-csrlead",
+   "title": "Counter prep",
+   "date": "2026-10-09",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9193",
+   "employee": "e-csrlead",
+   "title": "Counter prep",
+   "date": "2026-10-12",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9194",
+   "employee": "e-csrlead",
+   "title": "Inventory count",
+   "date": "2026-10-13",
+   "start": "09:00",
+   "end": "09:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9195",
+   "employee": "e-csrlead",
+   "title": "Vendor delivery",
+   "date": "2026-10-13",
+   "start": "15:30",
+   "end": "16:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9196",
+   "employee": "e-csrlead",
+   "title": "Counter prep",
+   "date": "2026-10-14",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "meeting",
+   "attendees": []
+  },
+  {
+   "id": "EV-9197",
+   "employee": "e-csrlead",
+   "title": "Inventory count",
+   "date": "2026-10-15",
+   "start": "10:30",
+   "end": "11:30",
+   "type": "busy",
+   "attendees": []
+  },
+  {
+   "id": "EV-9198",
+   "employee": "e-bburns",
+   "title": "Weekly operations sync (all divisions)",
+   "date": "2026-10-09",
+   "start": "08:00",
+   "end": "08:45",
+   "type": "meeting",
+   "attendees": [
+    "e-cfo",
+    "e-wvp",
+    "e-mhops",
+    "e-mpmgr",
+    "e-vzcd",
+    "e-cswops",
+    "e-csrmgr"
+   ]
+  }
+ ],
  "_note": "Company PROFILES are REAL (publicly sourced; see each 'source'). Transactions (jobs, invoices, bills, POs, inventory quantities/prices) are SYNTHETIC, modeled on Burns' real operations for demo - NOT actual Burns financials. City Seafood products: Salmon & Shrimp confirmed real; others representative."
 }

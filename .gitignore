@@ -9,3 +9,5 @@ __pycache__/
 API_Keys.txt
 qbo_config.json
 qbo_tokens.json
+calsync_config.json
+calsync_tokens.json
